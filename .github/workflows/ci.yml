@@ -30,3 +30,6 @@ jobs:
         run: python -X utf8 -m pytest
       - name: Selfcheck (CLI + 数据 schema 守门)
         run: python -X utf8 -m structural_strengthening_checker selfcheck
+      # M4 起基准常驻 CI：验算真值比对 + 方案核查指标门槛（检出率 1.0 / 误报 0 / 判定准确率 1.0）
+      - name: Bench (calc + check 达标门)
+        run: python -X utf8 -m structural_strengthening_checker bench

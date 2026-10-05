@@ -41,7 +41,26 @@ VERDICT_SUSPICIOUS = "suspicious"
 VERDICT_NEEDS_CONFIRM = "needs_confirm"
 VERDICT_PASS = "pass"
 
+# 判定等级的中文标签（CLI 文本输出与 docx 报告共用，单一出口）
+VERDICT_LABELS = {
+    "fail": "不符合",
+    "suspicious": "疑似",
+    "needs_confirm": "待人工确认",
+    "pass": "通过",
+}
+
 _SEVERITY_ORDER = (VERDICT_FAIL, VERDICT_SUSPICIOUS, VERDICT_NEEDS_CONFIRM, VERDICT_PASS)
+
+
+def worst_verdict(verdicts: List[str]) -> str:
+    """多条判定取最重（fail > suspicious > needs_confirm > pass）；空列表兜底 needs_confirm。
+
+    M4 起为公共接口：核查基准的判定准确率按"该 rule_id 在报告中的最重 verdict"对账。
+    """
+    for v in _SEVERITY_ORDER:
+        if v in verdicts:
+            return v
+    return VERDICT_NEEDS_CONFIRM
 
 # 植筋锚固筛查支撑条款（全部须已核对方可数值判定；limits 键由测试与条款库对账）
 CLAUSE_ANCHOR_FORMULA = "GB50367-2013-15.2.3"
@@ -99,11 +118,6 @@ class CheckReport:
         return seen
 
 
-def _worst(verdicts: List[str]) -> str:
-    for v in _SEVERITY_ORDER:
-        if v in verdicts:
-            return v
-    return VERDICT_NEEDS_CONFIRM
 
 
 def check_plan(
@@ -349,7 +363,7 @@ def _check_adhesive(rule: Rule, card: PlanParamCard, store: ClauseStore) -> Chec
     return CheckFinding(
         rule_id=rule.id,
         rule_name=rule.name,
-        verdict=_worst(verdicts) if verdicts else VERDICT_NEEDS_CONFIRM,
+        verdict=worst_verdict(verdicts) if verdicts else VERDICT_NEEDS_CONFIRM,
         message="；".join(messages) if messages else rule.message,
         clause_id=rule.clause_id,
         advice=rule.advice,
@@ -530,7 +544,7 @@ def _check_anchor_depth(rule: Rule, card: PlanParamCard, store: ClauseStore) -> 
     return CheckFinding(
         rule_id=rule.id,
         rule_name=rule.name,
-        verdict=_worst(verdicts),
+        verdict=worst_verdict(verdicts),
         message="；".join(messages),
         clause_id=rule.clause_id,
         advice=rule.advice,

@@ -1,8 +1,27 @@
-"""基准骨架：算例 schema 守门（无来源拒收）+ 门控阻塞如实报告。"""
+"""基准骨架：算例 schema 守门（无来源拒收）+ 门控阻塞如实报告 + M4 核查基准指标门槛。
+
+M4 纪律（plan/05 §五）：指标门槛（检出率 1.0 / 误报 0 / 判定准确率 1.0）是基准常量，
+不达标必须回修实现、不得放宽门槛——这些常量在此处与 CLI 输出双向锁死。
+"""
 
 import json
 
+import pytest
+
 from structural_strengthening_checker.bench.calc_bench import load_cases, run_calc_bench
+from structural_strengthening_checker.bench.check_bench import (
+    MAX_FALSE_POSITIVES,
+    REQUIRED_DETECTION_RATE,
+    REQUIRED_VERDICT_ACCURACY,
+    reconcile_doc,
+    run_check_bench,
+    thresholds_met,
+)
+from structural_strengthening_checker.checking.engine import (
+    VERDICT_FAIL,
+    CheckFinding,
+    CheckReport,
+)
 from structural_strengthening_checker.core.clauses import ClauseStore
 
 
@@ -159,3 +178,83 @@ def test_bench_truth_mismatch_counts_failed(tmp_path):
     problems = result["details"][0]["problems"]
     assert any("Mu_kNm" in p for p in problems)
     assert any("no_such_metric" in p for p in problems)
+
+
+# ---------------------------------------------------------------------------
+# M4：方案核查基准（现场生成 → 对账 → 指标门槛）
+# ---------------------------------------------------------------------------
+
+def _finding(rule_id, verdict):
+    return CheckFinding(
+        rule_id=rule_id, rule_name=rule_id, verdict=verdict,
+        message="m", clause_id="c",
+    )
+
+
+def test_reconcile_doc_semantics():
+    """对账语义单测：漏检/误报/主期望判定比对/also_expect 并入期望集合。"""
+    truth_doc = {
+        "doc_name": "t.docx",
+        "injected": [
+            {"rule_id": "R-ADH-001", "expected_verdict": "fail", "also_expect": ["R-XX-002"]},
+            {"rule_id": "R-ANCH-001", "expected_verdict": "suspicious", "also_expect": []},
+        ],
+        # 生成器真值语义：全部注入 rule_id 都在 expected_non_pass（v1 全 fail；此处演示多档）
+        "expected_non_pass": ["R-ADH-001", "R-ANCH-001"],
+    }
+    # 期望集合 = expected_non_pass ∪ also_expect；报告恰好命中且判定一致 → 全 OK
+    report = CheckReport("t.docx", findings=[
+        _finding("R-ADH-001", VERDICT_FAIL),
+        _finding("R-XX-002", "needs_confirm"),
+        _finding("R-ANCH-001", "suspicious"),
+    ])
+    rec = reconcile_doc(truth_doc, report)
+    assert rec["ok"]
+    assert rec["expected"] == ["R-ADH-001", "R-ANCH-001", "R-XX-002"]
+    assert rec["missed"] == [] and rec["false_positives"] == []
+    assert rec["verdict_matches"] == ["R-ADH-001", "R-ANCH-001"]
+
+    # 漏检 + 误报 + 判定不符各一处 → 如实记录，ok=False
+    report_bad = CheckReport("t.docx", findings=[
+        _finding("R-ADH-001", "suspicious"),   # 判定不符（期望 fail）
+        _finding("R-OTHER", "needs_confirm"),  # 误报（期望集合之外）
+        # R-ANCH-001 未报告 → 漏检
+    ])
+    rec_bad = reconcile_doc(truth_doc, report_bad)
+    assert not rec_bad["ok"]
+    assert rec_bad["missed"] == ["R-ANCH-001", "R-XX-002"]
+    assert rec_bad["false_positives"] == ["R-OTHER"]
+    assert rec_bad["verdict_mismatches"] == [
+        {"rule_id": "R-ADH-001", "expected": "fail", "got": "suspicious"},
+        # 漏检的注入项判定比对记 got=None（未报告）
+        {"rule_id": "R-ANCH-001", "expected": "suspicious", "got": "None"},
+    ]
+
+
+def test_check_bench_meets_thresholds(repo_data_dir, tmp_path):
+    """M4 DoD 门槛锁死：检出率 1.0、误报 0、判定准确率 1.0（现场生成，产物入 tmp）。"""
+    result = run_check_bench(repo_data_dir, work_dir=tmp_path / "corpus")
+    assert result["issues"] == []
+    assert result["docs"] == 6  # 1 基线 + 5 注入（seed 固定语料形态）
+    assert result["detection_rate"] >= REQUIRED_DETECTION_RATE
+    assert result["false_positives"] <= MAX_FALSE_POSITIVES
+    assert result["verdict_accuracy"] >= REQUIRED_VERDICT_ACCURACY
+    assert thresholds_met(result)
+    # 基线文档显式断言：期望为空、无误报（0 误报口径的基线面）
+    baseline = next(d for d in result["details"] if d["clean_baseline"])
+    assert baseline["expected"] == [] and baseline["got"] == []
+
+
+def test_thresholds_met_fails_on_missing_corpus():
+    """语料退化（0 文档/带 issues/指标 None）不得判达标——防基准空转。"""
+    assert not thresholds_met({"docs": 0, "issues": [], "detection_rate": None,
+                               "false_positives": 0, "verdict_accuracy": None})
+    assert not thresholds_met({"docs": 1, "issues": ["x"], "detection_rate": 1.0,
+                               "false_positives": 0, "verdict_accuracy": 1.0})
+
+
+def test_check_bench_thresholds_are_dod_values():
+    """门槛常量本身是 M4 DoD：检出率 1.0 / 误报 0 / 判定准确率 1.0（改门槛=改 DoD，此处报警）。"""
+    assert REQUIRED_DETECTION_RATE == 1.0
+    assert MAX_FALSE_POSITIVES == 0
+    assert REQUIRED_VERDICT_ACCURACY == 1.0

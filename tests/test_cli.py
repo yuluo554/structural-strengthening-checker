@@ -138,6 +138,12 @@ def test_bench_passes_all_m2_cases(repo_cwd, capsys):
     assert '"passed": 14' in out
     assert '"failed": 0' in out
     assert '"blocked_by_clauses": 0' in out
+    # M4：核查基准同命令复现——指标达门槛、BENCH_OK 出口
+    assert '"detection_rate": 1.0' in out
+    assert '"false_positives": 0' in out
+    assert '"verdict_accuracy": 1.0' in out
+    assert "门槛判定: 达标" in out
+    assert "BENCH_OK" in out
 
 
 def test_checklist_lists_items(repo_cwd, capsys):

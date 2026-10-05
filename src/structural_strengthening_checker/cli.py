@@ -59,7 +59,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_check.add_argument("plan_file", help="方案文件（.docx/.pdf）")
     p_check.add_argument("--json", action="store_true", help="以 JSON 输出完整核查报告")
     p_check.add_argument("--report", default=None, metavar="DIR",
-                         help="将核查报告 JSON 写入指定目录（check_report.json）；docx 报告 M4 实装")
+                         help="将核查报告写入指定目录（check_report.json + check_report.docx）")
 
     p_ckl = sub.add_parser("checklist", help="GB 55021-2021 检查单（一览 / --doc 建议 / --interactive 逐项核对 / --fill 渲染）")
     p_ckl.add_argument("--doc", default=None, metavar="FILE",
@@ -71,9 +71,18 @@ def _build_parser() -> argparse.ArgumentParser:
     p_ckl.add_argument("--out", default=None, metavar="FILE",
                        help="核对结果保存路径（--interactive/--doc 模式下可用）")
 
-    sub.add_parser("bench", help="内置基准（M4 达标；当前验算基准可跑）")
+    sub.add_parser("bench", help="内置基准（验算真值比对 + 方案核查检出率/误报/判定准确率对账，门槛不达 exit 1）")
 
-    sub.add_parser("report", help="docx 报告导出（M4 实装）")
+    p_rep = sub.add_parser("report", help="docx 报告导出（report calc 验算书 / report check 核查报告）")
+    rep_sub = p_rep.add_subparsers(dest="report_command")
+    p_rep_calc = rep_sub.add_parser("calc", help="验算书 docx（FR-D1：输入参数/计算过程/依据条款/结论/签署栏）")
+    p_rep_calc.add_argument("module", help="验算模块 id（见 ssc modules）")
+    p_rep_calc.add_argument("--input", required=True, help="参数卡 JSON 文件")
+    p_rep_calc.add_argument("--out", required=True, help="输出 docx 路径")
+    p_rep_check = rep_sub.add_parser("check", help="核查报告 docx（FR-D2：问题清单+证据链+整改建议）")
+    p_rep_check.add_argument("plan_file", help="方案文件（.docx/.pdf）")
+    p_rep_check.add_argument("--out", required=True, help="输出 docx 路径")
+
     sub.add_parser("gui", help="桌面界面（M5 实装）")
     return parser
 
@@ -267,46 +276,53 @@ def _check_report_json(report, card, paras_count: int) -> Dict:
     }
 
 
-def _cmd_check(args) -> int:
+def _run_check_pipeline(plan_path: Path, data_dir: Path):
+    """共用核查流水线（ssc check / ssc report check 同一路径）。
+
+    返回 (report, card, paras, parse_failed, parse_note)。
+    OSError（缺文件/不可读）/ ValueError（后缀不支持）/ MissingExtraError 原样上抛；
+    ParseError 按 plan/03 §三降级纪律不抛：空段落 + parse_failed 标记。
+    """
     from .checking.engine import check_plan
     from .checking.rules import RuleStore
     from .core.errors import ParseError
     from .parsing.docx_text import extract_paras
     from .parsing.param_card_builder import build_param_card
 
-    plan_path = Path(args.plan_file)
-    data_dir = find_data_dir(args.data_dir)
     store = ClauseStore(data_dir / "knowledge")
     rules = RuleStore(data_dir / "knowledge")
     if rules.issues:
-        for issue in rules.issues:
-            print(f"  [x] 规则库问题: {issue}")
-        return EXIT_ERROR
-
-    doc_sha256 = None
+        raise SSCError("规则库问题: " + "; ".join(rules.issues))
+    doc_sha256 = hashlib.sha256(plan_path.read_bytes()).hexdigest()
     parse_failed = False
     parse_note = ""
     try:
-        doc_sha256 = hashlib.sha256(plan_path.read_bytes()).hexdigest()
+        paras = extract_paras(plan_path)
+    except ParseError as exc:
+        paras = []
+        parse_failed = True
+        parse_note = str(exc)
+    card = build_param_card(paras, doc_name=plan_path.name, doc_sha256=doc_sha256)
+    report = check_plan(card, rules, store, parse_failed=parse_failed)
+    return report, card, paras, parse_failed, parse_note
+
+
+def _cmd_check(args) -> int:
+    from .core.errors import MissingExtraError
+
+    plan_path = Path(args.plan_file)
+    data_dir = find_data_dir(args.data_dir)
+    try:
+        report, card, paras, parse_failed, parse_note = _run_check_pipeline(plan_path, data_dir)
     except OSError as exc:
         print(f"[输入] 无法读取方案文件: {exc}")
         return EXIT_INPUT
-    try:
-        paras = extract_paras(plan_path)
     except MissingExtraError as exc:
         print(f"[缺少依赖] {exc}")
         return EXIT_INPUT
     except ValueError as exc:
         print(f"[输入] {exc}")
         return EXIT_INPUT
-    except ParseError as exc:
-        # 降级纪律（plan/03 §三）：解析失败不产生任何 fail，整体降级 needs_confirm
-        paras = []
-        parse_failed = True
-        parse_note = str(exc)
-
-    card = build_param_card(paras, doc_name=plan_path.name, doc_sha256=doc_sha256)
-    report = check_plan(card, rules, store, parse_failed=parse_failed)
 
     if args.json:
         print(json.dumps(_check_report_json(report, card, len(paras)),
@@ -335,6 +351,15 @@ def _cmd_check(args) -> int:
             encoding="utf-8",
         )
         print(f"核查报告 JSON 已写入: {out_path}")
+        # M4 起 --report 同时导出 docx 核查报告（FR-D2）；缺 report extras 只降级提示，不影响核查完成
+        try:
+            from .report.docx_export import export_check_report
+
+            docx_path = export_check_report(report, out_dir / "check_report.docx", card=card)
+            print(f"核查报告 docx 已写入: {docx_path}")
+        except MissingExtraError as exc:
+            print(f"[缺少依赖] {exc}")
+            print("  （JSON 报告已写入；docx 报告需安装: py -m pip install -e .[report]）")
     return EXIT_OK
 
 
@@ -492,29 +517,137 @@ def _cmd_checklist(args) -> int:
 def _cmd_bench(args) -> int:
     data_dir = find_data_dir(args.data_dir)
     store = ClauseStore(data_dir / "knowledge")
-    bench = run_calc_bench(data_dir, store=store)
+
     print("验算基准（真值比对：verdict 严格相等 + 数值 ±0.5% 相对容差，口径 plan/05 §三）")
+    bench = run_calc_bench(data_dir, store=store)
     print(
         json.dumps(
             {k: v for k, v in bench.items() if k != "details"},
             ensure_ascii=False, indent=2,
         )
     )
-    if bench["issues"]:
+    failed = bool(bench["issues"])
+    if failed:
         for issue in bench["issues"]:
             print(f"  [x] {issue}")
+
+    print("方案核查基准（现场生成合成语料 → 逐份核查 → 非 pass 集合对账，口径 plan/05 §四）")
+    try:
+        from .bench.check_bench import thresholds_met, run_check_bench
+
+        check_bench = run_check_bench(data_dir)
+    except MissingExtraError as exc:
+        print(f"[缺少依赖] {exc}")
+        return EXIT_INPUT
+    if check_bench["issues"]:
+        failed = True
+        for issue in check_bench["issues"]:
+            print(f"  [x] {issue}")
+    compact = {
+        k: v for k, v in check_bench.items()
+        if k not in ("details", "issues") and k != "corpus_dir"
+    }
+    print(json.dumps(compact, ensure_ascii=False, indent=2))
+    for d in check_bench["details"]:
+        marks = ",".join(d["expected"]) or "clean_baseline"
+        problems = []
+        if d["missed"]:
+            problems.append("漏检 " + ",".join(d["missed"]))
+        if d["false_positives"]:
+            problems.append("误报 " + ",".join(d["false_positives"]))
+        if d["verdict_mismatches"]:
+            problems.append("判定不符 " + ",".join(
+                f"{m['rule_id']}(期望{m['expected']}/实得{m['got']})"
+                for m in d["verdict_mismatches"]
+            ))
+        status = "OK" if d["ok"] else "FAIL: " + "；".join(problems)
+        print(f"  - {d['doc_name']}  [{marks}]  {status}")
+    ok = thresholds_met(check_bench)
+    print(
+        f"门槛判定: {'达标' if ok else '未达标'}（检出率>={check_bench['thresholds']['detection_rate']:g}、"
+        f"误报<={check_bench['thresholds']['max_false_positives']}、判定准确率>="
+        f"{check_bench['thresholds']['verdict_accuracy']:g}）"
+    )
+    if not ok:
+        failed = True
+
+    if failed:
+        print("BENCH_FAIL")
         return EXIT_ERROR
+    print("BENCH_OK")
     return EXIT_OK
 
 
 def _cmd_report(args) -> int:
-    try:
-        from .report.docx_export import export_calc_book  # noqa: F401
-    except MissingExtraError as exc:
-        print(f"[缺少依赖] {exc}")
-        return EXIT_INPUT
-    print("报告导出在 M4 实装（验算书 + 核查报告，含免责声明与签署栏）。")
+    data_dir = find_data_dir(args.data_dir)
+    command = getattr(args, "report_command", None)
+
+    if command == "calc":
+        store = ClauseStore(data_dir / "knowledge")
+        try:
+            with open(args.input, encoding="utf-8") as fh:
+                params = json.load(fh)
+        except OSError as exc:
+            print(f"[输入] 无法读取参数文件: {exc}")
+            return EXIT_INPUT
+        except json.JSONDecodeError as exc:
+            print(f"[输入] 参数文件不是合法 JSON: {exc}")
+            return EXIT_INPUT
+        try:
+            result = run_calc(args.module, params, store)
+        except ClauseNotVerifiedError as exc:
+            print(f"[条款门控] {exc}")
+            return EXIT_CLAUSE_GATE
+        except ValidationError as exc:
+            print(f"[参数校验] {exc}")
+            return EXIT_INPUT
+        try:
+            out_path = _export_calc_report(result, Path(args.out))
+        except MissingExtraError as exc:
+            print(f"[缺少依赖] {exc}")
+            return EXIT_INPUT
+        print(f"验算书 docx 已写入: {out_path}")
+        return EXIT_OK
+
+    if command == "check":
+        plan_path = Path(args.plan_file)
+        try:
+            report, card, _paras, _failed, _note = _run_check_pipeline(plan_path, data_dir)
+        except OSError as exc:
+            print(f"[输入] 无法读取方案文件: {exc}")
+            return EXIT_INPUT
+        except MissingExtraError as exc:
+            print(f"[缺少依赖] {exc}")
+            return EXIT_INPUT
+        except ValueError as exc:
+            print(f"[输入] {exc}")
+            return EXIT_INPUT
+        try:
+            out_path = _export_check_docx(report, Path(args.out), card)
+        except MissingExtraError as exc:
+            print(f"[缺少依赖] {exc}")
+            return EXIT_INPUT
+        print(f"核查报告 docx 已写入: {out_path}")
+        return EXIT_OK
+
+    print(
+        "用法:\n"
+        "  ssc report calc <module> --input 参数卡.json --out 验算书.docx   验算书导出（FR-D1）\n"
+        "  ssc report check <方案文件> --out 核查报告.docx                 核查报告导出（FR-D2）"
+    )
     return EXIT_OK
+
+
+def _export_calc_report(result, out_path: Path) -> Path:
+    from .report.docx_export import export_calc_book
+
+    return export_calc_book(result, out_path)
+
+
+def _export_check_docx(report, out_path: Path, card=None) -> Path:
+    from .report.docx_export import export_check_report
+
+    return export_check_report(report, out_path, card=card)
 
 
 def _cmd_gui(args) -> int:
