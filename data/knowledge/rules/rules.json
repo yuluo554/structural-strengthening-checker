@@ -1,0 +1,70 @@
+[
+  {
+    "id": "R-ADH-001",
+    "name": "结构胶粘剂钢对钢拉伸抗剪强度标准值核查",
+    "gate": {
+      "category": "adhesive",
+      "only_if_keywords": ["结构胶", "胶粘剂", "建筑结构胶", "粘钢胶", "碳纤维浸渍胶", "植筋胶"]
+    },
+    "check_type": "param_range",
+    "target": "adhesive_indices[index=钢对钢拉伸抗剪强度标准值]",
+    "op": ">=",
+    "limit_ref": "GB55021-2021-B.0.2",
+    "severity": "fail",
+    "message": "结构胶粘剂钢对钢拉伸抗剪强度标准值低于规范限值或未标注",
+    "advice": "按 GB 55021-2021 附录B 表B.0.2-1/-2 核对：粘贴钢材用 I 类胶 A 级 ≥15MPa、B 级 ≥12MPa；粘贴纤维复合材用 I 类胶 A 级 ≥14MPa、B 级 ≥10MPa（标准值，(23±2)℃、(50±5)%RH）。重要构件应采用 A 级胶（GB 50367-2013 第4.4.1条），且胶的性能应符合 GB 50728-2011 第4.2.2条鉴定要求。",
+    "clause_id": "GB55021-2021-B.0.2",
+    "status": "已核对"
+  },
+  {
+    "id": "R-ANCH-001",
+    "name": "植筋锚固深度核查",
+    "gate": {
+      "category": "anchoring",
+      "only_if_keywords": ["锚固深度", "锚固长度", "植筋深度", "锚栓"]
+    },
+    "check_type": "param_range",
+    "target": "anchor_depths",
+    "op": ">=",
+    "limit_ref": "GB50367-2013-15.2.3",
+    "severity": "fail",
+    "message": "植筋锚固深度低于规范计算要求或未标注",
+    "advice": "按 GB 50367-2013 第15.2.3条核对：基本锚固深度 ls=0.2·αspt·d·fy/fbd，锚固深度设计值尚应乘以 ψN（第15.2.5条）与抗震修正 ψae（第15.2.2条）。锚固深度必须经设计计算确定，不得按短期拉拔试验值或厂商推荐值采用（第15.2.6条）。",
+    "clause_id": "GB50367-2013-15.2.3",
+    "status": "已核对"
+  },
+  {
+    "id": "R-APP-001",
+    "name": "先鉴定后加固程序核查",
+    "gate": {
+      "category": "appraisal",
+      "only_if_keywords": ["加固方案", "加固设计", "加固施工"]
+    },
+    "check_type": "checklist",
+    "target": "appraisal_first",
+    "op": null,
+    "limit_ref": "GB55021-2021-1.0.3",
+    "severity": "fail",
+    "message": "加固方案缺少检测鉴定结论/依据鉴定结果的环节（先鉴定、后加固）",
+    "advice": "GB 55021-2021 第1.0.3条（全文强制）：既有建筑的鉴定与加固应遵循先检测、鉴定，后加固设计、施工与验收的原则；第2.0.6条要求按程序进行加固设计、鉴定报告不得直接用于施工。方案应包含检测鉴定结论章节并注明鉴定依据与鉴定机构。",
+    "clause_id": "GB55021-2021-1.0.3",
+    "status": "已核对"
+  },
+  {
+    "id": "R-CONST-001",
+    "name": "加固前卸载/支撑构造措施核查",
+    "gate": {
+      "category": "unloading",
+      "only_if_keywords": ["增大截面", "粘贴钢板", "碳纤维"]
+    },
+    "check_type": "param_required",
+    "target": "unloading",
+    "op": null,
+    "limit_ref": "GB55021-2021-6.1.5",
+    "severity": "fail",
+    "message": "加固方案未按规范要求提出加固前卸除或部分卸除荷载的构造措施",
+    "advice": "GB 55021-2021 第6.1.5条（全文强制）：加固前应按设计的规定卸除或部分卸除作用在结构上的荷载；GB 50367-2013 第5.1.5条：增大截面加固时应卸除或大部分卸除活荷载。方案应写明卸载方式、卸载量与临时支撑要求。",
+    "clause_id": "GB55021-2021-6.1.5",
+    "status": "已核对"
+  }
+]

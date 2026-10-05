@@ -1,0 +1,320 @@
+[
+  {
+    "clause_id": "GB55021-2021-1.0.2",
+    "standard": "GB 55021-2021",
+    "clause_no": "1.0.2",
+    "title": "既有建筑检测、鉴定和加固必须执行本规范",
+    "gist": "既有建筑的检测、鉴定和加固必须执行本规范。GB 55021-2021 为全文强制性工程建设规范（2021-09-08 发布，2022-04-01 实施，住房和城乡建设部与国家市场监督管理总局联合发布），全部条文必须严格执行。",
+    "excerpt": "既有建筑的检测、鉴定和加固必须执行本规范。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 1 页（PDF 第 11 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "第二副本 https://pyso.newswz.cn/upload/202308/202308051117332581.pdf 同文；发布信息与住建部公告 2021 年第 166 号一致"
+    },
+    "status": "已核对",
+    "tags": ["checklist", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-1.0.3",
+    "standard": "GB 55021-2021",
+    "clause_no": "1.0.3",
+    "title": "先检测、鉴定，后加固设计、施工与验收",
+    "gist": "既有建筑的鉴定与加固，应遵循先检测、鉴定，后加固设计、施工与验收的原则。这是加固方案核查中鉴定先行环节的最高位依据（全文强制）。",
+    "excerpt": "既有建筑的鉴定与加固，应遵循先检测、鉴定，后加固设计、施工与验收的原则。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 1 页（PDF 第 11 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明（第 6.1.1 条）确认先鉴定后加固工作程序"
+    },
+    "status": "已核对",
+    "tags": ["checklist", "appraisal-first", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-2.0.2",
+    "standard": "GB 55021-2021",
+    "clause_no": "2.0.2",
+    "title": "既有建筑应进行鉴定的情形",
+    "gist": "既有建筑在下列情况下应进行鉴定：①达到设计工作年限需要继续使用；②改建、扩建、移位以及建筑用途或使用环境改变前；③原设计未考虑抗震设防或抗震设防要求提高；④遭受灾害或事故后；⑤存在较严重的质量缺陷或损伤、疲劳、变形、振动影响、毗邻工程施工影响；⑥日常使用中发现安全隐患；⑦有要求需进行质量评价时。",
+    "excerpt": "既有建筑在下列情况下应进行鉴定：1 达到设计工作年限需要继续使用；2 改建、扩建、移位以及建筑用途或使用环境改变前。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 2 页（PDF 第 12 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["checklist", "appraisal-first", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-2.0.3",
+    "standard": "GB 55021-2021",
+    "clause_no": "2.0.3",
+    "title": "既有建筑应进行加固的情形",
+    "gist": "既有建筑在下列情况下应进行加固：①经安全性鉴定确认需要提高结构构件的安全性；②经抗震鉴定确认需要加强整体性、改善构件的受力状况、提高综合抗震能力。",
+    "excerpt": "既有建筑在下列情况下应进行加固：1 经安全性鉴定确认需要提高结构构件的安全性；2 经抗震鉴定确认需要加强整体性、改善构件的受力状况、提高综合抗震能力。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 2 页（PDF 第 12 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["checklist", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-2.0.4",
+    "standard": "GB 55021-2021",
+    "clause_no": "2.0.4",
+    "title": "鉴定与加固的组合要求",
+    "gist": "既有建筑的鉴定与加固应符合：①鉴定应同时进行安全性鉴定和抗震鉴定；②加固应进行承载能力加固和抗震能力加固，且以修复建筑物安全使用功能、延长其工作年限为目标；③既有建筑应满足防倒塌的整体牢固性，以及紧急状态时人员从建筑中撤离等安全性应急功能要求。",
+    "excerpt": "既有建筑的鉴定应同时进行安全性鉴定和抗震鉴定。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 2 页（PDF 第 12 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["checklist", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-2.0.6",
+    "standard": "GB 55021-2021",
+    "clause_no": "2.0.6",
+    "title": "加固设计程序（鉴定报告不得直接用于施工）",
+    "gist": "既有建筑的加固必须按规定的程序进行加固设计；不得将鉴定报告直接用于施工。",
+    "excerpt": "既有建筑的加固必须按规定的程序进行加固设计；不得将鉴定报告直接用于施工。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 2~3 页（PDF 第 12~13 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["checklist", "appraisal-first", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-2.0.7",
+    "standard": "GB 55021-2021",
+    "clause_no": "2.0.7",
+    "title": "加固施工质量检验与竣工验收",
+    "gist": "既有建筑的加固施工必须进行加固工程的施工质量检验和竣工验收；合格后方允许投入使用。",
+    "excerpt": "既有建筑的加固施工必须进行加固工程的施工质量检验和竣工验收；合格后方允许投入使用。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 3 页（PDF 第 13 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["checklist", "acceptance", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-6.1.2",
+    "standard": "GB 55021-2021",
+    "clause_no": "6.1.2",
+    "title": "加固设计应明确用途、使用环境和加固设计工作年限",
+    "gist": "加固设计应明确结构加固后的用途、使用环境和加固设计工作年限。在加固设计工作年限内，未经技术鉴定或设计许可，不得改变加固后结构的用途和使用环境。",
+    "excerpt": "在加固设计工作年限内，未经技术鉴定或设计许可，不得改变加固后结构的用途和使用环境。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 15 页（PDF 第 25 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "与 GB 50367-2013 第3.1.8条语义一致（互证）"
+    },
+    "status": "已核对",
+    "tags": ["checklist", "service-life", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-6.1.3",
+    "standard": "GB 55021-2021",
+    "clause_no": "6.1.3",
+    "title": "既有建筑主体结构加固设计计算规定",
+    "gist": "加固既有建筑主体结构时应按 6 款规定进行设计计算：①结构上的作用应经调查、检测核实；②加固设计计算时结构构件尺寸应根据鉴定报告结果综合确定，并计入实际荷载偏心、结构构件变形造成的附加内力；③原结构、构件的材料强度等级和力学性能标准值应结合原设计文件和现场检测综合取值；④加固材料性能的标准值应具有按规定置信水平确定的 95% 的强度保证率；⑤验算结构、构件承载力时应计入应变滞后的影响以及加固部分与原结构共同工作程度；⑥当加固后改变传力路线或使结构质量增大时，应对相关结构、构件及地基基础进行验算。",
+    "excerpt": "验算结构、构件承载力时，应计入应变滞后的影响，以及加固部分与原结构共同工作程度。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"material_fractile": 0.95, "strain_lag_required": true},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 15 页（PDF 第 25 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "第④款与 GB 50367-2013 第4.4.2条（置信水平 0.90、保证率 95%）一致；第⑤款为二次受力路径的最高位依据"
+    },
+    "status": "已核对",
+    "tags": ["checklist", "design-calc", "mandatory", "secondary-loading"]
+  },
+  {
+    "clause_id": "GB55021-2021-6.1.5",
+    "standard": "GB 55021-2021",
+    "clause_no": "6.1.5",
+    "title": "加固前卸载要求",
+    "gist": "加固前应按设计的规定卸除或部分卸除作用在结构上的荷载。",
+    "excerpt": "加固前应按设计的规定卸除或部分卸除作用在结构上的荷载。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 16 页（PDF 第 26 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "与 GB 50367-2013 第5.1.5条语义一致（互证）"
+    },
+    "status": "已核对",
+    "tags": ["checklist", "unloading", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-6.1.8",
+    "standard": "GB 55021-2021",
+    "clause_no": "6.1.8",
+    "title": "被加固混凝土构件的强度下限与胶粘加固基材要求",
+    "gist": "增大截面法、置换混凝土法、粘贴钢板法、粘贴碳纤维复合材法加固混凝土构件时，被加固的混凝土结构构件其现场实测混凝土强度推定值不得低于 13.0MPa；采用胶粘加固时，混凝土表面的正拉粘结强度平均值不得低于 1.5MPa，且不得用于素混凝土构件以及纵向受力钢筋一侧配筋率小于 0.2% 的构件。",
+    "excerpt": "其现场实测混凝土强度推定值不得低于13.0MPa；采用胶粘加固时，混凝土表面的正拉粘结强度平均值不得低于1.5MPa。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"concrete_strength_min_MPa": 13.0, "surface_tensile_bond_min_MPa": 1.5, "excluded": ["素混凝土构件", "纵向受力钢筋一侧配筋率小于0.2%的构件"]},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 16 页（PDF 第 26 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["checklist", "applicability", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-6.1.9",
+    "standard": "GB 55021-2021",
+    "clause_no": "6.1.9",
+    "title": "结构胶粘结加固的验算要求",
+    "gist": "采用结构胶粘结加固结构构件时，应对原结构构件进行验算；加固后正截面受弯承载力应符合现行标准的规定，并应验算其受剪承载力。",
+    "excerpt": "加固后正截面受弯承载力应符合现行标准的规定，并应验算其受剪承载力。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 16 页（PDF 第 26 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["checklist", "design-calc", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-6.2.3",
+    "standard": "GB 55021-2021",
+    "clause_no": "6.2.3",
+    "title": "植筋与锚栓的材料要求",
+    "gist": "结构加固用的植筋应采用带肋钢筋或全螺纹螺杆，不得采用光圆钢筋；锚栓应采用有锁键效应的后扩底机械锚栓，或栓体有倒锥或全螺纹的胶粘型锚栓。",
+    "excerpt": "结构加固用的植筋应采用带肋钢筋或全螺纹螺杆，不得采用光圆钢筋。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"rebar_type": "带肋钢筋或全螺纹螺杆", "banned": ["光圆钢筋"]},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐字互证）",
+      "locator": "GB 55021-2021 正文第 16 页（PDF 第 26 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "与 GB 50367-2013 表15.2.4 注 3（fbd 仅适用于带肋钢筋或全螺纹螺杆）一致"
+    },
+    "status": "已核对",
+    "tags": ["checklist", "post-rebar", "materials", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-A.0.1",
+    "standard": "GB 55021-2021",
+    "clause_no": "A.0.1",
+    "title": "碳纤维复合材安全性能指标（附录A）",
+    "gist": "结构加固用碳纤维复合材的安全性能指标应符合表 A.0.1。单向织物（布）：高强 I 级抗拉强度标准值 ≥3400MPa、受拉弹性模量 ≥2.3×10⁵MPa、伸长率 ≥1.6%、层间剪切强度 ≥45MPa；高强 II 级 ≥3000MPa、≥2.0×10⁵MPa、≥1.5%、≥35MPa；高强 III 级 ≥2400MPa、≥1.6×10⁵MPa、≥1.3%、≥30MPa。纤维复合材与基材正拉粘结强度：对混凝土和砌体材料 ≥2.5 且为基材内聚破坏，对钢基材 ≥3.5 且不得为粘附破坏；纤维体积含量：单向织物 ≥65%、条形板 ≥55%（表中指标除注明标准值外均为平均值）。",
+    "excerpt": "高强 I 级抗拉强度标准值 ≥3400MPa、受拉弹性模量 ≥2.3×10⁵MPa……纤维复合材与基材正拉粘结强度：对混凝土和砌体材料 ≥2.5，且为基材内聚破坏。",
+    "formula_ref": "表A.0.1",
+    "symbols": [],
+    "limits": {
+      "fabric_grade_I": {"tensile_std_MPa": 3400, "elastic_modulus_MPa": 230000, "elongation_pct": 1.6, "interlaminar_shear_MPa": 45},
+      "fabric_grade_II": {"tensile_std_MPa": 3000, "elastic_modulus_MPa": 200000, "elongation_pct": 1.5, "interlaminar_shear_MPa": 35},
+      "fabric_grade_III": {"tensile_std_MPa": 2400, "elastic_modulus_MPa": 160000, "elongation_pct": 1.3, "interlaminar_shear_MPa": 30},
+      "bond_tensile_concrete_masonry_MPa": 2.5,
+      "bond_tensile_steel_MPa": 3.5,
+      "note": "条形板分列值 PDF 提取不完整，待纸版/正式电子版复核后补录"
+    },
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本互证）",
+      "locator": "GB 55021-2021 附录A 第 28~29 页（PDF 第 38~39 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "框架与 GB 50367-2013 第4.3节（表4.3.4-1/表4.3.5）对应；GB 50367 表值（图片）待核对"
+    },
+    "status": "已核对",
+    "tags": ["materials", "cfrp", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-B.0.1",
+    "standard": "GB 55021-2021",
+    "clause_no": "B.0.1",
+    "title": "结构胶按最高使用温度分类与 A/B 级（附录B）",
+    "gist": "既有建筑粘结加固应使用经过改性的结构胶。结构胶按其最高使用温度分为三类：I 类适用温度范围 -45℃~60℃；II 类 -45℃~95℃；III 类 -45℃~125℃。对 I 类结构胶还应分为 A 级胶和 B 级胶：前者用于重要构件，后者用于一般构件。",
+    "excerpt": "I 类适用的温度范围为－45℃~60℃；II 类适用的温度范围为－45℃~95℃；III 类适用的温度范围为－45℃~125℃。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"class_I_temp_C": [-45, 60], "class_II_temp_C": [-45, 95], "class_III_temp_C": [-45, 125]},
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本互证）",
+      "locator": "GB 55021-2021 附录B 第 30 页（PDF 第 40 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "与 GB 50367-2013 第4.4.1条 A/B 级分级一致"
+    },
+    "status": "已核对",
+    "tags": ["adhesive", "materials", "mandatory"]
+  },
+  {
+    "clause_id": "GB55021-2021-B.0.2",
+    "standard": "GB 55021-2021",
+    "clause_no": "B.0.2",
+    "title": "以混凝土为基材的结构胶安全性能指标（附录B）",
+    "gist": "以混凝土为基材、室温固化型的结构胶，其安全性能指标应包括粘结能力指标、长期工作安全性能指标和耐介质侵蚀能力指标。粘贴钢材用结构胶（表 B.0.2-1）：钢对钢拉伸抗剪强度标准值（(23±2)℃、(50±5)%RH）I 类胶 A 级 ≥15MPa、B 级 ≥12MPa，II 类 ≥18MPa；钢对钢对接粘结抗拉强度 A 级 ≥33MPa、B 级 ≥27MPa；钢对 C45 混凝土正拉粘结强度 ≥2.5MPa 且为混凝土内聚破坏。粘贴纤维复合材用结构胶（表 B.0.2-2）：钢对钢拉伸抗剪强度标准值 I 类胶 A 级 ≥14MPa、B 级 ≥10MPa，II 类 ≥16MPa；钢对钢对接粘结抗拉强度 A 级 ≥40MPa、B 级 ≥32MPa。",
+    "excerpt": "钢对钢拉伸抗剪强度（MPa）……标准值（(23±2)℃、(50±5)%RH）：I 类胶 A 级 ≥15、B 级 ≥12（粘贴钢材用）；A 级 ≥14、B 级 ≥10（粘贴纤维复合材用）。",
+    "formula_ref": "表B.0.2-1、表B.0.2-2",
+    "symbols": [],
+    "limits": {
+      "steel_to_steel_shear_std_MPa_steel_pasting": {"grade_A": 15, "grade_B": 12, "class_II": 18},
+      "steel_to_steel_shear_std_MPa_frp_pasting": {"grade_A": 14, "grade_B": 10, "class_II": 16},
+      "steel_to_steel_tensile_MPa_steel_pasting": {"grade_A": 33, "grade_B": 27},
+      "steel_to_steel_tensile_MPa_frp_pasting": {"grade_A": 40, "grade_B": 32},
+      "steel_to_C45_concrete_tensile_bond_MPa": 2.5,
+      "note": "各表高温/低温工况平均值指标详见 PDF 原表；此登记仅录标准值行，其余行以 _private 文本为准"
+    },
+    "source": {
+      "channel": "中国安全生产协会(cnass.cn)挂载的规范PDF全文（与 newswz.cn 镜像副本逐值互证）",
+      "locator": "GB 55021-2021 附录B 第 30~31 页（PDF 第 40~41 页）",
+      "checked_date": "2026-10-05",
+      "cross_check": "与 GB 50367-2013 第4.4.3条引用的 GB 50728-2011 表4.2.2 框架一致（GB 50728 表值在在线渠道为图片，数值比对待补）"
+    },
+    "status": "已核对",
+    "tags": ["adhesive", "materials", "mandatory", "rule-limit"]
+  }
+]

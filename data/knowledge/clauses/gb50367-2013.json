@@ -1,0 +1,706 @@
+[
+  {
+    "clause_id": "GB50367-2013-10.2.1",
+    "standard": "GB 50367-2013",
+    "clause_no": "10.2.1",
+    "title": "粘贴纤维复合材加固受弯构件的基本假定",
+    "gist": "采用纤维复合材对梁、板等受弯构件加固时，除 GB 50010 正截面承载力计算基本假定外尚应符合：①纤维复合材应力-应变关系取直线式，拉应力等于拉应变与弹性模量的乘积；②考虑二次受力影响时，应按构件加固前的初始受力情况确定纤维复合材的滞后应变；③达到受弯承载能力极限状态前，加固材料与混凝土之间不致出现粘结剥离破坏。",
+    "excerpt": "当考虑二次受力影响时，应按构件加固前的初始受力情况，确定纤维复合材的滞后应变。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第10.2.1条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml（移动版同文）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341306（平截面假定论证）复核语义一致"
+    },
+    "status": "已核对",
+    "tags": ["cfrp", "flexure", "assumption"]
+  },
+  {
+    "clause_id": "GB50367-2013-10.2.2",
+    "standard": "GB 50367-2013",
+    "clause_no": "10.2.2",
+    "title": "纤维复合材加固后相对界限受压区高度",
+    "gist": "受弯构件加固后的相对界限受压区高度 ξb,f 按构件加固前控制值的 0.85 倍采用（ξb,f=0.85ξb），ξb 按现行国家标准《混凝土结构设计规范》GB 50010 的规定计算。条文说明指出该控制值用于避免因加固量过大导致超筋性质的脆性破坏。",
+    "excerpt": "受弯构件加固后的相对界限受压区高度ξb,f，应按下式计算，即按构件加固前控制值的0.85倍采用，ξb,f＝0.85ξb。",
+    "formula_ref": "式(10.2.2)",
+    "symbols": [
+      {"sym": "ξb,f", "meaning": "构件加固后的相对界限受压区高度", "unit": null, "range": null},
+      {"sym": "ξb", "meaning": "构件加固前的相对界限受压区高度（按 GB 50010 计算）", "unit": null, "range": null}
+    ],
+    "limits": {"xi_bf_factor": {"value": 0.85, "op": "=", "note": "ξb,f = 0.85 × ξb（加固前控制值）"}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第10.2.2条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341306 复核（HRB335 达界限时钢筋应变约为 1.5 倍屈服应变）"
+    },
+    "status": "已核对",
+    "tags": ["cfrp", "flexure", "limit"]
+  },
+  {
+    "clause_id": "GB50367-2013-10.2.3",
+    "standard": "GB 50367-2013",
+    "clause_no": "10.2.3",
+    "title": "矩形截面粘贴纤维复合材正截面受弯承载力计算",
+    "gist": "在矩形截面受弯构件受拉边混凝土表面粘贴纤维复合材加固时，正截面承载力按公式组确定：式(10.2.3-1)为力矩平衡公式（力矩中心取受拉区边缘，使式中不同时出现两个未知量）、式(10.2.3-2)为轴向力平衡公式、式(10.2.3-3)为按平截面假定推导的强度利用系数 ψf 计算公式、式(10.2.3-4)保证受压钢筋达到屈服强度（当 x<2a′ 时近似取 x=2a′）。ψf>1.0 时取 1.0（控制最小加固量）；εcu=0.0033；不考虑二次受力时取 εf0=0。设计流程（条文说明）：由式(10.2.3-1)算出受压区高度 x，按式(10.2.3-3)算出 ψf，代入式(10.2.3-2)求纤维复合材有效截面面积 Afe。",
+    "excerpt": "当ψf＞1.0时，取ψf＝1.0；εcu——混凝土极限压应变，取εcu＝0.0033；εf0——考虑二次受力影响时纤维复合材的滞后应变，应按本规范第10.2.8条的规定计算，若不考虑二次受力影响，取εf0＝0。",
+    "formula_ref": "式(10.2.3-1)~(10.2.3-4)；公式本体在在线渠道为图片，M2 实装前须以正式出版文本核对公式形态",
+    "symbols": [
+      {"sym": "M", "meaning": "构件加固后弯矩设计值", "unit": "kN·m", "range": [">0", null]},
+      {"sym": "x", "meaning": "混凝土受压区高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "b", "meaning": "矩形截面宽度", "unit": "mm", "range": [">0", null]},
+      {"sym": "h", "meaning": "矩形截面高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "fy0", "meaning": "原截面受拉钢筋抗拉强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "f'y0", "meaning": "原截面受压钢筋抗压强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "As0", "meaning": "原截面受拉钢筋截面面积", "unit": "mm²", "range": [">0", null]},
+      {"sym": "A's0", "meaning": "原截面受压钢筋截面面积", "unit": "mm²", "range": [">=0", null]},
+      {"sym": "a'", "meaning": "纵向受压钢筋合力点至截面近边的距离", "unit": "mm", "range": [">0", null]},
+      {"sym": "h0", "meaning": "构件加固前的截面有效高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "ff", "meaning": "纤维复合材抗拉强度设计值（按表4.3.4-1~3）", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "Afe", "meaning": "纤维复合材有效截面面积", "unit": "mm²", "range": [">0", null]},
+      {"sym": "ψf", "meaning": "纤维复合材强度利用系数", "unit": null, "range": ["<=1.0（>1.0 时取 1.0）", null]},
+      {"sym": "εcu", "meaning": "混凝土极限压应变", "unit": null, "range": ["=0.0033", null]},
+      {"sym": "εf", "meaning": "纤维复合材拉应变设计值（按表4.3.5）", "unit": null, "range": [">0", null]},
+      {"sym": "εf0", "meaning": "考虑二次受力时纤维复合材的滞后应变（按第10.2.8条；不考虑二次受力取 0）", "unit": null, "range": [">=0", null]}
+    ],
+    "limits": {"psi_f_cap": 1.0, "epsilon_cu": 0.0033},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第10.2.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml（移动版符号定义同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341306 确认公式组结构（力矩中心/轴力平衡/ψf 推导/x≥2a'）与设计流程；公式本体图片未核对，M2 前以正式出版文本补核"
+    },
+    "status": "已核对",
+    "tags": ["cfrp", "flexure", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-10.2.4",
+    "standard": "GB 50367-2013",
+    "clause_no": "10.2.4",
+    "title": "实际应粘贴的纤维复合材截面面积与厚度折减系数",
+    "gist": "实际应粘贴的纤维复合材截面面积 Af=Afe/km（式10.2.4-1）。厚度折减系数 km：采用预成型板时 km=1.0；采用多层粘贴的纤维织物时按式(10.2.4-2)计算（与 Ef、nf 层数、tf 单层厚度有关；公式本体为图片）。条文说明指出 km 系参照 ACI 440 委员会指南制定，考虑多层粘贴的不利影响。",
+    "excerpt": "Af＝Afe/km（10.2.4-1）……当采用预成型板时，km＝1.0。",
+    "formula_ref": "式(10.2.4-1)、(10.2.4-2)",
+    "symbols": [
+      {"sym": "Af", "meaning": "实际应粘贴的纤维复合材截面面积", "unit": "mm²", "range": [">0", null]},
+      {"sym": "Afe", "meaning": "纤维复合材有效截面面积", "unit": "mm²", "range": [">0", null]},
+      {"sym": "km", "meaning": "纤维复合材厚度折减系数", "unit": null, "range": ["(0,1]", null]},
+      {"sym": "Ef", "meaning": "纤维复合材弹性模量设计值（按表4.3.5）", "unit": "MPa", "range": [">0", null]},
+      {"sym": "nf", "meaning": "纤维复合材（单向织物）层数", "unit": null, "range": [">=1", null]},
+      {"sym": "tf", "meaning": "纤维复合材（单向织物）单层厚度", "unit": "mm", "range": [">0", null]}
+    ],
+    "limits": {"km_preformed_plate": {"value": 1.0, "op": "="}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第10.2.4条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml（移动版同文）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341306（km 来源：ACI 440）"
+    },
+    "status": "已核对",
+    "tags": ["cfrp", "flexure", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-10.2.8",
+    "standard": "GB 50367-2013",
+    "clause_no": "10.2.8",
+    "title": "考虑二次受力时纤维复合材滞后应变计算",
+    "gist": "考虑二次受力影响时，纤维复合材滞后应变 εf0 按式(10.2.8)计算（公式本体为图片），式中 M0k 为加固前验算截面上原作用的弯矩标准值，αf 为综合考虑裂缝截面内力臂变化、钢筋拉应变不均匀及钢筋排列影响的计算系数，按表10.2.8 采用；当原构件钢筋应力 σs0≤150MPa 且 ρte≤0.05 时，表中 αf 值可乘以调整系数 0.9。",
+    "excerpt": "当原构件钢筋应力σs0≤150MPa，且ρte≤0.05时，表中αf值可乘以调整系数0.9。",
+    "formula_ref": "式(10.2.8)；表10.2.8（表值为图片，数值待以正式出版文本核对）",
+    "symbols": [
+      {"sym": "M0k", "meaning": "加固前受弯构件验算截面上原作用的弯矩标准值", "unit": "kN·m", "range": [">=0", null]},
+      {"sym": "αf", "meaning": "计算系数（按表10.2.8 查表，ρte 与钢筋排数相关）", "unit": null, "range": null},
+      {"sym": "ρte", "meaning": "混凝土有效受拉截面的纵向受拉钢筋配筋率（ρte=As/Ate）", "unit": null, "range": [">0", null]}
+    ],
+    "limits": {"alpha_f_adjust_factor": {"value": 0.9, "condition": "σs0≤150MPa 且 ρte≤0.05"}, "table_10_2_8": {"value": null, "note": "表10.2.8 数值待核对（在线渠道为图片）"}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第10.2.8条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml（移动版同文）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341306（αf 取值方法说明）"
+    },
+    "status": "已核对",
+    "tags": ["cfrp", "flexure", "secondary-loading", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-10.2.10",
+    "standard": "GB 50367-2013",
+    "clause_no": "10.2.10",
+    "title": "纤维复合材加固后受弯承载力提高幅度限制",
+    "gist": "钢筋混凝土结构构件加固后，其正截面受弯承载力的提高幅度不应超过 40%，并应验算受剪承载力，避免因受弯承载力提高导致构件受剪破坏先于受弯破坏。条文说明：目的是控制加固后构件的裂缝宽度和变形，强调强剪弱弯设计原则。",
+    "excerpt": "其正截面受弯承载力的提高幅度，不应超过40％，并应验算其受剪承载力。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"capacity_increase_max": {"op": "<=", "value": 0.40, "note": "加固后与加固前正截面受弯承载力之比-1 ≤ 40%"}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第10.2.10条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341306（目的说明）"
+    },
+    "status": "已核对",
+    "tags": ["cfrp", "flexure", "limit"]
+  },
+  {
+    "clause_id": "GB50367-2013-10.2.11",
+    "standard": "GB 50367-2013",
+    "clause_no": "10.2.11",
+    "title": "纤维复合材加固量层数限制",
+    "gist": "纤维复合材的加固量：对预成型板不宜超过 2 层；对湿法铺层的织物不宜超过 4 层；超过 4 层时宜改用预成型板，并采取可靠的加强锚固措施。",
+    "excerpt": "对预成型板，不宜超过2层，对湿法铺层的织物，不宜超过4层。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"layers_preformed_max": 2, "layers_wet_layup_max": 4},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第10.2.11条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["cfrp", "flexure", "construction"]
+  },
+  {
+    "clause_id": "GB50367-2013-9.2.1",
+    "standard": "GB 50367-2013",
+    "clause_no": "9.2.1",
+    "title": "粘贴钢板加固受弯构件的基本假定",
+    "gist": "采用粘贴钢板对梁、板等受弯构件加固时，除 GB 50010 正截面承载力基本假定外尚应符合：①构件达到受弯承载能力极限状态时，外贴钢板的拉应变 εsp 按截面应变保持平面的假设确定；②钢板应力 σsp 取等于拉应变 εsp 与弹性模量 Esp 的乘积；③考虑二次受力影响时，应按构件加固前的初始受力情况确定粘贴钢板的滞后应变；④达到受弯承载能力极限状态前，外贴钢板与混凝土之间不致出现粘结剥离破坏。",
+    "excerpt": "当考虑二次受力影响时，应按构件加固前的初始受力情况，确定粘贴钢板的滞后应变。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第9.2.1条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341299（平截面假定试验研究）复核语义一致"
+    },
+    "status": "已核对",
+    "tags": ["steel-plate", "flexure", "assumption"]
+  },
+  {
+    "clause_id": "GB50367-2013-9.2.2",
+    "standard": "GB 50367-2013",
+    "clause_no": "9.2.2",
+    "title": "粘贴钢板加固后相对界限受压区高度",
+    "gist": "受弯构件加固后的相对界限受压区高度 ξb,sp 按加固前控制值的 0.85 倍采用（ξb,sp=0.85ξb），ξb 按现行国家标准《混凝土结构设计规范》GB 50010 的规定计算。",
+    "excerpt": "受弯构件加固后的相对界限受压区高度ξb,sp应按加固前控制值的0.85倍采用。",
+    "formula_ref": "式(9.2.2)",
+    "symbols": [
+      {"sym": "ξb,sp", "meaning": "粘贴钢板加固后的相对界限受压区高度", "unit": null, "range": null},
+      {"sym": "ξb", "meaning": "构件加固前的相对界限受压区高度（按 GB 50010 计算）", "unit": null, "range": null}
+    ],
+    "limits": {"xi_bsp_factor": {"value": 0.85, "op": "="}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第9.2.2条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341299"
+    },
+    "status": "已核对",
+    "tags": ["steel-plate", "flexure", "limit"]
+  },
+  {
+    "clause_id": "GB50367-2013-9.2.3",
+    "standard": "GB 50367-2013",
+    "clause_no": "9.2.3",
+    "title": "矩形截面粘贴钢板正截面受弯承载力计算",
+    "gist": "在矩形截面受弯构件的受拉面和受压面粘贴钢板加固时，正截面承载力按公式组确定：式(9.2.3-1)为力矩平衡公式（力矩中心取受拉区边缘）、式(9.2.3-2)为轴向力平衡公式、式(9.2.3-3)为按平截面假定推导的强度折减系数 ψsp 计算公式、式(9.2.3-4)保证受压钢筋达到屈服（x<2a′ 时近似取 x=2a′）。ψsp>1.0 时取 1.0（控制最小加固量）；εcu=0.0033；不考虑二次受力时取 εsp,0=0。计算流程（条文说明及9.2.4条）：受压面无钢板（A'sp=0）时，由式(9.2.3-1)求 x，按式(9.2.3-3)求 ψsp，代入式(9.2.3-2)求受拉面应粘贴的钢板量 Asp。",
+    "excerpt": "ψsp——考虑二次受力影响时，受拉钢板抗拉强度有可能达不到设计值而引用的折减系数，当ψsp＞1.0时，取ψsp＝1.0；εcu——混凝土极限压应变，取εcu＝0.0033。",
+    "formula_ref": "式(9.2.3-1)~(9.2.3-4)；公式本体在在线渠道为图片，M2 实装前须以正式出版文本核对公式形态",
+    "symbols": [
+      {"sym": "M", "meaning": "构件加固后弯矩设计值", "unit": "kN·m", "range": [">0", null]},
+      {"sym": "x", "meaning": "混凝土受压区高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "b", "meaning": "矩形截面宽度", "unit": "mm", "range": [">0", null]},
+      {"sym": "h", "meaning": "矩形截面高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "fsp", "meaning": "加固钢板抗拉强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "f'sp", "meaning": "加固钢板抗压强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "Asp", "meaning": "受拉钢板截面面积", "unit": "mm²", "range": [">=0", null]},
+      {"sym": "A'sp", "meaning": "受压钢板截面面积", "unit": "mm²", "range": [">=0", null]},
+      {"sym": "As0", "meaning": "原构件受拉钢筋截面面积", "unit": "mm²", "range": [">0", null]},
+      {"sym": "A's0", "meaning": "原构件受压钢筋截面面积", "unit": "mm²", "range": [">=0", null]},
+      {"sym": "a'", "meaning": "纵向受压钢筋合力点至截面近边的距离", "unit": "mm", "range": [">0", null]},
+      {"sym": "h0", "meaning": "构件加固前的截面有效高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "ψsp", "meaning": "二次受力时受拉钢板强度折减系数（>1.0 取 1.0）", "unit": null, "range": ["<=1.0", null]},
+      {"sym": "εcu", "meaning": "混凝土极限压应变", "unit": null, "range": ["=0.0033", null]},
+      {"sym": "εsp,0", "meaning": "考虑二次受力时受拉钢板的滞后应变（按第9.2.9条；不考虑取 0）", "unit": null, "range": [">=0", null]}
+    ],
+    "limits": {"psi_sp_cap": 1.0, "epsilon_cu": 0.0033},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第9.2.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml（移动版符号定义同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341299 确认公式组结构（力矩中心取受拉区边缘/轴力平衡/ψsp 平截面推导/x≥2a'）与设计流程；公式本体图片未核对"
+    },
+    "status": "已核对",
+    "tags": ["steel-plate", "flexure", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-9.2.5",
+    "standard": "GB 50367-2013",
+    "clause_no": "9.2.5",
+    "title": "受拉钢板粘贴延伸长度",
+    "gist": "受弯构件正弯矩区正截面加固时，受拉面沿轴向粘贴钢板的截断位置应从强度充分利用截面算起，取不小于粘贴延伸长度 lsp=fsp·tsp/fbd＋200（式9.2.5）。fbd 为钢板与混凝土之间的粘结强度设计值，取 fbd=0.5ft（ft 为 GB 50010 混凝土抗拉强度设计值）；fbd 计算值低于 0.5MPa 时取 0.5MPa，高于 0.8MPa 时取 0.8MPa。",
+    "excerpt": "lsp＝ƒsp·tsp/ƒbd＋200……取ƒbd＝0.5ƒt……当ƒbd计算值低于0.5MPa时，取ƒbd为0.5MPa，当ƒbd计算值高于0.8MPa时，取ƒbd为0.8MPa。",
+    "formula_ref": "式(9.2.5)",
+    "symbols": [
+      {"sym": "lsp", "meaning": "受拉钢板粘贴延伸长度", "unit": "mm", "range": [">0", null]},
+      {"sym": "tsp", "meaning": "粘贴的钢板总厚度", "unit": "mm", "range": [">0", null]},
+      {"sym": "fsp", "meaning": "加固钢板抗拉强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "fbd", "meaning": "钢板与混凝土之间的粘结强度设计值（=0.5ft，限 [0.5, 0.8] MPa）", "unit": "N/mm²", "range": ["[0.5,0.8]", null]}
+    ],
+    "limits": {"fbd_factor_ft": 0.5, "fbd_min_MPa": 0.5, "fbd_max_MPa": 0.8, "lsp_extra_mm": 200},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第9.2.5条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341299（延伸长度确定方法与纤维复合材统一；粘结强度取值修订依据）"
+    },
+    "status": "已核对",
+    "tags": ["steel-plate", "flexure", "anchorage"]
+  },
+  {
+    "clause_id": "GB50367-2013-9.2.6",
+    "standard": "GB 50367-2013",
+    "clause_no": "9.2.6",
+    "title": "梁底粘钢端部U形箍板锚固与钢对钢粘结强度设计值",
+    "gist": "框架梁和独立梁梁底正截面粘钢加固时，受拉钢板应延伸至支座边或柱边且延伸长度满足第9.2.5条；受实际条件限制无法满足时，可在钢板端部锚固区加贴U形箍板，其数量按式(9.2.6-1)/(9.2.6-2)确定（判别条件 fsv·b1≤2fbd·hsp）。fsv 为钢对钢粘结强度设计值：对 A 级胶取 3.0MPa，对 B 级胶取 2.5MPa。",
+    "excerpt": "ƒsv——钢对钢粘结强度设计值(N/mm2)，对A级胶取为3.0MPa，对B级胶取为2.5MPa。",
+    "formula_ref": "式(9.2.6-1)、(9.2.6-2)",
+    "symbols": [
+      {"sym": "fsv", "meaning": "钢对钢粘结强度设计值（A级胶 3.0 / B级胶 2.5 MPa）", "unit": "N/mm²", "range": null},
+      {"sym": "n", "meaning": "加固钢板每端加贴U形箍板的数量", "unit": null, "range": [">=1", null]},
+      {"sym": "b1", "meaning": "加固钢板的宽度", "unit": "mm", "range": [">0", null]},
+      {"sym": "bsp", "meaning": "U形箍板的宽度", "unit": "mm", "range": [">0", null]},
+      {"sym": "hsp", "meaning": "U形箍板单肢与梁侧面混凝土粘结的竖向高度", "unit": "mm", "range": [">0", null]}
+    ],
+    "limits": {"fsv_grade_A_MPa": 3.0, "fsv_grade_B_MPa": 2.5},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第9.2.6条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341299（两种锚固受剪情况）"
+    },
+    "status": "已核对",
+    "tags": ["steel-plate", "flexure", "anchorage", "adhesive"]
+  },
+  {
+    "clause_id": "GB50367-2013-9.2.9",
+    "standard": "GB 50367-2013",
+    "clause_no": "9.2.9",
+    "title": "考虑二次受力时粘贴钢板滞后应变计算",
+    "gist": "考虑二次受力影响时，加固钢板的滞后应变 εsp,0 按式(9.2.9)计算（公式本体为图片），式中 M0k 为加固前验算截面上作用的弯矩标准值，αsp 为综合考虑裂缝截面内力臂变化、钢筋拉应变不均匀及钢筋排列影响的计算系数，按表9.2.9 采用；当原构件钢筋应力 σs0≤150MPa 且 ρte≤0.05 时，表中 αsp 值可乘以调整系数 0.9。",
+    "excerpt": "当原构件钢筋应力σs0≤150MPa，且ρte≤0.05时，表中αsp值可乘以调整系数0.9。",
+    "formula_ref": "式(9.2.9)；表9.2.9（表值为图片，数值待以正式出版文本核对）",
+    "symbols": [
+      {"sym": "M0k", "meaning": "加固前受弯构件验算截面上作用的弯矩标准值", "unit": "kN·m", "range": [">=0", null]},
+      {"sym": "αsp", "meaning": "计算系数（按表9.2.9 查表）", "unit": null, "range": null},
+      {"sym": "ρte", "meaning": "原有混凝土有效受拉截面的纵向受拉钢筋配筋率（ρte=As/Ate）", "unit": null, "range": [">0", null]}
+    ],
+    "limits": {"alpha_sp_adjust_factor": {"value": 0.9, "condition": "σs0≤150MPa 且 ρte≤0.05"}, "table_9_2_9": {"value": null, "note": "表9.2.9 数值待核对（在线渠道为图片）"}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第9.2.9条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341299（αsp 取值按配筋率和钢筋排数查表）"
+    },
+    "status": "已核对",
+    "tags": ["steel-plate", "flexure", "secondary-loading", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-9.2.11",
+    "standard": "GB 50367-2013",
+    "clause_no": "9.2.11",
+    "title": "粘贴钢板加固后受弯承载力提高幅度限制",
+    "gist": "钢筋混凝土结构构件加固后，其正截面受弯承载力的提高幅度不应超过 40%，并应验算受剪承载力，避免受弯承载力提高后导致构件受剪破坏先于受弯破坏。",
+    "excerpt": "其正截面受弯承载力的提高幅度，不应超过40％。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"capacity_increase_max": {"op": "<=", "value": 0.40}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第9.2.11条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341299（控制裂缝宽度与变形、强剪弱弯）"
+    },
+    "status": "已核对",
+    "tags": ["steel-plate", "flexure", "limit"]
+  },
+  {
+    "clause_id": "GB50367-2013-9.2.12",
+    "standard": "GB 50367-2013",
+    "clause_no": "9.2.12",
+    "title": "粘贴钢板加固量限制",
+    "gist": "粘贴钢板的加固量：对受拉区和受压区分别不应超过 3 层和 2 层，且钢板总厚度不应大于 10mm。",
+    "excerpt": "对受拉区和受压区，分别不应超过3层和2层，且钢板总厚度不应大于10mm。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"layers_tension_max": 3, "layers_compression_max": 2, "total_thickness_max_mm": 10},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第9.2.12条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["steel-plate", "flexure", "construction"]
+  },
+  {
+    "clause_id": "GB50367-2013-5.2.3",
+    "standard": "GB 50367-2013",
+    "clause_no": "5.2.3",
+    "title": "受拉区增大截面加固矩形截面受弯承载力计算",
+    "gist": "在受拉区加固矩形截面受弯构件时，正截面受弯承载力按式(5.2.3-1)、(5.2.3-2)确定（公式本体为图片）。新增钢筋强度利用系数 αs 取 0.9；α1 为受压区混凝土矩形应力图的应力值与混凝土轴心抗压强度设计值的比值：混凝土强度等级不超过 C50 时取 1.0，C80 时取 0.94，其间线性内插；fc0 为原构件混凝土轴心抗压强度设计值；ξb 按第5.2.4条计算。条文说明：不论一次/二次受力，均可近似按一次受力计算，但对新增钢筋强度统一折减 αs=0.9。",
+    "excerpt": "αs——新增钢筋强度利用系数，取αs＝0.9……当混凝土强度等级不超过C50时，取α1＝1.0，当混凝土强度等级为C80时，取α1＝0.94，其间按线性内插法确定。",
+    "formula_ref": "式(5.2.3-1)、(5.2.3-2)；公式本体在在线渠道为图片，M2 实装前须以正式出版文本核对公式形态",
+    "symbols": [
+      {"sym": "M", "meaning": "构件加固后弯矩设计值", "unit": "kN·m", "range": [">0", null]},
+      {"sym": "αs", "meaning": "新增钢筋强度利用系数", "unit": null, "range": ["=0.9", null]},
+      {"sym": "fy", "meaning": "新增钢筋抗拉强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "As", "meaning": "新增受拉钢筋截面面积", "unit": "mm²", "range": [">=0", null]},
+      {"sym": "h0", "meaning": "构件加固后截面有效高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "h01", "meaning": "构件加固前截面有效高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "x", "meaning": "混凝土受压区高度", "unit": "mm", "range": [">0", null]},
+      {"sym": "fy0", "meaning": "原钢筋抗拉强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "f'y0", "meaning": "原钢筋抗压强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "As0", "meaning": "原受拉钢筋截面面积", "unit": "mm²", "range": [">0", null]},
+      {"sym": "A's0", "meaning": "原受压钢筋截面面积", "unit": "mm²", "range": [">=0", null]},
+      {"sym": "a'", "meaning": "纵向受压钢筋合力点至混凝土受压区边缘的距离", "unit": "mm", "range": [">0", null]},
+      {"sym": "α1", "meaning": "受压区混凝土矩形应力图应力值与轴心抗压强度设计值的比值（≤C50 取 1.0，C80 取 0.94，线性内插）", "unit": null, "range": null},
+      {"sym": "fc0", "meaning": "原构件混凝土轴心抗压强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "b", "meaning": "矩形截面宽度", "unit": "mm", "range": [">0", null]},
+      {"sym": "ξb", "meaning": "构件增大截面加固后的相对界限受压区高度（按第5.2.4条）", "unit": null, "range": null}
+    ],
+    "limits": {"alpha_s": 0.9, "alpha1_le_C50": 1.0, "alpha1_C80": 0.94},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第5.2.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341178.shtml（移动版符号定义同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341277（αs=0.9 的试验依据与一次受力近似说明）"
+    },
+    "status": "已核对",
+    "tags": ["section-enlarge", "flexure", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-5.2.4",
+    "standard": "GB 50367-2013",
+    "clause_no": "5.2.4",
+    "title": "增大截面加固后相对界限受压区高度",
+    "gist": "受弯构件增大截面加固后的相对界限受压区高度 ξb 按式(5.2.4-1)、(5.2.4-2)确定（公式本体为图片）。β1 为计算系数：混凝土强度等级不超过 C50 时取 0.80，C80 时取 0.74，其间线性内插；εcu=0.0033；εs1 为新增钢筋位置处按平截面假设确定的初始应变值（当新增主筋与原主筋采用短钢筋焊接连接时可近似取 εs1=εs0·h01/h0）；εs0 为加固前在初始弯矩 M0k 作用下原受拉钢筋的应变值。",
+    "excerpt": "β1——计算系数，当混凝土强度等级不超过C50时，β1值取为0.80，当混凝土强度等级为C80时，β1值取为0.74，其间按线性内插法确定……εcu——混凝土极限压应变，取εcu＝0.0033。",
+    "formula_ref": "式(5.2.4-1)、(5.2.4-2)；公式本体在在线渠道为图片，M2 实装前须以正式出版文本核对公式形态",
+    "symbols": [
+      {"sym": "ξb", "meaning": "增大截面加固后的相对界限受压区高度", "unit": null, "range": null},
+      {"sym": "β1", "meaning": "计算系数（≤C50 取 0.80，C80 取 0.74，线性内插）", "unit": null, "range": null},
+      {"sym": "εcu", "meaning": "混凝土极限压应变", "unit": null, "range": ["=0.0033", null]},
+      {"sym": "εs1", "meaning": "新增钢筋位置处按平截面假设确定的初始应变值", "unit": null, "range": [">=0", null]},
+      {"sym": "εs0", "meaning": "加固前在初始弯矩 M0k 作用下原受拉钢筋的应变值", "unit": null, "range": [">=0", null]},
+      {"sym": "M0k", "meaning": "加固前受弯构件验算截面上原作用的弯矩标准值", "unit": "kN·m", "range": [">=0", null]}
+    ],
+    "limits": {"beta1_le_C50": 0.8, "beta1_C80": 0.74, "epsilon_cu": 0.0033},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第5.2.4条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341178.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341277（ξb 式来源：内力臂系数 0.85 推导）"
+    },
+    "status": "已核对",
+    "tags": ["section-enlarge", "flexure", "formula", "secondary-loading"]
+  },
+  {
+    "clause_id": "GB50367-2013-5.2.5",
+    "standard": "GB 50367-2013",
+    "clause_no": "5.2.5",
+    "title": "原受拉钢筋应力未达屈服时的复核（σs0 替代 fy0）",
+    "gist": "当按式(5.2.3-1)、(5.2.3-2)算得的加固后混凝土受压区高度 x 与加固前原截面有效高度 h01 之比 x/h01 大于原截面相对界限受压区高度 ξb0 时，应考虑原纵向受拉钢筋应力 σs0 尚达不到 fy0 的情况，此时应将两式中的 fy0 改为 σs0 并重新验算（σs0 按式(5.2.5)确定，公式本体为图片）。",
+    "excerpt": "应考虑原纵向受拉钢筋应力σs0尚达不到ƒy0的情况，此时，应将上述两公式中的ƒy0改为σs0，并重新进行验算。",
+    "formula_ref": "式(5.2.5)；公式本体在在线渠道为图片",
+    "symbols": [
+      {"sym": "σs0", "meaning": "原纵向受拉钢筋应力（未达 fy0 时）", "unit": "N/mm²", "range": [">=0", null]},
+      {"sym": "ξb0", "meaning": "原截面相对界限受压区高度", "unit": null, "range": null}
+    ],
+    "limits": {"recalc_condition": "x/h01 > ξb0 时以 σs0 代 fy0 重新验算"},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第5.2.5条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341178.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["section-enlarge", "flexure", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-15.2.1",
+    "standard": "GB 50367-2013",
+    "clause_no": "15.2.1",
+    "title": "承重构件植筋锚固计算基本规定",
+    "gist": "承重构件的植筋锚固计算应符合：①植筋设计应在计算和构造上防止混凝土发生劈裂破坏；②植筋仅承受轴向力，且仅允许按充分利用钢材强度的计算模式进行设计；③植筋胶粘剂的粘结强度设计值应按本章的规定值采用；④抗震设防区的承重结构，其植筋承载力仍按本节规定计算，但其锚固深度设计值应乘以考虑位移延性要求的修正系数。",
+    "excerpt": "植筋仅承受轴向力，且仅允许按充分利用钢材强度的计算模式进行设计。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第15.2.1条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341333（抗震修正系数依据）"
+    },
+    "status": "已核对",
+    "tags": ["post-rebar", "anchorage"]
+  },
+  {
+    "clause_id": "GB50367-2013-15.2.2",
+    "standard": "GB 50367-2013",
+    "clause_no": "15.2.2",
+    "title": "单根植筋锚固承载力与锚固深度设计值",
+    "gist": "单根植筋锚固的承载力设计值应符合公式组规定（式15.2.2-1/-2，公式本体为图片）：植筋钢材轴向受拉承载力设计值 Nbt=fy·As；锚固深度设计值 ld 由基本锚固深度 ls（按第15.2.3条）乘以 ψN（按第15.2.5条）和 ψae 确定。ψae 为考虑植筋位移延性要求的修正系数：当混凝土强度等级不高于 C30 时，对 6 度区及 7 度区一、二类场地取 ψae=1.10，对 7 度区三、四类场地及 8 度区取 ψae=1.25；当混凝土强度等级高于 C30 时取 ψae=1.00。",
+    "excerpt": "ψae——考虑植筋位移延性要求的修正系数，当混凝土强度等级不高于C30时，对6度区及7度区一、二类场地，取ψae＝1.10，对7度区三、四类场地及8度区，取ψae＝1.25；当混凝土强度高于C30时，取ψae＝1.00。",
+    "formula_ref": "式(15.2.2-1)、(15.2.2-2)；公式本体在在线渠道为图片，M2 实装前须以正式出版文本核对公式形态",
+    "symbols": [
+      {"sym": "Nbt", "meaning": "植筋钢材轴向受拉承载力设计值", "unit": "kN", "range": [">0", null]},
+      {"sym": "fy", "meaning": "植筋用钢筋抗拉强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "As", "meaning": "钢筋截面面积", "unit": "mm²", "range": [">0", null]},
+      {"sym": "ld", "meaning": "植筋锚固深度设计值", "unit": "mm", "range": [">0", null]},
+      {"sym": "ls", "meaning": "植筋的基本锚固深度（按第15.2.3条）", "unit": "mm", "range": [">0", null]},
+      {"sym": "ψN", "meaning": "考虑各种因素需加大锚固深度的修正系数（按第15.2.5条）", "unit": null, "range": [">=1.0", null]},
+      {"sym": "ψae", "meaning": "考虑植筋位移延性要求的修正系数", "unit": null, "range": ["[1.00,1.25]", null]}
+    ],
+    "limits": {"psi_ae_le_C30_6_7deg_12site": 1.10, "psi_ae_le_C30_7deg34_8deg": 1.25, "psi_ae_gt_C30": 1.00},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第15.2.2条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml（移动版同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341333（抗震延性修正系数的试验依据）"
+    },
+    "status": "已核对",
+    "tags": ["post-rebar", "anchorage", "seismic"]
+  },
+  {
+    "clause_id": "GB50367-2013-15.2.3",
+    "standard": "GB 50367-2013",
+    "clause_no": "15.2.3",
+    "title": "植筋基本锚固深度计算",
+    "gist": "植筋的基本锚固深度按下式确定：ls=0.2·αspt·d·fy/fbd（式15.2.3）。αspt 为防止混凝土劈裂引用的计算系数，按表15.2.3 确定（植筋直径介于表列数值之间时按线性内插法确定）；d 为植筋公称直径；fbd 为植筋用胶粘剂的粘结抗剪强度设计值，按表15.2.4 的规定值采用。",
+    "excerpt": "ls＝0.2αspt·d·ƒy/ƒbd（15.2.3）……αspt——为防止混凝土劈裂引用的计算系数，按本规范表15.2.3的确定。",
+    "formula_ref": "式(15.2.3)（公式文本已核对）；表15.2.3（表值为图片，数值待以正式出版文本核对）",
+    "symbols": [
+      {"sym": "ls", "meaning": "植筋的基本锚固深度", "unit": "mm", "range": [">0", null]},
+      {"sym": "αspt", "meaning": "考虑混凝土劈裂影响的计算系数（按表15.2.3，内插）", "unit": null, "range": [">0", null]},
+      {"sym": "d", "meaning": "植筋公称直径", "unit": "mm", "range": [">0", null]},
+      {"sym": "fy", "meaning": "植筋用钢筋抗拉强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "fbd", "meaning": "植筋用胶粘剂粘结抗剪强度设计值（按表15.2.4）", "unit": "N/mm²", "range": [">0", null]}
+    ],
+    "limits": {"formula_coefficient": 0.2, "table_15_2_3": {"value": null, "note": "αspt 表值待核对（在线渠道为图片）"}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第15.2.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml（移动版公式文本复核：ls＝0.2αspt·d·ƒy/ƒbd）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341333（αspt 参照 ACI 318-02 制定并按我国工程经验调整为查表法）"
+    },
+    "status": "已核对",
+    "tags": ["post-rebar", "anchorage", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-15.2.4",
+    "standard": "GB 50367-2013",
+    "clause_no": "15.2.4",
+    "title": "植筋用结构胶粘剂粘结抗剪强度设计值（强制性条文）",
+    "gist": "植筋用结构胶粘剂的粘结抗剪强度设计值 fbd 应按表15.2.4 的规定值采用（表值为图片，数值待以正式出版文本核对）；当基材混凝土强度等级大于 C30 且采用快固型胶粘剂时，fbd 应乘以调整系数 0.8。表注：①使用表中 fbd 值时构件混凝土保护层厚度不应低于 GB 50010 规定值；②s1 为植筋间距、s2 为植筋边距；③fbd 值仅适用于带肋钢筋或全螺纹螺杆的粘结锚固。条文说明确认本条为强制性条文。",
+    "excerpt": "当基材混凝土强度等级大于C30，且采用快固型胶粘剂时，其粘结抗剪强度设计值ƒbd应乘以调整系数0.8。",
+    "formula_ref": "表15.2.4（表值为图片，数值待以正式出版文本核对）",
+    "symbols": [
+      {"sym": "fbd", "meaning": "植筋用胶粘剂粘结抗剪强度设计值", "unit": "N/mm²", "range": [">0", null]},
+      {"sym": "s1", "meaning": "植筋间距", "unit": "mm", "range": [">0", null]},
+      {"sym": "s2", "meaning": "植筋边距", "unit": "mm", "range": [">0", null]}
+    ],
+    "limits": {"fast_cure_above_C30_factor": 0.8, "table_15_2_4": {"value": null, "note": "fbd 表值待核对（在线渠道为图片）"}},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第15.2.4条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml（移动版同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341333（确认强制性条文属性；表值参照 ICBO 安全系数与 EOTA 取值曲线）"
+    },
+    "status": "已核对",
+    "tags": ["post-rebar", "anchorage", "adhesive", "mandatory"]
+  },
+  {
+    "clause_id": "GB50367-2013-15.2.5",
+    "standard": "GB 50367-2013",
+    "clause_no": "15.2.5",
+    "title": "植筋锚固深度修正系数 ψN",
+    "gist": "考虑各种因素对植筋受拉承载力影响而需加大锚固深度的修正系数 ψN=ψbr·ψw·ψT（式15.2.5，公式文本已核对）。ψbr 为考虑结构构件受力状态对承载力影响的系数：悬挑结构构件取 1.50，非悬挑的重要构件接长取 1.15，其他构件取 1.00。ψw 为混凝土孔壁潮湿影响系数：对耐潮湿型胶粘剂按产品说明书规定值采用，但不得低于 1.1。ψT 为使用环境温度 T 影响系数：T≤60℃ 时取 1.0；60℃<T≤80℃ 时应采用耐中温胶粘剂并按产品说明书规定的 ψT 值采用；T>80℃ 时应采用耐高温胶粘剂并采取有效隔热措施。",
+    "excerpt": "ψN＝ψbr·ψw·ψT（15.2.5）……当为悬挑结构构件时，ψbr＝1.50，当为非悬挑的重要构件接长时，ψbr＝1.15，当为其他构件时，ψbr＝1.00……但不得低于1.1。",
+    "formula_ref": "式(15.2.5)（公式文本已核对）",
+    "symbols": [
+      {"sym": "ψN", "meaning": "锚固深度加大修正系数", "unit": null, "range": [">=1.0", null]},
+      {"sym": "ψbr", "meaning": "结构构件受力状态影响系数", "unit": null, "range": ["[1.00,1.50]", null]},
+      {"sym": "ψw", "meaning": "混凝土孔壁潮湿影响系数", "unit": null, "range": [">=1.1", null]},
+      {"sym": "ψT", "meaning": "使用环境温度影响系数", "unit": null, "range": [">=1.0", null]}
+    ],
+    "limits": {"psi_br_cantilever": 1.5, "psi_br_important_member": 1.15, "psi_br_other": 1.0, "psi_w_min": 1.1, "psi_T_le_60C": 1.0},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第15.2.5条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml（移动版公式文本复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341333（修正系数参照欧洲指南与我国试验研究制定）"
+    },
+    "status": "已核对",
+    "tags": ["post-rebar", "anchorage", "formula"]
+  },
+  {
+    "clause_id": "GB50367-2013-15.2.6",
+    "standard": "GB 50367-2013",
+    "clause_no": "15.2.6",
+    "title": "植筋锚固深度必须经设计计算确定",
+    "gist": "承重结构植筋的锚固深度应经设计计算确定，不得按短期拉拔试验值或厂商技术手册的推荐值采用。条文说明警示：多根群植试验表明锚固深度仅 10d 时破坏为混凝土劈裂脆性破坏，钢筋不能屈服。",
+    "excerpt": "承重结构植筋的锚固深度应经设计计算确定，不得按短期拉拔试验值或厂商技术手册的推荐值采用。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第15.2.6条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341333（10d/12d 误导警示）"
+    },
+    "status": "已核对",
+    "tags": ["post-rebar", "anchorage"]
+  },
+  {
+    "clause_id": "GB50367-2013-4.4.1",
+    "standard": "GB 50367-2013",
+    "clause_no": "4.4.1",
+    "title": "承重结构用胶粘剂的 A/B 级分级与适用范围",
+    "gist": "承重结构用的胶粘剂宜按其基本性能分为 A 级胶和 B 级胶：对重要结构、悬挑构件、承受动力作用的结构或构件，应采用 A 级胶；对一般结构可采用 A 级胶或 B 级胶。条文说明：A/B 两级的主要区别在于韧性和耐湿热老化性能的合格指标不同。",
+    "excerpt": "对重要结构，悬挑构件、承受动力作用的结构、构件，应采用A级胶，对一般结构可采用A级胶或B级胶。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"grade_A_required": "重要结构、悬挑构件、承受动力作用的结构构件"},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第4.4.1条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341172.shtml（移动版同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341271（A/B 级区别说明）"
+    },
+    "status": "已核对",
+    "tags": ["adhesive", "materials"]
+  },
+  {
+    "clause_id": "GB50367-2013-4.4.2",
+    "standard": "GB 50367-2013",
+    "clause_no": "4.4.2",
+    "title": "胶粘剂粘结抗剪强度检验的统计要求（强制性条文）",
+    "gist": "承重结构用的胶粘剂必须进行粘结抗剪强度检验。检验时其粘结抗剪强度标准值应根据置信水平 0.90、保证率 95% 的要求确定。条文说明确认本条为强制性条文，95% 保证率依据《建筑结构可靠度设计统一标准》GB 50068 确定。",
+    "excerpt": "其粘结抗剪强度标准值，应根据置信水平为0.90、保证率为95％的要求确定。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"confidence_level": 0.9, "fractile": 0.95},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第4.4.2条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341172.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341271（确认强制性条文属性与依据）"
+    },
+    "status": "已核对",
+    "tags": ["adhesive", "materials", "mandatory"]
+  },
+  {
+    "clause_id": "GB50367-2013-4.4.3",
+    "standard": "GB 50367-2013",
+    "clause_no": "4.4.3",
+    "title": "承重结构加固用胶粘剂性能应符合 GB 50728-2011",
+    "gist": "承重结构加固用的胶粘剂（包括粘贴钢板和纤维复合材，以及种植钢筋和锚栓的用胶），其性能均应符合国家标准《工程结构加固材料安全性鉴定技术规范》GB 50728-2011 第4.2.2条的规定。条文说明：必须在确认改性效果后才能保证粘结可靠性；耐湿热老化检验不得以其他人工老化试验替代。",
+    "excerpt": "其性能均应符合国家标准《工程结构加固材料安全性鉴定技术规范》GB 50728-2011第4.2.2条的规定。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第4.4.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341172.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341271（湿热老化检验不可替代说明）"
+    },
+    "status": "已核对",
+    "tags": ["adhesive", "materials"]
+  },
+  {
+    "clause_id": "GB50367-2013-4.4.4",
+    "standard": "GB 50367-2013",
+    "clause_no": "4.4.4",
+    "title": "严禁使用的胶粘剂品种（强制性条文）",
+    "gist": "承重结构加固工程中严禁使用不饱和聚酯树脂和醇酸树脂作为胶粘剂。条文说明确认本条为强制性条文（两类树脂耐水、耐潮湿和耐湿热老化性能很差）。",
+    "excerpt": "承重结构加固工程中严禁使用不饱和聚酯树脂和醇酸树脂作为胶粘剂。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"banned": ["不饱和聚酯树脂", "醇酸树脂"]},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第4.4.4条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341172.shtml",
+      "checked_date": "2026-10-05",
+      "cross_check": "条文说明页 2341271（确认强制性条文属性）"
+    },
+    "status": "已核对",
+    "tags": ["adhesive", "materials", "mandatory"]
+  },
+  {
+    "clause_id": "GB50367-2013-3.1.7",
+    "standard": "GB 50367-2013",
+    "clause_no": "3.1.7",
+    "title": "加固设计使用年限确定原则",
+    "gist": "混凝土结构加固设计使用年限按下列原则确定：①加固后的使用年限由业主和设计单位共同商定；②当加固材料中含有合成树脂或其他聚合物成分时，使用年限宜按 30 年考虑；业主要求 50 年时，胶和聚合物的粘结性能应通过耐长期应力作用能力的检验；③到期后重新可靠性鉴定认为工作正常仍可延长；④使用胶粘方法或掺聚合物材料加固的结构应定期检查工作状态，第一次检查不应迟于 10 年；⑤局部加固时应考虑原建筑物剩余设计使用年限的影响。",
+    "excerpt": "当结构的加固材料中含有合成树脂或其他聚合物成分时，其结构加固后的使用年限宜按30年考虑；当业主要求结构加固后的使用年限为50年时，其所使用的胶和聚合物的粘结性能，应通过耐长期应力作用能力的检验。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {"service_life_polymer_default_years": 30, "service_life_50y_requires": "耐长期应力作用能力检验", "first_inspection_max_years": 10},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第3.1.7条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341165.shtml（移动版同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["general", "service-life"]
+  },
+  {
+    "clause_id": "GB50367-2013-3.1.8",
+    "standard": "GB 50367-2013",
+    "clause_no": "3.1.8",
+    "title": "加固后用途不得擅自改变",
+    "gist": "设计应明确结构加固后的用途。在加固设计使用年限内，未经技术鉴定或设计许可，不得改变加固后结构的用途和使用环境。",
+    "excerpt": "在加固设计使用年限内，未经技术鉴定或设计许可，不得改变加固后结构的用途和使用环境。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第3.1.8条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341165.shtml（移动版同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": null
+    },
+    "status": "已核对",
+    "tags": ["general", "appraisal-first"]
+  },
+  {
+    "clause_id": "GB50367-2013-5.1.5",
+    "standard": "GB 50367-2013",
+    "clause_no": "5.1.5",
+    "title": "增大截面加固前的卸载要求",
+    "gist": "采用增大截面加固法对混凝土结构进行加固时，应采取措施卸除或大部分卸除作用在结构上的活荷载。",
+    "excerpt": "应采取措施卸除或大部分卸除作用在结构上的活荷载。",
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
+      "locator": "GB50367-2013 第5.1.5条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341176.shtml（移动版同文复核）",
+      "checked_date": "2026-10-05",
+      "cross_check": "GB 55021-2021 第6.1.5条（全文强制：加固前应按设计规定卸除或部分卸除荷载）语义一致"
+    },
+    "status": "已核对",
+    "tags": ["section-enlarge", "unloading", "construction"]
+  }
+]

@@ -23,11 +23,39 @@ def base_clause(**overrides):
 def test_repo_store_loads(repo_data_dir):
     store = ClauseStore(repo_data_dir / "knowledge")
     assert not store.issues
-    assert len(store) >= 1
+    # M1 数据先行首批：GB50367×31 + GB55021×16 + GB50728×1 + JGJ145×1（待核对）
+    assert len(store) == 49
     summary = store.status_summary()
-    assert summary["pending"] >= 1
-    # 骨架期纪律：无一条款是"已核对"（M1 起按核对流程逐条转正）
-    assert summary["verified"] == 0
+    assert summary["verified"] == 48
+    # 熔断纪律留痕：JGJ 145-2013 §6.3 渠道已试不可达，保持待核对
+    assert summary["pending"] == 1
+    assert "JGJ145-2013-6.3" in store
+    assert store.get("JGJ145-2013-6.3").status == "待核对"
+
+
+def test_repo_verified_clauses_have_checked_date(repo_data_dir):
+    """status=已核对 ⇔ source.checked_date 非空（加载器强制；此处断言仓库数据真实满足）。"""
+    store = ClauseStore(repo_data_dir / "knowledge")
+    for clause in store.all_clauses():
+        if clause.status == "已核对":
+            assert clause.source.get("checked_date"), clause.clause_id
+            assert clause.source.get("channel"), clause.clause_id
+            assert clause.source.get("locator"), clause.clause_id
+
+
+def test_repo_module_required_clauses_all_verified(repo_data_dir):
+    """4 个验算模块的 required_clauses 已替换为真实 clause_id 且全部已核对（M1→M2 交接面）。"""
+    from structural_strengthening_checker.core.engine import CALC_REGISTRY
+
+    store = ClauseStore(repo_data_dir / "knowledge")
+    for module in CALC_REGISTRY.values():
+        assert module.required_clauses, module.module_id
+        for cid in module.required_clauses:
+            assert cid in store, f"{module.module_id} 所需条款未登记: {cid}"
+            assert store.get(cid).status == "已核对", f"{cid} 未核对"
+        # 占位 ID 必须已清零
+        assert "FLEXURE" not in " ".join(module.required_clauses)
+        assert "ANCHOR" not in " ".join(module.required_clauses)
 
 
 def test_unregistered_clause_rejected(repo_data_dir):

@@ -35,7 +35,7 @@ dependencies = []
 gui = ["PySide6>=6.2"]
 report = ["python-docx>=0.8.11"]
 parse = ["python-docx>=0.8.11", "pypdf>=3.0"]
-dev = ["pytest>=7.0"]
+dev = ["pytest>=7.0", "python-docx>=0.8.11"]  # docx 供 datagen/报告开发与 CI 生成器测试
 package = ["pyinstaller>=5.0"]
 
 [project.scripts]

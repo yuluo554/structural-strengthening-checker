@@ -39,19 +39,42 @@ def test_case_missing_keys_rejected(tmp_path):
     assert any("缺少必填字段" in i for i in issues)
 
 
-def test_repo_cases_dir_empty_is_ok(repo_data_dir):
+def test_repo_cases_dir_m1_batch(repo_data_dir):
+    """M1 首批：3 例植筋算例（真值+计算书来源），pending/ 子目录不被加载。"""
     cases, issues = load_cases(repo_data_dir / "cases")
-    assert cases == []
     assert issues == []
+    assert len(cases) == 3
+    assert {c["case_id"] for c in cases} == {"PR-001", "PR-002", "PR-003"}
+    for case in cases:
+        assert case["module"] == "post_rebar_anchor"
+        # 真值必有来源：来源指向仓库内可复核的手工计算书
+        assert "workings" in case["source"]["locator"]
 
 
-def test_bench_blocks_on_unverified_clauses(tmp_path, repo_data_dir):
+def test_bench_blocks_on_unverified_clauses(tmp_path):
     """算例走 run_calc 同一门控：条款未核对 → blocked_by_clauses，不虚报通过。"""
+    from structural_strengthening_checker.core.engine import CALC_REGISTRY
+
+    module = CALC_REGISTRY["cfrp_beam_flexure"]
+    kdir = tmp_path / "knowledge"
+    (kdir / "clauses").mkdir(parents=True)
+    clauses = [
+        {
+            "clause_id": cid,
+            "standard": "GB 0000-0000",
+            "clause_no": "0.0.0",
+            "title": "t",
+            "gist": "g",
+            "status": "待核对",
+            "source": {"channel": None, "checked_date": None},
+        }
+        for cid in module.required_clauses
+    ]
+    (kdir / "clauses" / "c.json").write_text(json.dumps(clauses), encoding="utf-8")
     cases_dir = tmp_path / "cases"
     cases_dir.mkdir()
     (cases_dir / "a.json").write_text(json.dumps([_case()]), encoding="utf-8")
-    store = ClauseStore(repo_data_dir / "knowledge")
-    result = run_calc_bench(tmp_path, store=store)
+    result = run_calc_bench(tmp_path, store=ClauseStore(kdir))
     assert result["total"] == 1
     assert result["blocked_by_clauses"] == 1
     assert result["passed"] == 0

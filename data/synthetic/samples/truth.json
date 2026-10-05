@@ -1,0 +1,115 @@
+{
+  "generator": "structural_strengthening_checker.datagen.gen_plan v1",
+  "seed": 20261005,
+  "truth_semantics": "评测按文档全部非 pass 集合对账：expected_non_pass 为主期望集合（全部 fail），注入隐含的其余结论记 also_expect（v1 四类注入互不隐含，恒为空）；多报 also_expect 之外的问题算误报。",
+  "docs": [
+    {
+      "doc_name": "baseline_seed20261005.docx",
+      "doc_sha256": "cf8612b6b5a9a003ea45a672e3ca257c2e8dfdf3744768712cc75e0daee168a9",
+      "clean_baseline": true,
+      "injected": [],
+      "expected_non_pass": []
+    },
+    {
+      "doc_name": "case01_seed20261005.docx",
+      "doc_sha256": "211bbd7f4c15fb91d922503bad8727c4eadc88e8c5ddc6214320842dc35a99fb",
+      "clean_baseline": false,
+      "injected": [
+        {
+          "type": "adhesive_grade_low",
+          "rule_id": "R-ADH-001",
+          "param": "adhesive_indices[钢对钢拉伸抗剪强度标准值]=12.0MPa",
+          "expected_verdict": "fail",
+          "also_expect": []
+        }
+      ],
+      "expected_non_pass": [
+        "R-ADH-001"
+      ]
+    },
+    {
+      "doc_name": "case02_seed20261005.docx",
+      "doc_sha256": "86f038b93bd50aa2f9cebe31d898663fa97871866a2ead9e1acde8129b959a4c",
+      "clean_baseline": false,
+      "injected": [
+        {
+          "type": "anchor_depth_insufficient",
+          "rule_id": "R-ANCH-001",
+          "param": "anchor_depths[植筋]=150mm",
+          "expected_verdict": "fail",
+          "also_expect": []
+        }
+      ],
+      "expected_non_pass": [
+        "R-ANCH-001"
+      ]
+    },
+    {
+      "doc_name": "case03_seed20261005.docx",
+      "doc_sha256": "3560e756b4b6ed918525f243044009e2f1731010ff5bee9ca800837305409a13",
+      "clean_baseline": false,
+      "injected": [
+        {
+          "type": "missing_appraisal_first",
+          "rule_id": "R-APP-001",
+          "param": "appraisal_first 缺失",
+          "expected_verdict": "fail",
+          "also_expect": []
+        }
+      ],
+      "expected_non_pass": [
+        "R-APP-001"
+      ]
+    },
+    {
+      "doc_name": "case04_seed20261005.docx",
+      "doc_sha256": "c94e3dc8d143c113d3cb51d6718d98ed73479ffd6297912bb512bf7159e28ccc",
+      "clean_baseline": false,
+      "injected": [
+        {
+          "type": "missing_unloading",
+          "rule_id": "R-CONST-001",
+          "param": "unloading 描述缺失",
+          "expected_verdict": "fail",
+          "also_expect": []
+        }
+      ],
+      "expected_non_pass": [
+        "R-CONST-001"
+      ]
+    },
+    {
+      "doc_name": "case05_seed20261005.docx",
+      "doc_sha256": "d6fa995c62bb3d8e8d3a796ae0109540b29a01aff3464cffb7124ea4f5941eea",
+      "clean_baseline": false,
+      "injected": [
+        {
+          "type": "missing_appraisal_first",
+          "rule_id": "R-APP-001",
+          "param": "appraisal_first 缺失",
+          "expected_verdict": "fail",
+          "also_expect": []
+        },
+        {
+          "type": "anchor_depth_insufficient",
+          "rule_id": "R-ANCH-001",
+          "param": "anchor_depths[植筋]=150mm",
+          "expected_verdict": "fail",
+          "also_expect": []
+        },
+        {
+          "type": "adhesive_grade_low",
+          "rule_id": "R-ADH-001",
+          "param": "adhesive_indices[钢对钢拉伸抗剪强度标准值]=12.0MPa",
+          "expected_verdict": "fail",
+          "also_expect": []
+        }
+      ],
+      "expected_non_pass": [
+        "R-APP-001",
+        "R-ANCH-001",
+        "R-ADH-001"
+      ]
+    }
+  ]
+}

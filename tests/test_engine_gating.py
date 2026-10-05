@@ -28,19 +28,48 @@ def test_registry_has_exactly_four_modules():
     assert len(CALC_REGISTRY) == 4
 
 
+def _pending_store(module_id, make_knowledge):
+    """构造"所需条款全部待核对"的临时条款库（门控覆盖：逐模块）。"""
+    from structural_strengthening_checker.core.clauses import ClauseStore
+
+    module = CALC_REGISTRY[module_id]
+    clauses = [
+        {
+            "clause_id": cid,
+            "standard": "GB 0000-0000",
+            "clause_no": "0.0.0",
+            "title": "t",
+            "gist": "g",
+            "status": "待核对",
+            "source": {"channel": None, "checked_date": None},
+        }
+        for cid in module.required_clauses
+    ]
+    return ClauseStore(make_knowledge(clauses=clauses))
+
+
 @pytest.mark.parametrize("module_id", sorted(EXPECTED_MODULES))
-def test_gate_blocks_before_compute(module_id, repo_data_dir):
-    store = ClauseStore(repo_data_dir / "knowledge")
+def test_gate_blocks_before_compute(module_id, make_knowledge):
+    """M1 起仓库条款已核对（门控放行到 M2 stub），门控覆盖改用待核对临时库逐模块断言。"""
+    store = _pending_store(module_id, make_knowledge)
     with pytest.raises(ClauseNotVerifiedError):
         run_calc(module_id, valid_params(CALC_REGISTRY[module_id]), store)
 
 
 @pytest.mark.parametrize("module_id", sorted(EXPECTED_MODULES))
-def test_gate_precedes_param_validation(module_id, repo_data_dir):
+def test_gate_precedes_param_validation(module_id, make_knowledge):
     """纪律顺序：条款门控优先于参数校验——即使参数也坏，先报条款未核对。"""
-    store = ClauseStore(repo_data_dir / "knowledge")
+    store = _pending_store(module_id, make_knowledge)
     with pytest.raises(ClauseNotVerifiedError):
         run_calc(module_id, {}, store)  # 缺全部参数
+
+
+@pytest.mark.parametrize("module_id", sorted(EXPECTED_MODULES))
+def test_repo_verified_clauses_open_gate(module_id, repo_data_dir):
+    """M1 数据先行：仓库条款库首批已核对 → 门控放行，到达 M2 stub（NotImplementedError）。"""
+    store = ClauseStore(repo_data_dir / "knowledge")
+    with pytest.raises(NotImplementedError):
+        run_calc(module_id, valid_params(CALC_REGISTRY[module_id]), store)
 
 
 @pytest.mark.parametrize("module_id", sorted(EXPECTED_MODULES))

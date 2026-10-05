@@ -1,0 +1,21 @@
+[
+  {
+    "clause_id": "JGJ145-2013-6.3",
+    "standard": "JGJ 145-2013",
+    "clause_no": "6.3",
+    "title": "植筋承载能力极限状态设计（章节定位占位，条文待核对）",
+    "gist": "《混凝土结构后锚固技术规程》JGJ 145-2013（2013-06-09 发布，2013-12-01 实施）第 6 章'承载能力极限状态设计'第 6.3 节为植筋系统（Post-installed Rebar System）设计条款，是植筋锚固验算的另一适用依据（与 GB 50367-2013 第15.2 节并行的行业规程路径）。章节归属由规程目次核对确认；具体条文文字与公式数值尚未核对，核对前不得进入计算路径。",
+    "excerpt": null,
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": "已尝试渠道：①济南城乡建设发展研究中心(jncc.jinan.gov.cn)挂载规程PDF——扫描件，第31页后文字层失效，6.3 节文本不可提取；②建标库站内书号未定位到；③道客巴巴/搜建筑需登录或为图片查看器。待后续以纸版或可提取文本渠道核对。",
+      "locator": "JGJ 145-2013 目次（PDF 第 7~9 页）确认第 6.3 节标题 'Post-installed Rebar System'；条文原文待获取",
+      "checked_date": null,
+      "cross_check": null
+    },
+    "status": "待核对",
+    "tags": ["post-rebar", "anchorage", "pending"]
+  }
+]

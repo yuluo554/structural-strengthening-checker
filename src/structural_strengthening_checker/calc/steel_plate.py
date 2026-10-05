@@ -16,7 +16,16 @@ from .cfrp_beam import _nonneg, _pos
     module_id="steel_plate_flexure",
     name="粘贴钢板加固受弯承载力验算",
     description="GB 50367-2013。公式与限值待条文核对后 M2 实装。",
-    required_clauses=["GB50367-2013-STEEL-PLATE-FLEXURE"],
+    required_clauses=[
+        "GB50367-2013-9.2.1",
+        "GB50367-2013-9.2.2",
+        "GB50367-2013-9.2.3",
+        "GB50367-2013-9.2.5",
+        "GB50367-2013-9.2.6",
+        "GB50367-2013-9.2.9",
+        "GB50367-2013-9.2.11",
+        "GB50367-2013-9.2.12",
+    ],
     param_schema={
         "b": _pos("mm", "截面宽度"),
         "h": _pos("mm", "截面高度"),

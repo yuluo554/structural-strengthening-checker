@@ -37,7 +37,8 @@ def test_modules_lists_four(repo_cwd, capsys):
         "post_rebar_anchor",
     ):
         assert module_id in out
-        assert "[GATED]" in out  # 骨架期全部未就绪（条文待核对）
+        # M1 数据先行：所需条款全部已核对 → READY（计算体仍为 M2 stub）
+        assert "[READY]" in out
 
 
 def _write_params(tmp_path, module_id, params):
@@ -46,10 +47,44 @@ def _write_params(tmp_path, module_id, params):
     return path
 
 
-def test_calc_gate_demo_exit3(repo_cwd, tmp_path, capsys):
-    """门控演示：条文未核对 → exit 3 + 指向核对流程的消息。"""
+def test_calc_repo_data_reaches_m2_stub_exit2(repo_cwd, tmp_path, capsys):
+    """M1 后仓库条款已核对：门控放行 → M2 stub 未实装 → exit 2（受控降级，绝不 traceback）。"""
     params_path = _write_params(tmp_path, "cfrp_beam_flexure", VALID_CFRP_PARAMS)
     code = main(["calc", "cfrp_beam_flexure", "--input", str(params_path)])
+    out = capsys.readouterr().out
+    assert code == 2, out
+    assert "未实装" in out
+
+
+def test_calc_gate_demo_exit3(repo_cwd, tmp_path, capsys):
+    """门控演示：临时数据目录注入待核对条款 → exit 3 + 指向核对流程的消息。"""
+    data_dir = tmp_path / "data"
+    clauses_dir = data_dir / "knowledge" / "clauses"
+    clauses_dir.mkdir(parents=True)
+    from structural_strengthening_checker.core.engine import CALC_REGISTRY
+
+    clauses = [
+        {
+            "clause_id": cid,
+            "standard": "GB 0000-0000",
+            "clause_no": "0.0.0",
+            "title": "t",
+            "gist": "g",
+            "status": "待核对",
+            "source": {"channel": None, "checked_date": None},
+        }
+        for cid in CALC_REGISTRY["cfrp_beam_flexure"].required_clauses
+    ]
+    (clauses_dir / "c.json").write_text(
+        json.dumps(clauses, ensure_ascii=False), encoding="utf-8"
+    )
+    params_path = _write_params(tmp_path, "cfrp_beam_flexure", VALID_CFRP_PARAMS)
+    code = main(
+        [
+            "--data-dir", str(data_dir),
+            "calc", "cfrp_beam_flexure", "--input", str(params_path),
+        ]
+    )
     out = capsys.readouterr().out
     assert code == 3, out
     assert "条款门控" in out
@@ -77,18 +112,22 @@ def test_calc_missing_file_exit2(repo_cwd, tmp_path, capsys):
     assert "无法读取" in capsys.readouterr().out
 
 
-def test_bench_reports_empty_honestly(repo_cwd, capsys):
+def test_bench_reports_m1_cases_honestly(repo_cwd, capsys):
     code = main(["bench"])
     out = capsys.readouterr().out
     assert code == 0, out
-    assert '"total": 0' in out  # 算例库 M1 填充，骨架期如实报 0
+    # M1 填充 3 例植筋算例；门控已放行，计算体 M2 未实装 → 如实报 failed=3
+    assert '"total": 3' in out
+    assert '"blocked_by_clauses": 0' in out
+    assert '"failed": 3' in out
 
 
 def test_checklist_lists_items(repo_cwd, capsys):
     code = main(["checklist"])
     out = capsys.readouterr().out
     assert code == 0, out
-    assert "GB55021-APPRAISAL-FIRST" in out
+    # M1 按原文回填真实条号（GB 55021-2021）
+    assert "GB55021-1.0.3" in out
 
 
 def test_check_missing_extra_or_planned(repo_cwd, tmp_path, capsys):

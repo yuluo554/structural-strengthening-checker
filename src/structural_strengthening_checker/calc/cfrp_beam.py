@@ -2,8 +2,9 @@
 
 骨架状态：仅完成模块注册、参数 schema、所需条款声明与门控接入；
 计算体（含二次受力/应变滞后路径）在 M2 实装（plan/05 §五）。
-required_clauses 为**占位条款 ID**，M1 条文核对后替换为条款库真实 clause_id——
-在此之前 require_verified() 必然拒绝（条文纪律演示路径）。
+required_clauses 已于 M1 按 plan/05 §二核对流程入库为真实 clause_id
+（data/knowledge/clauses/gb50367-2013.json，status=已核对）；公式本体
+（式10.2.3-1~4 图片形态）在 M2 实装前须以正式出版文本补核。
 """
 
 from __future__ import annotations
@@ -26,7 +27,15 @@ def _nonneg(unit: str, meaning: str) -> Dict[str, Any]:
     module_id="cfrp_beam_flexure",
     name="粘贴碳纤维布加固梁正截面受弯承载力验算",
     description="GB 50367-2013；含二次受力/应变滞后影响（M0>0 激活）。公式与限值待条文核对后 M2 实装。",
-    required_clauses=["GB50367-2013-CFRP-FLEXURE"],
+    required_clauses=[
+        "GB50367-2013-10.2.1",
+        "GB50367-2013-10.2.2",
+        "GB50367-2013-10.2.3",
+        "GB50367-2013-10.2.4",
+        "GB50367-2013-10.2.8",
+        "GB50367-2013-10.2.10",
+        "GB50367-2013-10.2.11",
+    ],
     param_schema={
         "b": _pos("mm", "截面宽度"),
         "h": _pos("mm", "截面高度"),

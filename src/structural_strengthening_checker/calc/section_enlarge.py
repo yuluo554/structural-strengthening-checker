@@ -16,7 +16,12 @@ from .cfrp_beam import _nonneg, _pos
     module_id="section_enlarge_flexure",
     name="增大截面加固法受弯承载力验算",
     description="GB 50367-2013。新旧混凝土协同工作等公式待条文核对后 M2 实装。",
-    required_clauses=["GB50367-2013-SECTION-ENLARGE-FLEXURE"],
+    required_clauses=[
+        "GB50367-2013-5.1.5",
+        "GB50367-2013-5.2.3",
+        "GB50367-2013-5.2.4",
+        "GB50367-2013-5.2.5",
+    ],
     param_schema={
         "b": _pos("mm", "原截面宽度"),
         "h": _pos("mm", "原截面高度"),

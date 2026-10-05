@@ -93,8 +93,8 @@ def _cmd_selfcheck(args) -> int:
     print(f"GB 55021 检查单: {ckl['total']} 项（已核对 {ckl['verified']}）")
     bench = run_calc_bench(data_dir, store=store)
     print(
-        f"算例库: {bench['total']} 例（可执行待 M2 门控放开；"
-        f"当前门控阻塞 {bench['blocked_by_clauses']}）"
+        f"算例库: {bench['total']} 例（门控阻塞 {bench['blocked_by_clauses']}；"
+        f"真值比对在 M2/M4 实装，failed 计数为未实装计算体，如实报告）"
     )
 
     print(f"验算模块: {len(CALC_REGISTRY)} 个")

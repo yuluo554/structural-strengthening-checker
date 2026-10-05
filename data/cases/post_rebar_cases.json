@@ -1,0 +1,90 @@
+[
+  {
+    "case_id": "PR-001",
+    "module": "post_rebar_anchor",
+    "input": {
+      "fc": 30.0,
+      "fy": 300.0,
+      "d": 12.0,
+      "ld": 260.0,
+      "alpha_spt": 0.8,
+      "fbd": 2.5,
+      "psi_br": 1.0,
+      "psi_w": 1.1,
+      "psi_T": 1.0
+    },
+    "expected": {
+      "ls_required_mm": 230.4,
+      "psi_N": 1.1,
+      "tolerance": 0.005,
+      "note": "真值仅为式(15.2.3) ls 与式(15.2.5) ψN 两个文本已核量；ld 终判（含 ψae 组合式）待 M2 公式补核后扩展"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5) 已核对文本）",
+      "title": "植筋锚固深度自编算例 PR-001 一般室内构件",
+      "locator": "data/cases/workings/post_rebar_workings.md",
+      "cross_check": "闭式解与逐步四则重算一致（见计算书第3步）；αspt/fbd 为场景输入系数，非表格数值断言"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等；依据 GB 50367-2013 已核对条文，plan/05 §三",
+    "scenario": "一次受力/一般构件（ψbr=1.00），非抗震（ψae 组合未参与真值）"
+  },
+  {
+    "case_id": "PR-002",
+    "module": "post_rebar_anchor",
+    "input": {
+      "fc": 30.0,
+      "fy": 360.0,
+      "d": 14.0,
+      "ld": 250.0,
+      "alpha_spt": 0.7,
+      "fbd": 2.5,
+      "psi_br": 1.0,
+      "psi_w": 1.1,
+      "psi_T": 1.0
+    },
+    "expected": {
+      "ls_required_mm": 282.24,
+      "psi_N": 1.1,
+      "verdict": "需调整",
+      "tolerance": 0.005,
+      "note": "反向例：ld=250 < ls=282.24 ≤ ls·ψN（310.464）；verdict 由单调性（ψae≥1.00）保证，不依赖未核对组合式"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5) 已核对文本）",
+      "title": "植筋锚固深度自编算例 PR-002 反向例（锚固深度不足）",
+      "locator": "data/cases/workings/post_rebar_workings.md",
+      "cross_check": "闭式解与逐步四则重算一致（见计算书第4步）"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
+    "scenario": "反向例：提供锚固深度低于基本锚固深度，需调整"
+  },
+  {
+    "case_id": "PR-003",
+    "module": "post_rebar_anchor",
+    "input": {
+      "fc": 30.0,
+      "fy": 360.0,
+      "d": 16.0,
+      "ld": 600.0,
+      "alpha_spt": 0.9,
+      "fbd": 3.0,
+      "psi_br": 1.5,
+      "psi_w": 1.1,
+      "psi_T": 1.0
+    },
+    "expected": {
+      "ls_required_mm": 345.6,
+      "psi_N": 1.65,
+      "tolerance": 0.005,
+      "note": "悬挑构件（ψbr=1.50，已核对离散值）；ld 终判（含 ψae 组合式）待 M2 公式补核后扩展"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5) 已核对文本）",
+      "title": "植筋锚固深度自编算例 PR-003 悬挑构件",
+      "locator": "data/cases/workings/post_rebar_workings.md",
+      "cross_check": "闭式解与逐步四则重算一致（见计算书第3步）"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
+    "scenario": "悬挑结构构件（ψbr=1.50）"
+  }
+]
