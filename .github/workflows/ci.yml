@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # 3.8 矩阵：本机唯一解释器为 3.8.8，防新语法混入（ubuntu-24.04 无 3.8，锁 22.04）
+          - { os: ubuntu-22.04, python-version: "3.8" }
+          - { os: ubuntu-latest, python-version: "3.12" }
+          - { os: windows-latest, python-version: "3.8" }
+          - { os: windows-latest, python-version: "3.12" }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: |
+          python -m pip install -U pip
+          python -m pip install -e .[dev]
+      - name: Tests
+        run: python -X utf8 -m pytest
+      - name: Selfcheck (CLI + 数据 schema 守门)
+        run: python -X utf8 -m structural_strengthening_checker selfcheck

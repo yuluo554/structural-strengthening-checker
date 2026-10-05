@@ -1,0 +1,22 @@
+[
+  {
+    "item_id": "GB55021-APPRAISAL-FIRST",
+    "clause_no": "",
+    "gist": "既有建筑加固前应先进行鉴定（\"先鉴定、后加固\"；具体条号 M1 按原文核对回填）",
+    "keywords": ["鉴定", "检测鉴定"],
+    "check_mode": "manual",
+    "options": ["符合", "不符合", "不适用", "待确认"],
+    "advice": "核查方案是否包含检测鉴定结论章节及其依据标准。",
+    "status": "待核对"
+  },
+  {
+    "item_id": "GB55021-SERVICE-LIFE",
+    "clause_no": "",
+    "gist": "加固后使用年限限制要求（具体条号与年限值 M1 按原文核对回填，未核对前不预填数值）",
+    "keywords": ["使用年限"],
+    "check_mode": "manual",
+    "options": ["符合", "不符合", "不适用", "待确认"],
+    "advice": "核查方案声明的加固后使用年限是否满足规范要求。",
+    "status": "待核对"
+  }
+]

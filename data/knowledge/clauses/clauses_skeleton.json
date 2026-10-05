@@ -1,0 +1,20 @@
+[
+  {
+    "clause_id": "GB50367-2013-4.5.5",
+    "standard": "GB 50367-2013",
+    "clause_no": "4.5.5",
+    "title": "结构胶粘剂安全性能要求（占位条目，M1 核对）",
+    "gist": "加固用结构胶粘剂安全性能指标要求。该条号已由地方改造文件引用佐证（data/README 依据查证记录：深圳老旧小区改造指引引用 GB 50367-2013 第 4.5.5 条）；具体指标名称与限值以规范原文核对后入库，核对前不得进入计算与判定。",
+    "excerpt": null,
+    "formula_ref": null,
+    "symbols": [],
+    "limits": {},
+    "source": {
+      "channel": null,
+      "locator": "查证渠道记录见 data/README.md；原文待获取（data/standards_raw/）",
+      "checked_date": null
+    },
+    "status": "待核对",
+    "tags": ["adhesive", "materials"]
+  }
+]

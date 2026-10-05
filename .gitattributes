@@ -1,0 +1,10 @@
+# 统一 LF：位级锁定基准与 fixtures 禁止 CRLF 重写（Windows autocrlf 防护）
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.docx binary
+*.pdf binary
+*.exe binary
