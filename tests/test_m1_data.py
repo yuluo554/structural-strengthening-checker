@@ -6,10 +6,16 @@ from structural_strengthening_checker.core.clauses import ClauseStore
 
 
 def test_repo_clauses_batch_coverage(repo_data_dir):
-    """首批入库覆盖 4 本规范；占位 ID（M0 骨架用）必须清零。"""
+    """入库覆盖 5 本规范（M3 新增 GB/T 50010 钢筋强度设计值条款）；占位 ID（M0 骨架用）必须清零。"""
     store = ClauseStore(repo_data_dir / "knowledge")
     standards = {c.standard for c in store.all_clauses()}
-    assert standards == {"GB 50367-2013", "GB 55021-2021", "GB 50728-2011", "JGJ 145-2013"}
+    assert standards == {
+        "GB 50367-2013",
+        "GB 55021-2021",
+        "GB 50728-2011",
+        "JGJ 145-2013",
+        "GB/T 50010-2010（2024年版，混凝土结构设计标准）",
+    }
     all_text = " ".join(store._clauses)
     for placeholder in ("CFRP-FLEXURE", "STEEL-PLATE-FLEXURE", "SECTION-ENLARGE", "POST-REBAR-ANCHOR"):
         assert placeholder not in all_text

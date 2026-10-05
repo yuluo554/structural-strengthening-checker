@@ -1,7 +1,10 @@
-"""docx/PDF 文本提取（M3 实装完整版）。依赖全部惰性导入，缺失抛 MissingExtraError。
+"""docx/PDF 文本提取（M3 完整版）。依赖全部惰性导入，缺失抛 MissingExtraError。
 
-骨架已实现的确定性行为：docx 逐段提取（段落序号保留，供证据定位）；
-PDF 用 pypdf 逐页提取（页码=证据 page）。中文路径与编码为回归测试项。
+确定性行为（plan/03 §三降级纪律）：
+- docx 逐段提取（段落序号=原文档序号，供证据定位）；PDF 用 pypdf 逐页提取（页码=证据 page）；
+- 损坏/加密/无文本层 → ParseError（受控异常），由 CLI 按"可解析段落 0"整体降级
+  needs_confirm 清单，绝不 traceback、绝不产生 fail；
+- 中文路径直接用 pathlib 传给底层库（Windows/CI 均为回归测试项）。
 """
 
 from __future__ import annotations
@@ -10,13 +13,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
-from ..core.errors import MissingExtraError
+from ..core.errors import MissingExtraError, ParseError
 
 
 @dataclass
 class Para:
     index: int  # 全文档段落序号（从 1 起）
-    page: int  # PDF 有页码；docx 统一记 1（页码定位 M3 增强）
+    page: int  # PDF 有页码；docx 统一记 1（docx 无分页概念，页码定位在报告层说明）
     text: str
 
 
@@ -38,7 +41,12 @@ def _import_pypdf():
 
 def extract_docx_paras(path: Path) -> List[Para]:
     docx = _import_docx()
-    document = docx.Document(str(path))
+    try:
+        document = docx.Document(str(path))
+    except MissingExtraError:
+        raise
+    except Exception as exc:  # 损坏 zip / 非 OOXML / 版本不兼容等，统一受控降级
+        raise ParseError(f"docx 解析失败: {path.name}（{type(exc).__name__}: {exc}）") from exc
     paras = []
     for i, p in enumerate(document.paragraphs, start=1):
         text = p.text.strip()
@@ -49,11 +57,27 @@ def extract_docx_paras(path: Path) -> List[Para]:
 
 def extract_pdf_paras(path: Path) -> List[Para]:
     pypdf = _import_pypdf()
-    reader = pypdf.PdfReader(str(path))
+    try:
+        reader = pypdf.PdfReader(str(path))
+    except MissingExtraError:
+        raise
+    except Exception as exc:
+        raise ParseError(f"PDF 打开失败: {path.name}（{type(exc).__name__}: {exc}）") from exc
+    if getattr(reader, "is_encrypted", False):
+        raise ParseError(f"PDF 已加密，不支持自动提取: {path.name}")
     paras = []
     seq = 0
     for page_no, page in enumerate(reader.pages, start=1):
-        for line in (page.extract_text() or "").splitlines():
+        try:
+            text_blob = page.extract_text() or ""
+        except Exception as exc:  # 单页内容流损坏：记空页继续，整体仍可用
+            text_blob = ""
+            paras.append(
+                Para(index=len(paras) + 1, page=page_no,
+                     text=f"[第{page_no}页文本提取失败: {type(exc).__name__}]")
+            )
+            continue
+        for line in text_blob.splitlines():
             text = line.strip()
             if text:
                 seq += 1
@@ -62,7 +86,10 @@ def extract_pdf_paras(path: Path) -> List[Para]:
 
 
 def extract_paras(path: Path) -> List[Para]:
-    suffix = Path(path).suffix.lower()
+    path = Path(path)
+    if not path.is_file():
+        raise ParseError(f"方案文件不存在: {path}")
+    suffix = path.suffix.lower()
     if suffix == ".docx":
         return extract_docx_paras(path)
     if suffix == ".pdf":

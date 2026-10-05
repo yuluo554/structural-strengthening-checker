@@ -45,3 +45,11 @@ class MissingExtraError(SSCError):
             f"缺少可选依赖组 [{extra}]（用于{purpose}）。"
             f"请执行: py -m pip install -e .[{target}]（或 pip install {target} 的等效命令）"
         )
+
+
+class ParseError(SSCError):
+    """方案文件解析失败（损坏/加密/无文本层等）。
+
+    降级纪律（plan/03 §三）：调用方不得因此产生任何 fail 结论——
+    CLI 捕获后按"可解析段落 0"整体降级 needs_confirm 清单处理。
+    """

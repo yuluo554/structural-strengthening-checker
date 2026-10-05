@@ -174,3 +174,142 @@ VALID_CFRP_PARAMS = {
     "xi_b": 0.518,
     "Es": 200000.0,
 }
+
+
+# ---------------------------------------------------------------------------
+# M3：ssc check 端到端（合成方案语料对账）+ ssc checklist 核对流
+# ---------------------------------------------------------------------------
+
+def test_check_end_to_end_corpus_reconciliation(repo_cwd, tmp_path, capsys):
+    """M3 DoD：生成器语料端到端——报告非 pass 集合 == truth.expected_non_pass（误报 0 口径）。"""
+    from structural_strengthening_checker.datagen import gen_plan
+
+    out = tmp_path / "corpus"
+    truth = gen_plan.generate(out, seed=20261005, count=5)
+    for doc in truth["docs"]:
+        code = main(["check", "--json", str(out / doc["doc_name"])])
+        report = json.loads(capsys.readouterr().out)
+        assert code == 0, doc["doc_name"]
+        # 真值语义为"集合对账"（plan/05 §四）：比较与顺序无关
+        assert sorted(report["non_pass_rule_ids"]) == sorted(doc["expected_non_pass"]), doc["doc_name"]
+        assert report["disclaimer"], doc["doc_name"]
+    # 基线显式断言：4 条规则全 pass
+    code = main(["check", "--json", str(out / "baseline_seed20261005.docx")])
+    report = json.loads(capsys.readouterr().out)
+    assert code == 0
+    assert report["summary"] == {"fail": 0, "suspicious": 0, "needs_confirm": 0, "pass": 4}
+
+
+def test_check_report_flag_writes_json(repo_cwd, tmp_path, capsys):
+    from structural_strengthening_checker.datagen import gen_plan
+
+    out = tmp_path / "corpus"
+    gen_plan.generate(out, seed=20261005, count=1)
+    report_dir = tmp_path / "report"
+    code = main(["check", str(out / "case01_seed20261005.docx"), "--report", str(report_dir)])
+    assert code == 0
+    data = json.loads((report_dir / "check_report.json").read_text(encoding="utf-8"))
+    assert data["non_pass_rule_ids"] == ["R-ADH-001"]
+
+
+def test_check_corrupt_docx_degrades_no_fail(repo_cwd, tmp_path, capsys):
+    bad = tmp_path / "损坏方案.docx"
+    bad.write_bytes(b"PK\x03\x04 garbage not zip")
+    code = main(["check", str(bad)])
+    out = capsys.readouterr().out
+    assert code == 0, out
+    assert "解析失败" in out
+    assert "不符合 0" in out
+    assert "待人工确认 4" in out  # 全部规则降级 needs_confirm
+
+
+def test_check_chinese_filename(repo_cwd, tmp_path, capsys):
+    from structural_strengthening_checker.datagen import gen_plan
+
+    out = tmp_path / "corpus"
+    gen_plan.generate(out, seed=20261005, count=1)
+    dst = tmp_path / "加固方案_中文文件名.docx"
+    dst.write_bytes((out / "baseline_seed20261005.docx").read_bytes())
+    code = main(["check", str(dst)])
+    out_txt = capsys.readouterr().out
+    assert code == 0, out_txt
+    assert "不符合 0" in out_txt
+
+
+def test_check_missing_plan_file_friendly(repo_cwd, tmp_path, capsys):
+    """文件不存在=输入错误（exit 2 友好提示），不是解析失败降级路径。"""
+    code = main(["check", str(tmp_path / "不存在.docx")])
+    out = capsys.readouterr().out
+    assert code == 2
+    assert "无法读取" in out
+
+
+def _write_answers(tmp_path, answers):
+    path = tmp_path / "answers.json"
+    path.write_text(json.dumps(answers, ensure_ascii=False), encoding="utf-8")
+    return path
+
+
+def test_checklist_doc_suggestions_and_out(repo_cwd, tmp_path, capsys):
+    from structural_strengthening_checker.datagen import gen_plan
+
+    out = tmp_path / "corpus"
+    gen_plan.generate(out, seed=20261005, count=1)
+    answers_path = tmp_path / "suggest.json"
+    code = main(["checklist", "--doc", str(out / "baseline_seed20261005.docx"),
+                 "--out", str(answers_path)])
+    out_txt = capsys.readouterr().out
+    assert code == 0, out_txt
+    assert "建议 符合" in out_txt  # auto_text 条目检出关键词
+    data = json.loads(answers_path.read_text(encoding="utf-8"))
+    assert len(data) == 11
+    assert data["GB55021-6.1.5"]["choice"] == "符合"
+
+
+def test_checklist_fill_renders_summary(repo_cwd, tmp_path, capsys):
+    answers = {
+        "GB55021-1.0.3": {"choice": "符合", "note": "鉴定报告 JD-2026-088"},
+        "GB55021-6.1.5": {"choice": "不符合", "note": "未写卸载"},
+    }
+    path = _write_answers(tmp_path, answers)
+    code = main(["checklist", "--fill", str(path)])
+    out = capsys.readouterr().out
+    assert code == 0, out
+    assert "[符合] GB55021-1.0.3" in out
+    assert "[不符合] GB55021-6.1.5" in out
+    assert "备注: 未写卸载" in out
+
+
+def test_checklist_fill_invalid_choice_flagged(repo_cwd, tmp_path, capsys):
+    path = _write_answers(tmp_path, {"GB55021-1.0.3": {"choice": "差不多"}})
+    code = main(["checklist", "--fill", str(path)])
+    out = capsys.readouterr().out
+    assert code == 0  # 渲染层标注非法选项，不中断
+    assert "非法选项" in out
+
+
+def test_checklist_fill_bad_file_exit(repo_cwd, tmp_path, capsys):
+    bad = tmp_path / "bad.json"
+    bad.write_text("{not json", encoding="utf-8")
+    assert main(["checklist", "--fill", str(bad)]) == 1
+
+
+def test_checklist_interactive_flow(repo_cwd, tmp_path, capsys, monkeypatch):
+    import io
+
+    from structural_strengthening_checker.datagen import gen_plan
+
+    out = tmp_path / "corpus"
+    gen_plan.generate(out, seed=20261005, count=1)
+    # 依次输入：1（符合）+备注 / s 跳过 / 4（待确认）+空备注 / q 结束
+    monkeypatch.setattr("sys.stdin", io.StringIO("1\n依据鉴定报告\ns\n4\n\nq\n"))
+    answers_path = tmp_path / "filled.json"
+    code = main(["checklist", "--interactive", "--out", str(answers_path)])
+    out_txt = capsys.readouterr().out
+    assert code == 0, out_txt
+    data = json.loads(answers_path.read_text(encoding="utf-8"))
+    assert data["GB55021-1.0.3"] == {"choice": "符合", "note": "依据鉴定报告"}
+    assert "GB55021-2.0.2" not in data  # s 跳过
+    assert data["GB55021-2.0.3"] == {"choice": "待确认", "note": ""}
+    assert len(data) == 2  # q 提前结束
+    assert "待确认" in out_txt

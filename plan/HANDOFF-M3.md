@@ -1,5 +1,7 @@
 # HANDOFF-M3（M2 公式引擎 → M3 方案核查交接快照）
 
+> ⚠️ **已过时仅作历史（M3 已完成 2026-10-05，交接快照见 [HANDOFF-M4.md](HANDOFF-M4.md)）**。
+
 > 用法：新对话输入 `/goal 读取 "plan/HANDOFF-M3.md" 继续完成 M3 方案核查里程碑`（从仓库根运行；路径用相对路径，防本机路径进历史）。
 > 上一里程碑：M2 公式引擎（✅ 2026-10-05，plan/00 状态表已回写；偏差与实现决策见 data/cases/workings/formula_verification_M2.md §四/§六）。
 
