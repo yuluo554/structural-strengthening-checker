@@ -1,6 +1,4 @@
-"""M1 数据先行守门：条款库/规则库/检查单/算例库的入库纪律与 M1 交付面。"""
-
-import json
+"""M1/M2 数据守门：条款库/规则库/检查单/算例库的入库纪律与交付面。"""
 
 from structural_strengthening_checker.checking.checklist_gb55021 import ChecklistStore
 from structural_strengthening_checker.checking.rules import RuleStore
@@ -46,7 +44,7 @@ def test_repo_checklist_all_verified_with_clause_no(repo_data_dir):
 
 
 def test_repo_case_truths_computable_and_sourced(repo_data_dir):
-    """M1 真值算例：手工计算书来源 + 真值可独立复核（±0.5% 容差口径）。"""
+    """M1 三例植筋真值：手工计算书来源 + 真值可独立复算（±0.5% 容差口径）。"""
     from structural_strengthening_checker.bench.calc_bench import load_cases
 
     cases, issues = load_cases(repo_data_dir / "cases")
@@ -56,7 +54,9 @@ def test_repo_case_truths_computable_and_sourced(repo_data_dir):
         "PR-002": (282.24, 1.1),
         "PR-003": (345.6, 1.65),
     }
-    for case in cases:
+    pr_cases = [c for c in cases if c["case_id"] in truths]
+    assert len(pr_cases) == 3
+    for case in pr_cases:
         ls_expected, psi_expected = truths[case["case_id"]]
         inp = case["input"]
         # 式(15.2.3)（文本已核对）独立复算
@@ -67,17 +67,16 @@ def test_repo_case_truths_computable_and_sourced(repo_data_dir):
         assert abs(psi - psi_expected) <= 0.005 * psi_expected
 
 
-def test_pending_cases_not_loaded_by_bench(repo_data_dir):
-    """pending/ 骨架不得进入基准评测（load_cases 只扫顶层 *.json）。"""
+def test_repo_cases_m2_backfill_complete(repo_data_dir):
+    """M2 回填：pending/ 骨架已按核对公式回填入基准（9 例受弯 + 2 例植筋查表），目录删除。"""
     from structural_strengthening_checker.bench.calc_bench import load_cases
 
-    cases, _ = load_cases(repo_data_dir / "cases")
+    cases, issues = load_cases(repo_data_dir / "cases")
+    assert issues == []
     ids = {c["case_id"] for c in cases}
-    pending = json.loads(
-        (repo_data_dir / "cases" / "pending" / "flexure_pending_cases.json").read_text(
-            encoding="utf-8"
-        )
-    )
-    pending_ids = {c["case_id"] for c in pending["cases"]}
-    assert len(pending_ids) == 9
-    assert not (ids & pending_ids)
+    flexure_ids = {f"CF-00{i}-{s}" for i, s in ((1, "P"), (2, "S"), (3, "R"))}
+    flexure_ids |= {f"SP-00{i}-{s}" for i, s in ((1, "P"), (2, "S"), (3, "R"))}
+    flexure_ids |= {f"SE-00{i}-{s}" for i, s in ((1, "P"), (2, "S"), (3, "R"))}
+    assert flexure_ids <= ids
+    assert {"PR-004", "PR-005"} <= ids
+    assert not (repo_data_dir / "cases" / "pending").exists()

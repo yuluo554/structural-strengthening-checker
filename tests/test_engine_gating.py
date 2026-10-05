@@ -64,17 +64,42 @@ def test_gate_precedes_param_validation(module_id, make_knowledge):
         run_calc(module_id, {}, store)  # 缺全部参数
 
 
+DEMO_PARAMS = {
+    "cfrp_beam_flexure": {
+        "b": 250.0, "h": 500.0, "fc": 14.3, "As": 1520.0, "fy": 360.0,
+        "Afe": 101.0, "Ecf": 240000.0, "M0": 0.0, "M": 180.0,
+        "ff": 2300.0, "ef": 0.01, "as": 35.0, "xi_b": 0.518, "Es": 200000.0,
+    },
+    "steel_plate_flexure": {
+        "b": 250.0, "h": 500.0, "fc": 14.3, "As": 1520.0, "fy": 360.0,
+        "Ap": 600.0, "fp": 215.0, "M0": 0.0, "M": 190.0,
+        "as": 35.0, "xi_b": 0.518, "Es": 200000.0, "Esp": 206000.0,
+    },
+    "section_enlarge_flexure": {
+        "b": 250.0, "h": 500.0, "bf": 250.0, "hf": 100.0, "fc": 14.3, "fc2": 16.7,
+        "As": 1520.0, "fy": 360.0, "As2": 628.0, "fy2": 360.0,
+        "as": 35.0, "as2": 45.0, "M0": 0.0, "M": 220.0, "Es": 200000.0,
+    },
+    "post_rebar_anchor": {
+        "fc": 30.0, "fy": 360.0, "d": 16.0, "ld": 600.0,
+        "alpha_spt": 0.9, "fbd": 3.0, "psi_br": 1.5, "psi_w": 1.1, "psi_T": 1.0, "psi_ae": 1.0,
+    },
+}
+
+
 @pytest.mark.parametrize("module_id", sorted(EXPECTED_MODULES))
 def test_repo_verified_clauses_open_gate(module_id, repo_data_dir):
-    """M1 数据先行：仓库条款库首批已核对 → 门控放行，到达 M2 stub（NotImplementedError）。"""
+    """M2 起仓库条款已核对且计算体实装：门控放行 → 返回 CalcResult（三态之一）。"""
     store = ClauseStore(repo_data_dir / "knowledge")
-    with pytest.raises(NotImplementedError):
-        run_calc(module_id, valid_params(CALC_REGISTRY[module_id]), store)
+    result = run_calc(module_id, DEMO_PARAMS[module_id], store)
+    assert result["module"] == module_id
+    assert result["verdict"] in ("满足", "不满足", "需调整")
+    assert result["steps"] and result["clauses_used"]
 
 
 @pytest.mark.parametrize("module_id", sorted(EXPECTED_MODULES))
-def test_after_verified_reaches_stub(module_id, make_knowledge):
-    """条款全部已核对时放行到计算体（stub 抛 NotImplementedError=M2 实装点）。"""
+def test_after_verified_reaches_compute(module_id, make_knowledge):
+    """条款全部已核对时放行到计算体（M2 实装后返回 CalcResult 形状 dict）。"""
     module = CALC_REGISTRY[module_id]
     clauses = [
         {
@@ -89,8 +114,12 @@ def test_after_verified_reaches_stub(module_id, make_knowledge):
         for cid in module.required_clauses
     ]
     store = ClauseStore(make_knowledge(clauses=clauses))
-    with pytest.raises(NotImplementedError):
-        run_calc(module_id, valid_params(module), store)
+    result = run_calc(module_id, DEMO_PARAMS[module_id], store)
+    # CalcResult 形状（plan/04 §1.3 + M2 metrics 增补）
+    for key in ("module", "inputs", "steps", "capacity", "ratio", "verdict", "clauses_used", "warnings", "metrics"):
+        assert key in result, key
+    for st in result["steps"]:
+        assert st["formula_ref"] and st["clause_ids"]
 
 
 def test_param_validation_missing_and_out_of_range(make_knowledge):

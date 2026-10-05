@@ -1,0 +1,235 @@
+[
+  {
+    "case_id": "CF-001-P",
+    "module": "cfrp_beam_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "fc": 14.3, "As": 1520.0, "fy": 360.0,
+      "Afe": 101.0, "Ecf": 240000.0, "M0": 0.0, "M": 180.0,
+      "ff": 2300.0, "ef": 0.01, "as": 35.0, "xi_b": 0.518, "Es": 200000.0
+    },
+    "expected": {
+      "verdict": "满足",
+      "Mu_kNm": 244.02,
+      "x_mm": 179.42,
+      "psi_f": 0.4057,
+      "tolerance": 0.005,
+      "note": "真值为手工计算（flexure_workings.md §一 CF-001）；ff/εf=表4.3.4-1/表4.3.5 高强度I级布·一般构件；xi_b=0.518 为场景输入（GB 50010 HRB400, <=C50）"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(10.2.3-1~4) 已核对公式）",
+      "title": "碳纤维布加固梁正截面验算自编算例 CF-001-P 一次受力正向",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "力平衡复核：A·x=641427 ≈ fy·As+ψf·ff·Afe=641403（舍入差 0.004%）"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "一次受力正向例（M0=0；加固后承载力高于设计弯矩，x 在 ξb,f 限值内，提高幅度 14.8%<40%）"
+  },
+  {
+    "case_id": "CF-002-S",
+    "module": "cfrp_beam_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "fc": 14.3, "As": 1520.0, "fy": 360.0,
+      "Afe": 133.0, "Ecf": 240000.0, "M0": 80.0, "M": 195.0,
+      "ff": 2300.0, "ef": 0.01, "as": 35.0, "xi_b": 0.518, "Es": 200000.0
+    },
+    "expected": {
+      "verdict": "满足",
+      "alpha_f": 1.1716,
+      "epsilon_f0": 0.0006631,
+      "Mu_kNm": 246.29,
+      "x_mm": 181.41,
+      "psi_f": 0.3312,
+      "tolerance": 0.005,
+      "note": "二次受力路径：ρte=As/(0.5bh)=0.02432 落表10.2.8 档间，αf 线性内插（实现决策，见 formula_verification_M2.md §六.1）；σs0 未提供不乘 0.9"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(10.2.8)/表10.2.8 已核对公式与表值）",
+      "title": "碳纤维布加固梁正截面验算自编算例 CF-002-S 二次受力",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "εf0 量纲复核 N·mm/(MPa·mm²·mm)=无量纲；ψf 未封顶分支与力平衡自洽"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "二次受力例（M0>0，滞后应变 εf0 路径 + 表10.2.8 查表内插）"
+  },
+  {
+    "case_id": "CF-003-R",
+    "module": "cfrp_beam_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "fc": 14.3, "As": 1520.0, "fy": 360.0,
+      "Afe": 50.0, "Ecf": 240000.0, "M0": 0.0, "M": 260.0,
+      "ff": 2300.0, "ef": 0.01, "as": 35.0, "xi_b": 0.518, "Es": 200000.0
+    },
+    "expected": {
+      "verdict": "需调整",
+      "Mu_kNm": 230.41,
+      "x_mm": 167.76,
+      "psi_f": 0.4568,
+      "Afe_req_mm2": 179.6,
+      "tolerance": 0.005,
+      "note": "反向例：M=260 > Mu=230.41，加固量不足；需求量 Afe,req 由式(10.2.3-1)反解 x_M 后经式(10.2.3-2)反算，x_M=193.68 <= 0.85ξb·h0（方法可行，属可调整）"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(10.2.3-1~4) 已核对公式）",
+      "title": "碳纤维布加固梁正截面验算自编算例 CF-003-R 反向例（加固量不足）",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "x_M 与 Afe_req 的反算链独立于承载力正向链"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "反向例（加固量不足，需调整）"
+  },
+  {
+    "case_id": "SP-001-P",
+    "module": "steel_plate_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "fc": 14.3, "As": 1520.0, "fy": 360.0,
+      "Ap": 600.0, "fp": 215.0, "M0": 0.0, "M": 190.0,
+      "as": 35.0, "xi_b": 0.518, "Es": 200000.0, "Esp": 206000.0
+    },
+    "expected": {
+      "verdict": "满足",
+      "Mu_kNm": 255.00,
+      "x_mm": 189.15,
+      "psi_sp": 1.0,
+      "tolerance": 0.005,
+      "note": "ψsp 未封顶值 2.243>1.0 → 封顶取 1.0，力平衡退化为线性 x=(T+fsp·Asp)/A（式9.2.3-3 封顶条款）"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(9.2.3-1~4) 已核对公式）",
+      "title": "粘钢板加固梁正截面验算自编算例 SP-001-P 一次受力正向",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "封顶线性解与未封顶二次解的分支判断互证"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "一次受力正向例（ψsp 封顶路径）"
+  },
+  {
+    "case_id": "SP-002-S",
+    "module": "steel_plate_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "fc": 14.3, "As": 1520.0, "fy": 360.0,
+      "Ap": 800.0, "fp": 215.0, "M0": 90.0, "M": 210.0,
+      "as": 35.0, "xi_b": 0.518, "Es": 200000.0, "Esp": 206000.0
+    },
+    "expected": {
+      "verdict": "满足",
+      "alpha_sp": 1.1716,
+      "epsilon_sp0": 0.0007459,
+      "Mu_kNm": 268.10,
+      "x_mm": 201.17,
+      "psi_sp": 1.0,
+      "tolerance": 0.005,
+      "note": "二次受力：ρte=0.02432 表9.2.9 内插 αsp=1.1716；未封顶 x=230.52 的 ψsp=1.610>1.0 → 封顶 x=201.17（贴近 ξb,sp·h0=204.74）"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(9.2.9)/表9.2.9 已核对公式与表值）",
+      "title": "粘钢板加固梁正截面验算自编算例 SP-002-S 二次受力",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "表9.2.9 与表10.2.8 数值相同（出版文本互证）"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "二次受力例（M0>0 滞后应变 + ψsp 封顶）"
+  },
+  {
+    "case_id": "SP-003-R",
+    "module": "steel_plate_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "fc": 14.3, "As": 1520.0, "fy": 360.0,
+      "Ap": 300.0, "fp": 215.0, "M0": 0.0, "M": 250.0,
+      "as": 35.0, "xi_b": 0.518, "Es": 200000.0, "Esp": 206000.0
+    },
+    "expected": {
+      "verdict": "需调整",
+      "Mu_kNm": 234.36,
+      "x_mm": 171.10,
+      "psi_sp": 1.0,
+      "Asp_req_mm2": 525.7,
+      "tolerance": 0.005,
+      "note": "反向例：M=250 > Mu=234.36；需求量反算 x_M=184.68 可行 → 可调整（加大 Asp）"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(9.2.3-1~4) 已核对公式）",
+      "title": "粘钢板加固梁正截面验算自编算例 SP-003-R 反向例（钢板量不足）",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "需求反算链独立于承载力正向链"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "反向例（钢板量不足，需调整）"
+  },
+  {
+    "case_id": "SE-001-P",
+    "module": "section_enlarge_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "bf": 250.0, "hf": 100.0, "fc": 14.3, "fc2": 16.7,
+      "As": 1520.0, "fy": 360.0, "As2": 628.0, "fy2": 360.0,
+      "as": 35.0, "as2": 45.0, "M0": 0.0, "M": 220.0, "Es": 200000.0
+    },
+    "expected": {
+      "verdict": "满足",
+      "Mu_kNm": 288.56,
+      "x_mm": 209.98,
+      "xi_b": 0.5366,
+      "tolerance": 0.005,
+      "note": "受拉区增大截面：fc2 不进入正截面计算；ξb 由式(5.2.4-1) 全式计算（M0=0 时 εs0=εs1=0）；αs=0.9"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(5.2.3-1~3)/式(5.2.4-1) 已核对公式）",
+      "title": "增大截面加固梁正截面验算自编算例 SE-001-P 一次受力正向",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "式(5.2.3-1)与(5.2.3-2) 代入自洽（出版文本互证时已做推导复核）"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "一次受力正向例（完全卸载，M0=0）"
+  },
+  {
+    "case_id": "SE-002-S",
+    "module": "section_enlarge_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "bf": 250.0, "hf": 100.0, "fc": 14.3, "fc2": 16.7,
+      "As": 1520.0, "fy": 360.0, "As2": 804.0, "fy2": 360.0,
+      "as": 35.0, "as2": 45.0, "M0": 100.0, "M": 240.0, "Es": 200000.0
+    },
+    "expected": {
+      "verdict": "满足",
+      "epsilon_s0": 0.0008323,
+      "epsilon_s1": 0.001090,
+      "xi_b": 0.4393,
+      "Mu_kNm": 307.78,
+      "x_mm": 225.93,
+      "tolerance": 0.005,
+      "note": "二次受力：εs0/εs1 按式(5.2.4-3)/(5.2.4-2) 折减 ξb；x/h01=0.4859 未超 ξb0=0.518，不触发式(5.2.5)"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(5.2.4-1~3) 已核对公式）",
+      "title": "增大截面加固梁正截面验算自编算例 SE-002-S 二次受力",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "h01=h0 时 εs1=εs0 的条文近似与式(5.2.4-2) 自洽"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "二次受力例（M0>0，εs0/εs1 路径）"
+  },
+  {
+    "case_id": "SE-003-R",
+    "module": "section_enlarge_flexure",
+    "input": {
+      "b": 250.0, "h": 500.0, "bf": 250.0, "hf": 80.0, "fc": 14.3, "fc2": 16.7,
+      "As": 1520.0, "fy": 360.0, "As2": 308.0, "fy2": 360.0,
+      "as": 35.0, "as2": 40.0, "M0": 0.0, "M": 260.0, "Es": 200000.0
+    },
+    "expected": {
+      "verdict": "需调整",
+      "Mu_kNm": 249.79,
+      "x_mm": 180.98,
+      "xi_b": 0.5366,
+      "tolerance": 0.005,
+      "note": "反向例：M=260 > Mu=249.79，新增钢筋量不足（x 在限值内，属可调整）"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(5.2.3-1/2) 已核对公式）",
+      "title": "增大截面加固梁正截面验算自编算例 SE-003-R 反向例（新增钢筋量不足）",
+      "locator": "data/cases/workings/flexure_workings.md",
+      "cross_check": "对 x 线性直接解与力矩式回代一致"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
+    "scenario": "反向例（新增钢筋量不足，需调整）"
+  }
+]

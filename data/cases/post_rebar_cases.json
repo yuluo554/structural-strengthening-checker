@@ -11,22 +11,25 @@
       "fbd": 2.5,
       "psi_br": 1.0,
       "psi_w": 1.1,
-      "psi_T": 1.0
+      "psi_T": 1.0,
+      "psi_ae": 1.0
     },
     "expected": {
-      "ls_required_mm": 230.4,
+      "verdict": "满足",
+      "ls_mm": 230.4,
       "psi_N": 1.1,
+      "ld_required_mm": 253.44,
       "tolerance": 0.005,
-      "note": "真值仅为式(15.2.3) ls 与式(15.2.5) ψN 两个文本已核量；ld 终判（含 ψae 组合式）待 M2 公式补核后扩展"
+      "note": "真值口径=已核对文本量（式15.2.3 ls、式15.2.5 ψN）+ M2 已核对组合式终判（式15.2.2-2 ld≥ψN·ψae·ls，2026-10-05 出版文本核对）；ψae=1.0 非抗震显式输入"
     },
     "source": {
-      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5) 已核对文本）",
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5)/式(15.2.2-2) 已核对文本）",
       "title": "植筋锚固深度自编算例 PR-001 一般室内构件",
       "locator": "data/cases/workings/post_rebar_workings.md",
       "cross_check": "闭式解与逐步四则重算一致（见计算书第3步）；αspt/fbd 为场景输入系数，非表格数值断言"
     },
     "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等；依据 GB 50367-2013 已核对条文，plan/05 §三",
-    "scenario": "一次受力/一般构件（ψbr=1.00），非抗震（ψae 组合未参与真值）"
+    "scenario": "一次受力/一般构件（ψbr=1.00），非抗震（ψae=1.00）；ld=260 ≥ 253.44 → 满足"
   },
   {
     "case_id": "PR-002",
@@ -40,23 +43,25 @@
       "fbd": 2.5,
       "psi_br": 1.0,
       "psi_w": 1.1,
-      "psi_T": 1.0
+      "psi_T": 1.0,
+      "psi_ae": 1.0
     },
     "expected": {
-      "ls_required_mm": 282.24,
-      "psi_N": 1.1,
       "verdict": "需调整",
+      "ls_mm": 282.24,
+      "psi_N": 1.1,
+      "ld_required_mm": 310.464,
       "tolerance": 0.005,
-      "note": "反向例：ld=250 < ls=282.24 ≤ ls·ψN（310.464）；verdict 由单调性（ψae≥1.00）保证，不依赖未核对组合式"
+      "note": "反向例：ld=250 < ψN·ψae·ls=310.464（式15.2.2-2，M2 已核对终判；M1 期由单调性预判的结论与终判一致）"
     },
     "source": {
-      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5) 已核对文本）",
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5)/式(15.2.2-2) 已核对文本）",
       "title": "植筋锚固深度自编算例 PR-002 反向例（锚固深度不足）",
       "locator": "data/cases/workings/post_rebar_workings.md",
       "cross_check": "闭式解与逐步四则重算一致（见计算书第4步）"
     },
     "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
-    "scenario": "反向例：提供锚固深度低于基本锚固深度，需调整"
+    "scenario": "反向例：提供锚固深度低于 ψN·ψae·ls 需求，需调整"
   },
   {
     "case_id": "PR-003",
@@ -70,21 +75,98 @@
       "fbd": 3.0,
       "psi_br": 1.5,
       "psi_w": 1.1,
-      "psi_T": 1.0
+      "psi_T": 1.0,
+      "psi_ae": 1.0
     },
     "expected": {
-      "ls_required_mm": 345.6,
+      "verdict": "满足",
+      "ls_mm": 345.6,
       "psi_N": 1.65,
+      "ld_required_mm": 570.24,
       "tolerance": 0.005,
-      "note": "悬挑构件（ψbr=1.50，已核对离散值）；ld 终判（含 ψae 组合式）待 M2 公式补核后扩展"
+      "note": "悬挑构件（ψbr=1.50，已核对离散值）；终判含 ψae 组合式（M2 已核对）"
     },
     "source": {
-      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5) 已核对文本）",
+      "channel": "自编算例-手工计算书（依据 GB 50367-2013 式(15.2.3)/式(15.2.5)/式(15.2.2-2) 已核对文本）",
       "title": "植筋锚固深度自编算例 PR-003 悬挑构件",
       "locator": "data/cases/workings/post_rebar_workings.md",
       "cross_check": "闭式解与逐步四则重算一致（见计算书第3步）"
     },
     "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
-    "scenario": "悬挑结构构件（ψbr=1.50）"
+    "scenario": "悬挑结构构件（ψbr=1.50）；ld=600 ≥ 570.24 → 满足"
+  },
+  {
+    "case_id": "PR-004",
+    "module": "post_rebar_anchor",
+    "input": {
+      "fc": 14.3,
+      "fy": 360.0,
+      "d": 25.0,
+      "ld": 520.0,
+      "cover": 30.0,
+      "stirrup_dia": 8.0,
+      "adhesive_grade": 1,
+      "s1": 160.0,
+      "s2": 80.0,
+      "fc_grade": 30,
+      "psi_br": 1.0,
+      "psi_w": 1.1,
+      "psi_T": 1.0,
+      "psi_ae": 1.0
+    },
+    "expected": {
+      "verdict": "满足",
+      "alpha_spt": 1.0,
+      "fbd_used_MPa": 4.0,
+      "ls_mm": 450.0,
+      "ld_required_mm": 495.0,
+      "tolerance": 0.005,
+      "note": "查表算例（M2 追加）：αspt 由表15.2.3 查得（c=30、箍筋φ8、d=25 → 第4列 1.00）；fbd 由表15.2.4 查得（A级胶 s1=160=6.4d≥6d 且 s2=80=3.2d≥3.0d、C30 → 第二行 4.0；未达 s1≥7d 行条件）"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（表值 2026-10-05 以正式出版文本核对：表15.2.3/表15.2.4，印刷页 129）",
+      "title": "植筋锚固深度查表算例 PR-004（表15.2.3 + 表15.2.4 路径）",
+      "locator": "data/cases/workings/post_rebar_workings.md",
+      "cross_check": "表值与条款库 limits（table_15_2_3/table_15_2_4）及代码表值三处一致（测试锁死）"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
+    "scenario": "查表路径：αspt/fbd 由已核对表值查取（非场景系数）；ld=520 ≥ 495 → 满足"
+  },
+  {
+    "case_id": "PR-005",
+    "module": "post_rebar_anchor",
+    "input": {
+      "fc": 19.1,
+      "fy": 360.0,
+      "d": 20.0,
+      "ld": 350.0,
+      "cover": 30.0,
+      "stirrup_dia": 8.0,
+      "adhesive_grade": 2,
+      "s1": 110.0,
+      "s2": 60.0,
+      "fc_grade": 40,
+      "psi_br": 1.0,
+      "psi_w": 1.1,
+      "psi_T": 1.0,
+      "psi_ae": 1.0
+    },
+    "expected": {
+      "verdict": "需调整",
+      "alpha_spt": 1.0,
+      "fbd_used_MPa": 4.0,
+      "ls_mm": 360.0,
+      "ld_required_mm": 396.0,
+      "tolerance": 0.005,
+      "note": "查表反向例：B 级胶仅可用表15.2.4 第一行（A或B级 s1≥5d;s2≥2.5d）→ C40 4.0；s1=110=5.5d 满足；αspt 表15.2.3（c=30、φ8、d≤20 行）=1.00；ld=350 < 396 → 需调整"
+    },
+    "source": {
+      "channel": "自编算例-手工计算书（表值 2026-10-05 以正式出版文本核对：表15.2.3/表15.2.4，印刷页 129）",
+      "title": "植筋锚固深度查表算例 PR-005 反向例（B 级胶行限定 + 锚固不足）",
+      "locator": "data/cases/workings/post_rebar_workings.md",
+      "cross_check": "B 级胶行限定逻辑与表15.2.4 行结构一致"
+    },
+    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
+    "scenario": "查表路径反向例：ld 不足需调整"
   }
 ]

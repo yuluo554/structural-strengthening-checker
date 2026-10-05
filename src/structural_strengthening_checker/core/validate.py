@@ -25,8 +25,15 @@ def check_range(sym: str, value: Any, rng: Dict[str, Any], problems: List[str]) 
 
 
 def validate_params(param_schema: Dict[str, Dict[str, Any]], params: Dict[str, Any]) -> None:
-    """按模块参数 schema 校验：缺字段/越界/类型，逐字段列出问题后一次性抛出。"""
-    missing = [sym for sym in param_schema if sym not in params]
+    """按模块参数 schema 校验：缺字段/越界/类型，逐字段列出问题后一次性抛出。
+
+    schema 条目可带 "required": False（M2 起）：缺省不报错，提供时仍做范围/类型校验。
+    """
+    missing = [
+        sym
+        for sym, spec in param_schema.items()
+        if spec.get("required", True) and sym not in params
+    ]
     problems: List[str] = []
     if missing:
         problems.append("缺少参数: " + ", ".join(missing))

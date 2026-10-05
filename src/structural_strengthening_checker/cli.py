@@ -93,8 +93,8 @@ def _cmd_selfcheck(args) -> int:
     print(f"GB 55021 检查单: {ckl['total']} 项（已核对 {ckl['verified']}）")
     bench = run_calc_bench(data_dir, store=store)
     print(
-        f"算例库: {bench['total']} 例（门控阻塞 {bench['blocked_by_clauses']}；"
-        f"真值比对在 M2/M4 实装，failed 计数为未实装计算体，如实报告）"
+        f"算例库: {bench['total']} 例（通过 {bench['passed']} / 未通过 {bench['failed']} / "
+        f"门控阻塞 {bench['blocked_by_clauses']}）"
     )
 
     print(f"验算模块: {len(CALC_REGISTRY)} 个")
@@ -166,6 +166,15 @@ def _cmd_calc(args) -> int:
     except ValidationError as exc:
         print(f"[参数校验] {exc}")
         return EXIT_INPUT
+    cap = result["capacity"]
+    ratio = result["ratio"]
+    ratio_text = f"{ratio['value']:.3f}" if ratio.get("value") is not None else "N/A"
+    cap_text = f"{cap['value']:.4f}".rstrip("0").rstrip(".") if cap.get("value") is not None else "N/A"
+    print(f"验算结论: [{result['verdict']}] {module.name}")
+    print(f"  特征值(capacity) = {cap_text} {cap['unit']}；效应比({ratio['meaning']}) = {ratio_text}")
+    if result["warnings"]:
+        for w in result["warnings"]:
+            print(f"  [提示] {w}")
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return EXIT_OK
 
@@ -219,7 +228,7 @@ def _cmd_bench(args) -> int:
     data_dir = find_data_dir(args.data_dir)
     store = ClauseStore(data_dir / "knowledge")
     bench = run_calc_bench(data_dir, store=store)
-    print("验算基准（骨架期：如实报告门控阻塞，M2 后出现真值比对结果）")
+    print("验算基准（真值比对：verdict 严格相等 + 数值 ±0.5% 相对容差，口径 plan/05 §三）")
     print(
         json.dumps(
             {k: v for k, v in bench.items() if k != "details"},

@@ -47,13 +47,30 @@ def _write_params(tmp_path, module_id, params):
     return path
 
 
-def test_calc_repo_data_reaches_m2_stub_exit2(repo_cwd, tmp_path, capsys):
-    """M1 后仓库条款已核对：门控放行 → M2 stub 未实装 → exit 2（受控降级，绝不 traceback）。"""
+def test_calc_repo_data_computes_exit0(repo_cwd, tmp_path, capsys):
+    """M2 计算体实装：仓库条款已核对 → 门控放行 → 输出结论行 + CalcResult JSON，exit 0。"""
     params_path = _write_params(tmp_path, "cfrp_beam_flexure", VALID_CFRP_PARAMS)
     code = main(["calc", "cfrp_beam_flexure", "--input", str(params_path)])
     out = capsys.readouterr().out
-    assert code == 2, out
-    assert "未实装" in out
+    assert code == 0, out
+    assert "验算结论: [满足]" in out
+    assert '"verdict": "满足"' in out
+    assert '"Mu_kNm"' in out
+
+
+def test_calc_three_states_demo(repo_cwd, tmp_path, capsys):
+    """M2 DoD：CLI 演示 满足/需调整/不满足 三态。"""
+    cases = {
+        "满足": VALID_CFRP_PARAMS,  # CF-001-P 口径：Mu=244 > M=180
+        "需调整": dict(VALID_CFRP_PARAMS, M=260.0, Afe=50.0),  # CF-003-R 口径：Mu=230 < 260
+        "不满足": dict(VALID_CFRP_PARAMS, M=350.0),  # x_M 超出 0.85·ξb·h0 → 方法不可行
+    }
+    for verdict, params in cases.items():
+        params_path = _write_params(tmp_path, "cfrp_beam_flexure", params)
+        code = main(["calc", "cfrp_beam_flexure", "--input", str(params_path)])
+        out = capsys.readouterr().out
+        assert code == 0, out
+        assert f"验算结论: [{verdict}]" in out, verdict
 
 
 def test_calc_gate_demo_exit3(repo_cwd, tmp_path, capsys):
@@ -112,14 +129,15 @@ def test_calc_missing_file_exit2(repo_cwd, tmp_path, capsys):
     assert "无法读取" in capsys.readouterr().out
 
 
-def test_bench_reports_m1_cases_honestly(repo_cwd, capsys):
+def test_bench_passes_all_m2_cases(repo_cwd, capsys):
     code = main(["bench"])
     out = capsys.readouterr().out
     assert code == 0, out
-    # M1 填充 3 例植筋算例；门控已放行，计算体 M2 未实装 → 如实报 failed=3
-    assert '"total": 3' in out
+    # M2 回填后 14 例（5 植筋 + 9 受弯）全部通过（±0.5% 容差 + verdict 严格相等）
+    assert '"total": 14' in out
+    assert '"passed": 14' in out
+    assert '"failed": 0' in out
     assert '"blocked_by_clauses": 0' in out
-    assert '"failed": 3' in out
 
 
 def test_checklist_lists_items(repo_cwd, capsys):
@@ -150,4 +168,9 @@ VALID_CFRP_PARAMS = {
     "Ecf": 240000.0,
     "M0": 0.0,
     "M": 180.0,
+    "ff": 2300.0,
+    "ef": 0.01,
+    "as": 35.0,
+    "xi_b": 0.518,
+    "Es": 200000.0,
 }

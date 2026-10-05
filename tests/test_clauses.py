@@ -23,10 +23,10 @@ def base_clause(**overrides):
 def test_repo_store_loads(repo_data_dir):
     store = ClauseStore(repo_data_dir / "knowledge")
     assert not store.issues
-    # M1 数据先行首批：GB50367×31 + GB55021×16 + GB50728×1 + JGJ145×1（待核对）
-    assert len(store) == 49
+    # M2 批次：GB50367×33（M1 31 + M2 新增 4.3.4/4.3.5）+ GB55021×16 + GB50728×1 + JGJ145×1（待核对）
+    assert len(store) == 51
     summary = store.status_summary()
-    assert summary["verified"] == 48
+    assert summary["verified"] == 50
     # 熔断纪律留痕：JGJ 145-2013 §6.3 渠道已试不可达，保持待核对
     assert summary["pending"] == 1
     assert "JGJ145-2013-6.3" in store
