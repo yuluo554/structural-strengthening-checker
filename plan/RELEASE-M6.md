@@ -38,6 +38,8 @@
 | R1 | plan/HANDOFF-M4 第 108 行 [PERSONAL]："midasuser.com" 内含用户名子串 | 误报，非真实标记——扫描器引入短标记词边界规则后消除 |
 | R2 | dist 5 个 Qt 二进制 [BYTES_PERSONAL] | 误报定位：Qt6Core.dll 内嵌 Windows 时区名 "caucasus standard time"（含 a-s-u-s 序列）；字节扫描补齐与文本扫描同口径的短标记边界规则后消除。其余个人标记（主目录路径/姓名/邮箱）在 dist 316 文件中 0 命中（Python 字节探测逐一验证） |
 | R1 | dist 多文件 [BYTES_MARKER]（PIL/PySide6/cryptography SBOM/base_library.zip 等） | 上游厂商二进制内的公共邮箱（SBOM/LICENSE 维护者元数据）与二进制噪声；非本项目泄漏面。口径定稿：dist 字节扫描只跑强标记（个人标记+姊妹词），不跑邮箱正则 |
+| R4（终扫，覆盖新入仓文件） | plan/RELEASE-M6.md 第 70 行 [PERSONAL]：建仓 URL 含 GitHub 账号名 | 口径定稿：GitHub 账号名是发布行为的固有公开元数据（仓库挂在公开账号下，clone URL 必含），豁免；与硬门对象（个人邮箱/真实姓名/主目录路径）性质不同，豁免口径写入扫描器并有本行留档 |
+| R4（终扫） | tools/desensitize_scan.py 自文档字符串 [PERSONAL/ABS_PATH]：扫描器自身示例文字含标记字面量 | 措辞去字面量（时区名误报示例不再写用户名原词、系统盘示例不写盘符路径）；扫描器对自身可扫清 |
 
 ### 复核项豁免台账（R3 剩余，全部非个人信息）
 
@@ -46,15 +48,16 @@
 | plan/HANDOFF-M6.md:139 [ABS_PATH_SYS] | `SystemRoot="C:\\Windows"`（exe 干净验证模板） | Windows 系统盘常量，env -i 剥离环境后必须显式给出，不含任何个人/机器信息 |
 | plan/HANDOFF-M6.md:140 [ABS_PATH_ANY] | `"D:\...\dist\SSC\ssc-cli.exe"`（示例路径） | 已是省略号掩码形态，非真实路径 |
 
-### 最终结论（R3）
+### 最终结论（R5，发布提交终态）
 
 ```
-[SUMMARY] repo_hits=2 dist_hits=0 total_files_hit=2   （2 项均为上表复核项）
-[SUMMARY] gate=0 review=2
+[SUMMARY] repo_hits=5 dist_hits=0 total_files_hit=5   （5 项均为上表复核项：HANDOFF-M6 两处 + 本文件豁免台账自引三处）
+[SUMMARY] gate=0 review=5
 [VERDICT] SCAN_CLEAN
 ```
 
-**脱敏四步（邮箱/姓名/绝对路径/姊妹项目业务词）+ dist 产物本体扫描：全部通过。**
+**脱敏四步（邮箱/姓名/绝对路径/姊妹项目业务词）+ dist 产物本体扫描：硬门全 0，通过。**
+（本文件第 37/46/47 行的 REVIEW 为豁免台账自引豁免对象原文，属审计留痕本体，随 gate=0 一并放行。）
 
 ### 方法论备注
 

@@ -10,7 +10,7 @@
                     短标记如用户名需非字母数字边界——防 midasuser 之类子串误报）
   3. ABS_PATH       Windows 盘符绝对路径分级：
                     USER=含 \\Users\\ 或 Documents and Settings（硬门，必须 0）
-                    SYS=系统/程序目录（复核项：非个人信息可豁免留档，如 C:\\Windows）
+                    SYS=系统/程序目录（复核项：非个人信息可豁免留档，如系统盘 Windows 目录）
                     ANY=其余盘符路径（复核项）
   4. SIBLING        姊妹项目业务词（词表脱敏存储为 base64，扫描时解码）
 附：docx 元数据（docProps/*.xml）按同类别扫描；dist 全树复核禁区路径成分
@@ -117,12 +117,15 @@ def marker_hit(line: str, markers: list) -> bool:
 
 def count_marker_bytes(low: bytes, m: str) -> int:
     """字节级标记计数：与 marker_hit 同口径——短标记要求非字母数字边界
-    （防 caucasus 之类时区名对 ASUS 的子串误报），长标记子串即可。"""
+    （防时区名等英文词对短用户名标记的子串误报），长标记子串即可。
+    GitHub 账号名豁免：github.com/<账号名> 是发布行为的固有公开元数据（仓库挂在
+    公开账号下），该形态不计入个人标记命中；邮箱/真实姓名仍硬门。"""
     b = m.lower().encode("utf-8", "ignore")
     if not b:
         return 0
+    gh = b"github.com/" + b
     if len(m) >= 6:
-        return low.count(b)
+        return max(0, low.count(b) - low.count(gh))
     n = 0
     start = 0
     while True:
@@ -155,8 +158,10 @@ def scan_text(path: Path, rel: str, markers: list, sib: list, hits: list) -> Non
         return
     exempt_abs = rel.replace("\\", "/") == GUARD_TEST
     for lineno, raw_line in enumerate(text.splitlines(), 1):
-        # 先剥离 URL（https:// 等），防协议部分被误判为盘符绝对路径
+        # 先剥离 URL 协议头与 github.com/账号名（后者是发布固有公开元数据，见模块文档），
+        # 防协议部分被误判为盘符绝对路径、账号名误触个人标记
         line = URL_RE.sub("", raw_line)
+        line = re.sub(r"github\.com/[A-Za-z0-9-]+", "", line, flags=re.IGNORECASE)
         if EMAIL_RE.search(line):
             hits.append((rel, lineno, "EMAIL", 1))
         if marker_hit(line, markers):
