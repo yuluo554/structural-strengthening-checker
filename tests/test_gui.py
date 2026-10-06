@@ -186,7 +186,7 @@ def test_check_tab_export_report_dir(window, check_tab, tmp_path):
 
 
 def test_check_tab_missing_file(check_tab):
-    check_tab.path_edit.setText(str(check_tab.path_edit.text() or "Z:/no_such_file.docx"))
+    check_tab.path_edit.setText(str(check_tab.path_edit.text() or "no_such_missing_file.docx"))
     assert check_tab.run_check_now() is False
 
 

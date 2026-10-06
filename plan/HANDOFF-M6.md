@@ -31,10 +31,10 @@
   cases JSON 与仓库逐份对账一致。`.gitignore` 加 `!tools/ssc.spec` 例外。
 - **构建通道实录（plan/06 决策行）**：3.8.8 通道 7 连崩（unknown opcode/opname AttributeError/
   0xC0000005/"Instruction" not iterable——全部"原则上不可能"错误，清 pyc+冷却不解，判读为该老
-  解释器环境级不稳定）；**3.14.5 通道**（`C:\Users\ASUS\AppData\Local\Python\bin\python.exe`）
+  解释器环境级不稳定）；**3.14.5 通道**（`%LOCALAPPDATA%\Python\bin\python.exe`）
   首跑定位真根因：PyInstaller 6.22.3 对 3.14 webbrowser 字节码解析 bug（"Failed to scan the module
   'webbrowser'"）→ spec excludes 加 webbrowser 后一次成功。构建命令：
-  `PYTHONDONTWRITEBYTECODE=1 "C:\Users\ASUS\AppData\Local\Python\bin\python.exe" -X utf8 tools/build_exe.py`。
+  `PYTHONDONTWRITEBYTECODE=1 "%LOCALAPPDATA%\Python\bin\python.exe" -X utf8 tools/build_exe.py`。
 - **干净验证证据（M5 DoD）**：仓库外中立目录 + 剥离 PATH（env -i 仅 System32）+ 无 SSC_DATA_DIR：
   ssc-cli selfcheck（SELFCHECK_OK）/ bench（BENCH_OK）/ check / checklist / report 五通路全过；
   SSC.exe offscreen 启动存活探针通过。源码守门：test_no_network_imports（全离线断网证据）。
@@ -90,7 +90,7 @@
 
 ## 四、本机环境坑（M5 增补）
 
-- **PyInstaller 构建：一律走 3.14.5 通道**（`C:\Users\ASUS\AppData\Local\Python\bin\python.exe`），
+- **PyInstaller 构建：一律走 3.14.5 通道**（`%LOCALAPPDATA%\Python\bin\python.exe`），
   3.8.8 通道 7 连崩实录见 plan/06——不要在 3.8 上重试构建，直接用 3.14；
 - **3.14 通道也有坑**：PyInstaller 6.22.3 对 webbrowser 字节码解析 bug（已 excludes 绕过）；
   PySide6 装的是 6.11.2（与 3.8 通道的 6.6.3.1 并存，各归各的 site-packages，互不干扰）；
@@ -132,14 +132,14 @@ PYTHONDONTWRITEBYTECODE=1 py -X utf8 -m structural_strengthening_checker bench
 # 桌面界面（3.8 通道，PySide6 6.6.3.1）
 PYTHONDONTWRITEBYTECODE=1 py -X utf8 -m structural_strengthening_checker gui
 # exe 构建（必须 3.14 通道；构建+红线断言一体）
-PYTHONDONTWRITEBYTECODE=1 "C:\Users\ASUS\AppData\Local\Python\bin\python.exe" -X utf8 tools/build_exe.py
+PYTHONDONTWRITEBYTECODE=1 "%LOCALAPPDATA%\Python\bin\python.exe" -X utf8 tools/build_exe.py
 # 仅重跑既有产物断言
 PYTHONDONTWRITEBYTECODE=1 py -X utf8 tools/build_exe.py --skip-build
 # exe 干净验证模板（中立目录 + 剥离 PATH；%LOCALAPPDATA%\Temp\ssc_verif）
 cd "$LOCALAPPDATA/Temp/ssc_verif" && env -i PATH="/c/Windows/System32:/c/Windows" SystemRoot="C:\\Windows" \
   "D:\...\dist\SSC\ssc-cli.exe" selfcheck
 # 3.14 通道跑 GUI 冒烟（PYTHONPATH=src，未安装包时）
-PYTHONPATH=src QT_QPA_PLATFORM=offscreen "C:\Users\ASUS\AppData\Local\Python\bin\python.exe" -X utf8 <script>.py
+PYTHONPATH=src QT_QPA_PLATFORM=offscreen "%LOCALAPPDATA%\Python\bin\python.exe" -X utf8 <script>.py
 # 安装（新环境，同 M4）
 py -m pip install -U pip && NO_PROXY="*" no_proxy="*" py -m pip install -e .[dev] -i https://pypi.tuna.tsinghua.edu.cn/simple
 # GUI 开发安装

@@ -2,7 +2,7 @@
 
 **项目**：结构加固验算与加固方案核查桌面应用（土木工程·结构加固领域，Windows 桌面程序形态，**非识图路线**）
 **方法论**：ai-tool-project-sprint（plan 先行 → 数据先行 → 公式引擎/规则引擎 → 基准 → 桌面交付+打包 → 脱敏发布）
-**项目系列**：①construction-drawing-plan-checker（建造，Web，已发布）②power-operation-ticket-checker（电力）③medical-record-quality-checker（医疗）④bidding-document-checker（公共采购）⑤food-label-compliance-checker（食品）⑥invoice-ledger-checker（财务）⑦resume-talent-pool（人力资源，⑥⑦为桌面形态）→ ⑧本项目（结构加固，桌面形态，用户点名领域且明确排除识图）
+**项目系列**：同系列第 8 题（①~⑦ 为前作项目，名称与领域清单按脱敏纪律不入公开仓，登记见 plan/06 决策表）→ ⑧本项目（结构加固，桌面形态，用户点名领域且明确排除识图）
 
 ## 文档索引
 
