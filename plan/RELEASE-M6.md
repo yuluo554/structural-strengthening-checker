@@ -8,7 +8,7 @@
 | 步骤 | 结果 |
 |---|---|
 | 基线（dev 环境） | pytest 156 项全绿（exit 0）；`--collect-only` 收集数 **156**（15 个测试文件），与 HANDOFF-M6 记录一致 |
-| 新 clone | 中立目录 `%LOCALAPPDATA%\Temp\ssc_m6_clean`，clone 自本地仓库 → HEAD d1d45d4（M5 交付提交） |
+| 新 clone | 中立目录 `%LOCALAPPDATA%\Temp\ssc_m6_clean`，clone 自本地仓库 → **发布提交终态 9d43a06 复验**（首轮 d1d45d4 同样全过） |
 | 新 venv | py -3.8 -m venv .venv（Python 3.8.8）；`pip install -U pip` → pip 25.0.1 |
 | 按 README 逐字安装 | `pip install -e .[dev]` **默认 PyPI 直连一次成功**（未动用清华镜像，无网络偏离）；依赖 pytest 8.3.5 / python-docx 1.1.2 / lxml 6.1.3 等 |
 | pytest（干净 venv） | exit 0；收集数 **139**；**138 passed + 2 skipped（均显式声明，-rs 可见）** |
@@ -16,6 +16,7 @@
 | selfcheck | SELFCHECK_OK（exit 0；gui/parse extras 缺席按需提示，属设计行为） |
 | bench | BENCH_OK（exit 0；检出率/误报/判定准确率门槛全达，check 基准 6/6 逐份 OK） |
 | 安装态确认 | 导入路径 = 干净 clone 的 src（pip 可编辑安装生效，非 conftest 回退路径） |
+| dist 基线 | M6 全部提交未触及 `src/`（git diff d1d45d4..HEAD -- src/ 为空）——Release zip（83.6MB，sha256 见 §三）与发布源码同运行时基线 |
 
 **结论：干净环境验证通过。** 真异机验证与物理断网演示留发布验收复核（M5 起以等效证据背书，口径未变）。
 
