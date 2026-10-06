@@ -19,7 +19,9 @@
 | HANDOFF-M3.md | M2→M3 交接快照 | ⚠️ 已过时仅作历史（M3 完成） |
 | HANDOFF-M4.md | M3→M4 交接快照 | ⚠️ 已过时仅作历史（M4 完成） |
 | HANDOFF-M5.md | M4→M5 交接快照 | ⚠️ 已过时仅作历史（M5 完成） |
-| HANDOFF-M6.md | M5→M6 交接快照 | ✅ 2026-10-06 |
+| HANDOFF-M6.md | M5→M6 交接快照 | ⚠️ 已过时仅作历史（M6 完成，项目完结） |
+| RELEASE-M6.md | M6 脱敏发布留档（干净验证+扫描实录+拍板留档） | ✅ 2026-10-06 |
+| HANDOFF-M7.md | 项目完结收官快照（发布物/开放项/口径存续） | ✅ 2026-10-06 |
 
 ## 决策记录
 
@@ -40,7 +42,7 @@
 | M3 方案核查 | docx/PDF 提取完整版（损坏/空文件降级）+ 参数卡抽取（正则+槽位+证据子串防幻觉）+ 规则引擎三级判定（数值比对/存在性/缺失型，status 纪律）+ `ssc check` 端到端 + `ssc checklist` 核对流（--doc/--interactive/--fill）；条款库 52 条（新增 GB/T 50010-2010 表4.2.3-1 钢筋强度设计值，建研院防火所渠道目视核对）；合成方案语料 6/6 端到端对账（基线 0 误报）；pytest 118 项全绿 | ✅ 2026-10-05 |
 | M4 内置基准 | `ssc bench` 双基准（验算真值比对 + 方案核查对账：现场生成→逐份核查→非 pass 集合 vs truth）；指标门槛（检出率 100% / 误报 0 / 判定准确率 100%）进测试断言并常驻 CI；指标表进 README；docx 报告导出补齐（FR-D1/D2：验算书+核查报告，免责声明+签署栏+0 外链，`ssc report calc/check` + `ssc check --report` 双写 JSON+docx）；pytest 129 项全绿 | ✅ 2026-10-06 |
 | M5 桌面交付 | PySide6 四页签界面（全部消费既有 API，GUI 测试 17 项 offscreen 常驻）+ find_data_dir 冻结分支（打包数据内嵌策略）+ PyInstaller onedir 双 exe（SSC.exe GUI + ssc-cli.exe 控制台，红线断言：_private 不入包+内嵌数据对账）；干净验证：中立目录+剥离 PATH 五通路全过 + GUI 存活探针；pytest 156 项全绿；PySide6 3.8 上限 6.6.3.1 锁定（待拍板 #1/#2 结算）；3.14 构建通道实录入 plan/06 | ✅ 2026-10-06 |
-| M6 脱敏发布 | 干净环境验证 + 脱敏四步 + GitHub 公开仓库 + Release（exe）+ 收尾固化 | ⬜ |
+| M6 脱敏发布 | 干净环境验证（新 clone+新 venv 按 README 逐字跑通；收集数对账 139+GUI 17=156 无静默少跑）+ 脱敏四步工具化（tools/desensitize_scan.py：入仓树+dist 产物本体+docx 元数据，硬门全清 gate=0，dist 316 文件全净）+ plan/RELEASE-M6.md 留档 + 技术报告 docs/技术报告.md 入仓 + GitHub 公开仓库发布（tag v0.1.0-M6，Release 附 exe zip 83.6MB+sha256，description+topics 10 个）+ CI 首跑四矩阵全绿（含 bench 门与 windows/3.8 gui extras 矩阵）+ 收尾固化（README 转正/缓议项 #4·#5·#6 结算） | ✅ 2026-10-06（项目完结） |
 
 ## 决策记录
 
