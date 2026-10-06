@@ -83,7 +83,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_rep_check.add_argument("plan_file", help="方案文件（.docx/.pdf）")
     p_rep_check.add_argument("--out", required=True, help="输出 docx 路径")
 
-    sub.add_parser("gui", help="桌面界面（M5 实装）")
+    sub.add_parser("gui", help="启动桌面界面（四页签：验算表单/方案核查/检查单/报告）")
     return parser
 
 
@@ -654,13 +654,10 @@ def _cmd_gui(args) -> int:
     from .gui.app import launch
 
     try:
-        return launch()
+        return launch(getattr(args, "data_dir", None))
     except MissingExtraError as exc:
         print(f"[缺少依赖] {exc}")
         return EXIT_INPUT
-    except NotImplementedError:
-        print("桌面界面在 M5 实装（plan/05 §五）；当前可用 CLI: ssc selfcheck / modules / calc / check / checklist / bench。")
-        return EXIT_OK
 
 
 def main(argv: Optional[List[str]] = None) -> int:
