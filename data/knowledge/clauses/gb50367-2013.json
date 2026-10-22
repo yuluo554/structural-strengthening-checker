@@ -13,6 +13,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第10.2.1条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml（移动版同文）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341306（平截面假定论证）复核语义一致"
     },
     "status": "已核对",
@@ -55,6 +57,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第10.2.2条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341306 复核（HRB335 达界限时钢筋应变约为 1.5 倍屈服应变）"
     },
     "status": "已核对",
@@ -230,6 +234,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第10.2.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml（移动版符号定义同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341306 确认公式组结构（力矩中心/轴力平衡/ψf 推导/x≥2a'）与设计流程；公式本体图片未核对，M2 前以正式出版文本补核；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 76（PDF 页 88），公式组完整可读，与条文说明结构一致"
     },
     "status": "已核对",
@@ -317,6 +323,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第10.2.4条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml（移动版同文）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341306（km 来源：ACI 440）；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 78（PDF 页 90），式(10.2.4-2) 完整可读（系数 308000）"
     },
     "status": "已核对",
@@ -398,6 +406,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第10.2.8条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml（移动版同文）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341306（αf 取值方法说明）；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 79（PDF 页 91），公式与全表数值完整可读"
     },
     "status": "已核对",
@@ -428,6 +438,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第10.2.10条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341306（目的说明）"
     },
     "status": "已核对",
@@ -454,6 +466,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第10.2.11条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341207.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": null
     },
     "status": "已核对",
@@ -477,6 +491,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第9.2.1条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341299（平截面假定试验研究）复核语义一致"
     },
     "status": "已核对",
@@ -518,6 +534,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第9.2.2条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341299"
     },
     "status": "已核对",
@@ -684,6 +702,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第9.2.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml（移动版符号定义同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341299 确认公式组结构（力矩中心取受拉区边缘/轴力平衡/ψsp 平截面推导/x≥2a'）与设计流程；公式本体图片未核对；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 62（PDF 页 74），公式组完整可读（含受压钢板项 f'sp·A'sp·h）"
     },
     "status": "已核对",
@@ -749,6 +769,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第9.2.5条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341299（延伸长度确定方法与纤维复合材统一；粘结强度取值修订依据）"
     },
     "status": "已核对",
@@ -818,6 +840,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第9.2.6条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341299（两种锚固受剪情况）"
     },
     "status": "已核对",
@@ -900,6 +924,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第9.2.9条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341299（αsp 取值按配筋率和钢筋排数查表）；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 65（PDF 页 77），公式与全表数值完整可读"
     },
     "status": "已核对",
@@ -929,6 +955,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第9.2.11条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341299（控制裂缝宽度与变形、强剪弱弯）"
     },
     "status": "已核对",
@@ -956,6 +984,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第9.2.12条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341200.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": null
     },
     "status": "已核对",
@@ -1125,6 +1155,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第5.2.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341178.shtml（移动版符号定义同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341277（αs=0.9 的试验依据与一次受力近似说明）；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 21/22（PDF 页 33/34），公式组完整可读"
     },
     "status": "已核对",
@@ -1204,6 +1236,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第5.2.4条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341178.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341277（ξb 式来源：内力臂系数 0.85 推导）；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 23（PDF 页 35），三式完整可读；修正 M1 记录：出版文本为「可近似取 h01=h0，εs1=εs0」，非「εs1=εs0·h01/h0」"
     },
     "status": "已核对",
@@ -1247,6 +1281,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第5.2.5条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341178.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 23（PDF 页 35），公式完整可读"
     },
     "status": "已核对",
@@ -1270,6 +1306,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第15.2.1条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341333（抗震修正系数依据）"
     },
     "status": "已核对",
@@ -1362,6 +1400,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第15.2.2条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml（移动版同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341333（抗震延性修正系数的试验依据）；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 128（PDF 页 140），式(15.2.2-2) 组合式完整可读（M1 熔断项解除）"
     },
     "status": "已核对",
@@ -1469,6 +1509,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第15.2.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml（移动版公式文本复核：ls＝0.2αspt·d·ƒy/ƒbd）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341333（αspt 参照 ACI 318-02 制定并按我国工程经验调整为查表法）；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 129（PDF 页 141），公式与全表数值完整可读"
     },
     "status": "已核对",
@@ -1558,6 +1600,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第15.2.4条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml（移动版同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341333（确认强制性条文属性；表值参照 ICBO 安全系数与 EOTA 取值曲线）；正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 129（PDF 页 141），全表数值完整可读"
     },
     "status": "已核对",
@@ -1625,6 +1669,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第15.2.5条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml（移动版公式文本复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341333（修正系数参照欧洲指南与我国试验研究制定）"
     },
     "status": "已核对",
@@ -1648,6 +1694,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第15.2.6条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341235.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341333（10d/12d 误导警示）"
     },
     "status": "已核对",
@@ -1672,6 +1720,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第4.4.1条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341172.shtml（移动版同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341271（A/B 级区别说明）"
     },
     "status": "已核对",
@@ -1697,6 +1747,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第4.4.2条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341172.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341271（确认强制性条文属性与依据）"
     },
     "status": "已核对",
@@ -1720,6 +1772,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第4.4.3条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341172.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341271（湿热老化检验不可替代说明）"
     },
     "status": "已核对",
@@ -1747,6 +1801,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第4.4.4条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341172.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "条文说明页 2341271（确认强制性条文属性）"
     },
     "status": "已核对",
@@ -1774,6 +1830,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第3.1.7条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341165.shtml（移动版同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": null
     },
     "status": "已核对",
@@ -1796,6 +1854,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第3.1.8条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341165.shtml（移动版同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": null
     },
     "status": "已核对",
@@ -1818,6 +1878,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB50367-2013 第5.1.5条，正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341176.shtml（移动版同文复核）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "GB 55021-2021 第6.1.5条（全文强制：加固前应按设计规定卸除或部分卸除荷载）语义一致"
     },
     "status": "已核对",
@@ -1890,6 +1952,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文 + 正式出版文本扫描件（中国灌区协会挂载）",
       "locator": "GB50367-2013 第4.3.4条，建标库正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341166.shtml；表值目视核对：印刷页 14（PDF 页 26）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 14（PDF 页 26），三表数值完整可读"
     },
     "status": "已核对",
@@ -1968,6 +2032,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文 + 正式出版文本扫描件（中国灌区协会挂载）",
       "locator": "GB50367-2013 第4.3.5条，建标库正文页 http://www.jianbiaoku.com/webarbs/book/1069/2341166.shtml；表值目视核对：印刷页 15（PDF 页 27）",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "正式出版文本扫描件（data/_private/GB50367-2013_gqxh.pdf，中国灌区协会挂载）页面图像目视核对：印刷页 15（PDF 页 27），全表数值完整可读"
     },
     "status": "已核对",

@@ -28,7 +28,6 @@
       "locator": "data/cases/workings/post_rebar_workings.md",
       "cross_check": "闭式解与逐步四则重算一致（见计算书第3步）；αspt/fbd 为场景输入系数，非表格数值断言"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等；依据 GB 50367-2013 已核对条文，plan/05 §三",
     "scenario": "一次受力/一般构件（ψbr=1.00），非抗震（ψae=1.00）；ld=260 ≥ 253.44 → 满足"
   },
   {
@@ -60,7 +59,6 @@
       "locator": "data/cases/workings/post_rebar_workings.md",
       "cross_check": "闭式解与逐步四则重算一致（见计算书第4步）"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
     "scenario": "反向例：提供锚固深度低于 ψN·ψae·ls 需求，需调整"
   },
   {
@@ -92,7 +90,6 @@
       "locator": "data/cases/workings/post_rebar_workings.md",
       "cross_check": "闭式解与逐步四则重算一致（见计算书第3步）"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
     "scenario": "悬挑结构构件（ψbr=1.50）；ld=600 ≥ 570.24 → 满足"
   },
   {
@@ -129,7 +126,6 @@
       "locator": "data/cases/workings/post_rebar_workings.md",
       "cross_check": "表值与条款库 limits（table_15_2_3/table_15_2_4）及代码表值三处一致（测试锁死）"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
     "scenario": "查表路径：αspt/fbd 由已核对表值查取（非场景系数）；ld=520 ≥ 495 → 满足"
   },
   {
@@ -166,7 +162,6 @@
       "locator": "data/cases/workings/post_rebar_workings.md",
       "cross_check": "B 级胶行限定逻辑与表15.2.4 行结构一致"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲）；verdict 真值严格相等",
     "scenario": "查表路径反向例：ld 不足需调整"
   }
 ]

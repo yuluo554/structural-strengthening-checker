@@ -11,17 +11,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # 3.8 矩阵：本机唯一解释器为 3.8.8，防新语法混入（ubuntu-24.04 无 3.8，锁 22.04）
-          # extras 列：windows/3.8 矩阵加装 gui（M5 起 GUI 测试常驻一个矩阵，offscreen 运行），
+          # 支持面 = 3.12 / 3.13（3.8、3.9、3.10、3.11 均已 EOL 或即将 EOL）；
+          # extras 列：windows/3.12 矩阵加装 gui（M5 起 GUI 测试常驻一个矩阵，offscreen 运行），
           # 其余矩阵不装 PySide6——test_gui importorskip 自动跳过
-          - { os: ubuntu-22.04, python-version: "3.8", extras: dev }
           - { os: ubuntu-latest, python-version: "3.12", extras: dev }
-          - { os: windows-latest, python-version: "3.8", extras: "dev,gui" }
-          - { os: windows-latest, python-version: "3.12", extras: dev }
+          - { os: ubuntu-latest, python-version: "3.13", extras: dev }
+          - { os: windows-latest, python-version: "3.12", extras: "dev,gui" }
+          - { os: windows-latest, python-version: "3.13", extras: dev }
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # 脱敏 metadata 门要扫全历史（浅克隆只剩 1 提交 = 空验）
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install
@@ -35,3 +37,8 @@ jobs:
       # M4 起基准常驻 CI：验算真值比对 + 方案核查指标门槛（检出率 1.0 / 误报 0 / 判定准确率 1.0）
       - name: Bench (calc + check 达标门)
         run: python -X utf8 -m structural_strengthening_checker bench
+      # 脱敏门自证 + 提交元数据：前者证明扫描器还活着，后者覆盖文件扫描看不到的 git 历史
+      - name: Desensitize selftest (门自证：阳性 4 + 阴性 4)
+        run: python -X utf8 tools/desensitize_scan.py --selftest
+      - name: Desensitize metadata (提交历史邮箱)
+        run: python -X utf8 tools/desensitize_scan.py --mode metadata

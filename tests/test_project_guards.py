@@ -11,7 +11,7 @@ def test_pyproject_extras_declared():
     text = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
     for extra in ("gui", "report", "parse", "dev", "package"):
         assert f"{extra} = [" in text, f"pyproject 缺少 extras 组 {extra}"
-    assert 'requires-python = ">=3.8"' in text
+    assert 'requires-python = ">=3.12"' in text
     assert "dependencies = []" in text  # 核心层零依赖纪律
 
 
@@ -21,14 +21,14 @@ def test_gitattributes_eol_guard():
 
 
 def test_all_modules_have_future_annotations():
-    """3.8 兼容纪律：带注解的模块统一 from __future__ import annotations（CI 3.8 矩阵兜底 match 等语法）。"""
+    """注解纪律：带注解的模块统一 from __future__ import annotations（延迟求值，防运行期名称解析差异）。"""
     offenders = []
     for path in sorted(SRC_ROOT.rglob("*.py")):
         text = path.read_text(encoding="utf-8")
         needs_future = ("-> " in text) or (": list[" in text) or ("->list[" in text)
         if needs_future and "from __future__ import annotations" not in text:
             offenders.append(str(path.relative_to(REPO_ROOT)))
-    assert offenders == [], f"缺少 future annotations（3.8 注解兼容）: {offenders}"
+    assert offenders == [], f"缺少 future annotations: {offenders}"
 
 
 def test_no_personal_paths_in_source():
@@ -43,5 +43,5 @@ def test_no_personal_paths_in_source():
 
 
 def test_python_version_floor():
-    """本机 3.8.8 与 CI 双版本——要求文件与事实一致。"""
-    assert sys.version_info >= (3, 8)
+    """支持面 >=3.12（3.8/3.9/3.10/3.11 均已 EOL 或即将 EOL）——要求与本机事实一致。"""
+    assert sys.version_info >= (3, 12)

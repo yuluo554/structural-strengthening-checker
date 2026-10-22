@@ -22,6 +22,9 @@ reports/
 *.key
 *_private/
 
+# 迭代交接物料（诊断/路线/提示词/执行记录，本地留档不入公共仓）
+update/
+
 # 系统文件
 Thumbs.db
 Desktop.ini

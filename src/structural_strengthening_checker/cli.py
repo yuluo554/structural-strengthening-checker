@@ -527,6 +527,12 @@ def _cmd_bench(args) -> int:
         )
     )
     failed = bool(bench["issues"])
+    if bench.get("failed"):
+        failed = True
+        print(f"  [x] 算例真值比对失败 {bench['failed']} 例（共 {bench['total']} 例）")
+    if bench.get("blocked_by_clauses"):
+        failed = True
+        print(f"  [x] {bench['blocked_by_clauses']} 例被条款门控阻塞")
     if failed:
         for issue in bench["issues"]:
             print(f"  [x] {issue}")

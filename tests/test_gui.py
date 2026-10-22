@@ -1,6 +1,6 @@
 """GUI 四页签测试（PySide6 offscreen）：主流程冒烟 + 消费面纪律。
 
-- PySide6 未安装 → importorskip 跳过（CI 仅 windows/3.8 矩阵加装 gui extras）；
+- PySide6 未安装 → importorskip 跳过（CI 仅 windows/3.12 矩阵加装 gui extras）；
 - QT_QPA_PLATFORM=offscreen 必须在首次导入 PySide6 前设置；
 - 消息框/文件对话框统一 monkeypatch（测试不弹窗、不阻塞）。
 """

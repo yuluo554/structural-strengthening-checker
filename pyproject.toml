@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,8 +7,9 @@ name = "structural-strengthening-checker"
 version = "0.1.0"
 description = "结构加固验算与加固方案核查工具：GB 50367-2013 构件加固验算计算器 + 加固方案文本规则核查 + GB 55021-2021 强制条款检查单（全离线，条款联动可溯源）"
 readme = "README.md"
-requires-python = ">=3.8"
-license = { text = "MIT" }
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "structural-strengthening-checker contributors" }]
 keywords = [
     "structural-engineering",
@@ -21,11 +22,10 @@ keywords = [
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering",
 ]
 # 核心层零依赖：公式引擎/规则引擎/检查单/CLI/基准（规则通路）全部 stdlib

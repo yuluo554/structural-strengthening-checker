@@ -29,9 +29,12 @@ GB 55021-2021《既有建筑鉴定与加固通用规范》（全文强制，2022
 | 方案核查 | 误报数（期望集合之外的任何非 pass 结论） | 0 | 0 |
 | 方案核查 | 判定准确率（主期望 verdict 严格相等） | 100%（7/7） | 100% |
 
+该门槛由 `ssc bench` 的退出码执行：篡改任一算例真值（或出现条款门控阻塞）即 exit 1，
+不是只印一行「达标」。
+
 ## 快速开始
 
-环境：Windows（第一目标）/ Linux，Python ≥3.8。
+环境：Windows（第一目标）/ Linux，Python ≥3.12。
 
 ```bash
 git clone https://github.com/yuluo554/structural-strengthening-checker.git

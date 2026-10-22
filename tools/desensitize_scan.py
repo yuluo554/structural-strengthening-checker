@@ -26,7 +26,13 @@ ABS_PATH 类目（EMAIL/PERSONAL/SIBLING 照扫）。
 用法（仓库根）：
   py -X utf8 tools/desensitize_scan.py                # 全扫：入仓树 + dist/
   py -X utf8 tools/desensitize_scan.py --repo-only    # 仅入仓树（无 dist 时）
+  py -X utf8 tools/desensitize_scan.py --selftest     # 自证（阳性 4 + 阴性 4）
+  py -X utf8 tools/desensitize_scan.py --mode metadata  # 提交历史邮箱（防 D1 复发）
 退出码：0=硬门全清（复核项另行列出）；1=硬门有命中（处置后复扫）。
+
+豁免口径（RELEASE-M6 §四「GitHub 账号名豁免」）：账号名是发布固有公开元数据，
+`github.com/<账号>` 与裸 `<账号>/<repo>` 形态不计入命中；`git@<host>` 协议地址不是
+邮箱。真实邮箱 / 真实姓名 / 用户目录路径一律硬门。
 """
 from __future__ import annotations
 
@@ -75,9 +81,74 @@ REVIEW_CATS = {"ABS_PATH_SYS", "ABS_PATH_ANY"}
 
 DIST_FORBIDDEN_PARTS = {"_private", "standards_raw", "synthetic", "workings"}
 
+# --mode metadata：GitHub 提供的匿名化邮箱后缀（提交元数据唯一合法形态）
+NOREPLY_SUFFIX = "users.noreply.github.com"
+
 
 def sibling_words() -> list:
     return [w for w in base64.b64decode(_SIBLING_B64).decode("utf-8").splitlines() if w]
+
+
+def github_account() -> str:
+    """从 origin 远端解析 GitHub 账号名（`git@github.com:OWNER/repo.git` / https 两种形态）。
+
+    该账号名是发布行为的固有公开元数据（仓库挂在公开账号下），按 RELEASE-M6 §四
+    「GitHub 账号名豁免」口径不计入个人标记命中。
+    """
+    try:
+        out = subprocess.run(
+            ["git", "remote", "get-url", "origin"], cwd=str(ROOT),
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+        )
+    except OSError:
+        return ""
+    if out.returncode != 0:
+        return ""
+    m = re.search(r"github\.com[:/]+([A-Za-z0-9][A-Za-z0-9-]*)/", out.stdout.strip(),
+                  re.IGNORECASE)
+    return m.group(1) if m else ""
+
+
+def strip_publish_metadata(line: str, account: str) -> str:
+    """剥掉「发布固有公开元数据」，防假阳性（D4）：
+
+    ① URL 协议头（`https://` 等，否则盘符正则可能误触）；
+    ② `git@github.com` 这类 git 协议地址（形如 `user@host` 的串会被 EMAIL_RE 判成邮箱）；
+    ③ `github.com/<账号名>` 与裸 `<账号名>/<repo>`（账号名是公开元数据，不是个人信息）。
+    真实邮箱 / 真实姓名 / 用户目录路径仍照扫。
+    """
+    line = URL_RE.sub("", line)
+    line = re.sub(r"\bgit@[A-Za-z0-9.-]+", "", line)
+    line = re.sub(r"github\.com/[A-Za-z0-9-]+", "", line, flags=re.IGNORECASE)
+    if account:
+        line = re.sub(
+            r"(?<![A-Za-z0-9])" + re.escape(account) + r"(?![A-Za-z0-9])", "",
+            line, flags=re.IGNORECASE,
+        )
+    return line
+
+
+def classify_line(line: str, markers: list, sib: list, account: str,
+                  exempt_abs: bool = False) -> list:
+    """单行判定 → 命中的类目列表（不含次数）。扫描与 `--selftest` 共用同一口径，
+    保证自证测的就是真正在跑的判定逻辑。"""
+    cats = []
+    stripped = strip_publish_metadata(line, account)
+    if EMAIL_RE.search(stripped):
+        cats.append("EMAIL")
+    if marker_hit(stripped, markers):
+        cats.append("PERSONAL")
+    if not exempt_abs:
+        if ABS_PATH_USER_RE.search(stripped):
+            cats.append("ABS_PATH_USER")
+        elif ABS_PATH_SYS_RE.search(stripped):
+            cats.append("ABS_PATH_SYS")
+        elif ABS_PATH_ANY_RE.search(stripped):
+            cats.append("ABS_PATH_ANY")
+    low = stripped.lower()
+    if any(w.lower() in low for w in sib):
+        cats.append("SIBLING")
+    return cats
 
 
 def personal_markers() -> list:
@@ -150,7 +221,8 @@ def tracked_files() -> list:
     return [ROOT / n for n in names if n.strip()]
 
 
-def scan_text(path: Path, rel: str, markers: list, sib: list, hits: list) -> None:
+def scan_text(path: Path, rel: str, markers: list, sib: list, hits: list,
+              account: str = "") -> None:
     try:
         text = path.read_text(encoding="utf-8")
     except (UnicodeDecodeError, OSError):
@@ -158,25 +230,8 @@ def scan_text(path: Path, rel: str, markers: list, sib: list, hits: list) -> Non
         return
     exempt_abs = rel.replace("\\", "/") == GUARD_TEST
     for lineno, raw_line in enumerate(text.splitlines(), 1):
-        # 先剥离 URL 协议头与 github.com/账号名（后者是发布固有公开元数据，见模块文档），
-        # 防协议部分被误判为盘符绝对路径、账号名误触个人标记
-        line = URL_RE.sub("", raw_line)
-        line = re.sub(r"github\.com/[A-Za-z0-9-]+", "", line, flags=re.IGNORECASE)
-        if EMAIL_RE.search(line):
-            hits.append((rel, lineno, "EMAIL", 1))
-        if marker_hit(line, markers):
-            hits.append((rel, lineno, "PERSONAL", 1))
-        if not exempt_abs:
-            if ABS_PATH_USER_RE.search(line):
-                hits.append((rel, lineno, "ABS_PATH_USER", 1))
-            elif ABS_PATH_SYS_RE.search(line):
-                hits.append((rel, lineno, "ABS_PATH_SYS", 1))
-            elif ABS_PATH_ANY_RE.search(line):
-                hits.append((rel, lineno, "ABS_PATH_ANY", 1))
-        for w in sib:
-            if w.lower() in line.lower():
-                hits.append((rel, lineno, "SIBLING", 1))
-                break
+        for cat in classify_line(raw_line, markers, sib, account, exempt_abs):
+            hits.append((rel, lineno, cat, 1))
 
 
 def scan_bytes_file(path: Path, rel: str, markers: list, sib: list, hits: list) -> None:
@@ -235,13 +290,123 @@ def scan_dist(dist: Path, markers: list, sib: list, hits: list) -> int:
     return n_files
 
 
+def run_selftest() -> int:
+    """`--selftest`：对 classify_line 做真阳性 / 真阴性反证（正面证明门还活着）。
+
+    阳性 4 项（必须报出）：假邮箱 / 假用户名 / 假用户目录路径 / 假姊妹项目词。
+    阴性 4 项（必须不报）：git 协议地址 / `github.com/账号` / 裸 `账号/repo` /
+    文档里的模式占位（`<你的邮箱>` 之类占位符不是真实邮箱）。
+    敏感性用假标记与假账号，**不读本机环境**——保证结果可复现（D4 第③条）。
+    ★ 夹具一律**分段拼接**：本文件也在扫描范围内，写字面量会把自己判成命中
+    （自指假阳性），而给扫描器加豁免等于给门开后门。
+    """
+    at = "@"
+    fake_user = "zzselftest" + "user"
+    fake_mail = fake_user + "." + "probe" + at + "example" + ".invalid"
+    fake_dir = "C:" + "\\Users\\" + fake_user + "\\project"
+    fake_sib = "zz-selftest-" + "sibling-project"
+    fake_account = "zzselftest" + "account"
+    fake_markers = [fake_user, fake_mail]
+    sib_list = [fake_sib]
+    positive = [
+        ("EMAIL", f"联系人 {fake_mail} 已登记"),
+        ("PERSONAL", f"由 {fake_user.upper()} 在本机生成"),
+        ("ABS_PATH_USER", f"路径 {fake_dir}\\out.txt"),
+        ("SIBLING", f"参见 {fake_sib} 的口径"),
+    ]
+    negative = [
+        ("git 协议地址", f"git remote add origin git{at}github.com:{fake_account}/repo.git"),
+        ("github.com/账号", f"https://github.com/{fake_account}/repo 为公开仓库"),
+        ("裸 账号/repo", f"仓名 {fake_account}/repo 见 README"),
+        ("模式占位", "把你的邮箱填在 <你的邮箱> 处，账号填在 <账号名> 处"),
+    ]
+
+    ok = 0
+    total = 0
+    failures = []
+    for expected_cat, line in positive:
+        total += 1
+        cats = classify_line(line, fake_markers, sib_list, fake_account)
+        if expected_cat in cats:
+            ok += 1
+        else:
+            failures.append(f"阳性未报出: {expected_cat} ← {line!r}（实得 {cats}）")
+    for label, line in negative:
+        total += 1
+        cats = [c for c in classify_line(line, fake_markers, sib_list, fake_account)
+                if c in GATE_CATS]
+        if not cats:
+            ok += 1
+        else:
+            failures.append(f"阴性误报: {label} ← {line!r}（实得 {cats}）")
+
+    for f in failures:
+        print(f"  [x] {f}")
+    if ok != total or total < 8:
+        print(f"[SUMMARY] selftest {ok}/{total}（要求全部命中且 >= 8 项）")
+        print("[VERDICT] SELFTEST_FAIL")
+        return 1
+    print(f"DESENSITIZE_SELFTEST_OK {ok} 项反证全部命中（阳性 4 / 阴性 4）")
+    return 0
+
+
+def run_metadata_mode() -> int:
+    """`--mode metadata`：查提交历史的 author/committer 邮箱（文件内容扫描覆盖不到）。
+
+    D1 的直接防复发：历史改写后任何非 GitHub noreply 形态的提交邮箱都算 GATE_HIT。
+    """
+    try:
+        out = subprocess.run(
+            ["git", "log", "--format=%ae%x09%ce", "--all"], cwd=str(ROOT),
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+        )
+    except OSError as exc:
+        print(f"[缺少依赖] git 不可用: {exc}")
+        return 1
+    if out.returncode != 0:
+        print(f"[SUMMARY] mode=metadata gate=0（git log 不可用：{out.stderr.strip()[:80]}）")
+        print("[VERDICT] SCAN_CLEAN")
+        return 0
+
+    offenders = {}
+    n_commits = 0
+    for line in out.stdout.splitlines():
+        if not line.strip():
+            continue
+        n_commits += 1
+        for role, email in zip(("author", "committer"), line.split("\t")):
+            email = (email or "").strip()
+            if email and not email.lower().endswith(NOREPLY_SUFFIX):
+                offenders[(role, email)] = offenders.get((role, email), 0) + 1
+
+    print(f"[SCAN] mode=metadata 提交数={n_commits}")
+    for (role, email), c in sorted(offenders.items()):
+        print(f"GATE_HIT commit {role} [EMAIL_METADATA] x{c}")
+    print(f"[SUMMARY] mode=metadata gate={sum(offenders.values())}")
+    if offenders:
+        print("[VERDICT] SCAN_FINDINGS")
+        return 1
+    print("[VERDICT] SCAN_CLEAN（提交元数据全部为 GitHub noreply）")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="脱敏四步扫描（发布门）")
     ap.add_argument("--repo-only", action="store_true", help="不扫 dist/")
+    ap.add_argument("--selftest", action="store_true",
+                    help="自证：阳性 4 项必须报出 + 阴性 4 项必须不报")
+    ap.add_argument("--mode", choices=("text", "metadata"), default="text",
+                    help="text=文件内容（默认）；metadata=提交历史邮箱")
     args = ap.parse_args()
+
+    if args.selftest:
+        return run_selftest()
+    if args.mode == "metadata":
+        return run_metadata_mode()
 
     markers = personal_markers()
     sib = sibling_words()
+    account = github_account()
     hits = []
 
     files = tracked_files()
@@ -251,7 +416,7 @@ def main() -> int:
         rel = p.relative_to(ROOT).as_posix()
         if p.suffix.lower() == ".docx":
             scan_docx_meta(p, rel, markers, sib, hits)
-        scan_text(p, rel, markers, sib, hits)
+        scan_text(p, rel, markers, sib, hits, account)
 
     dist_n = 0
     if not args.repo_only:

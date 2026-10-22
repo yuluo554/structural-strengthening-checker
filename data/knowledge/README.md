@@ -1,6 +1,10 @@
 # data/knowledge 机器可读知识库
 
 - `clauses/*.json`：条款库（schema 见 plan/04 §1.1）。纪律：status=已核对 必须有 source.checked_date；无出处不得以确定语气落库。
+- **复核锚**：每条 `source` 带 `checked_date`（上次核对日）、`next_review`（下次应复核日，当前统一 2027-10-05）
+  与 `review_interval`（`annual`）。`next_review` 逾期只提示、不改变 `status`——
+  复核结论只能由人重新核对后回写，工具不得自动续期（见 `tests/test_review_anchor.py`）。
+  依据：GB 55021-2021 为全文强制（2022-04-01 实施），本库引用的 5 部规范均需年度可用性复核。
 - `rules/*.json`：核查规则库（schema 见 plan/04 §1.5）。不同类目 gate.only_if_keywords 必须互斥（引擎 + 测试强制）。
 - `checklist_gb55021.json`：GB 55021-2021 检查单条目。
 

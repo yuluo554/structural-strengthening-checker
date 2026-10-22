@@ -19,6 +19,8 @@
       "channel": "建标库(jianbiaoku.com)在线全文[附条文说明]",
       "locator": "GB 50728-2011 第4.2.2条，正文页 http://www.jianbiaoku.com/webarbs/book/12396/4732202.shtml；条文说明页 /12396/4732264.shtml",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "GB 55021-2021 附录B（已核对，双 PDF 副本）为同框架强制指标来源"
     },
     "status": "已核对",

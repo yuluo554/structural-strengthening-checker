@@ -9,7 +9,7 @@
 data/_private/（规范全文，版权红线）、standards_raw/、synthetic/、cases/workings/ 一律不入包，
 tools/build_exe.py 构建后遍历 dist 断言。运行期查找走 core/paths 冻结分支（sys._MEIPASS 优先）。
 
-要求 PyInstaller>=6（本机 3.8.8 由 pip 解析至支持 3.8 的最新 6.x）；
+要求 PyInstaller>=6（项目 floor 3.12；PyInstaller 6.x 起支持 3.12/3.13）；
 PySide6/python-docx/pypdf 由构建环境安装的 extras（gui/report/parse）带入。
 """
 

@@ -26,6 +26,8 @@
       "channel": "中国建筑科学研究院建筑防火研究所挂载的 GB/T 50010-2010（2024年版）全文网页（gf.cabr-fire.com）",
       "locator": "第4.2节 钢筋（article-12594），表4.2.3-1/4.2.3-2 为页内图片，已下载目视逐格核对；图片与该节 HTML 本地存档 data/_private/GB50010-2010_cabr-fire/",
       "checked_date": "2026-10-05",
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": "检索索引多源引文一致（2015 年版表值：HPB300 270、HRB400 360、HRB500 435，抗拉 fy 与 2024 年版相同；MorGain/midas 手册引文页 403/黑名单未直接抓取；HRB500 抗压 fy' 2015 年版为 410、2024 年版图片为 435——本库仅登记抗拉 fy，不受影响）"
     },
     "status": "已核对",

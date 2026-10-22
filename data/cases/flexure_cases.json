@@ -21,7 +21,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "力平衡复核：A·x=641427 ≈ fy·As+ψf·ff·Afe=641403（舍入差 0.004%）"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "一次受力正向例（M0=0；加固后承载力高于设计弯矩，x 在 ξb,f 限值内，提高幅度 14.8%<40%）"
   },
   {
@@ -48,7 +47,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "εf0 量纲复核 N·mm/(MPa·mm²·mm)=无量纲；ψf 未封顶分支与力平衡自洽"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "二次受力例（M0>0，滞后应变 εf0 路径 + 表10.2.8 查表内插）"
   },
   {
@@ -74,7 +72,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "x_M 与 Afe_req 的反算链独立于承载力正向链"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "反向例（加固量不足，需调整）"
   },
   {
@@ -99,7 +96,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "封顶线性解与未封顶二次解的分支判断互证"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "一次受力正向例（ψsp 封顶路径）"
   },
   {
@@ -126,7 +122,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "表9.2.9 与表10.2.8 数值相同（出版文本互证）"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "二次受力例（M0>0 滞后应变 + ψsp 封顶）"
   },
   {
@@ -152,7 +147,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "需求反算链独立于承载力正向链"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "反向例（钢板量不足，需调整）"
   },
   {
@@ -177,7 +171,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "式(5.2.3-1)与(5.2.3-2) 代入自洽（出版文本互证时已做推导复核）"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "一次受力正向例（完全卸载，M0=0）"
   },
   {
@@ -204,7 +197,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "h01=h0 时 εs1=εs0 的条文近似与式(5.2.4-2) 自洽"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "二次受力例（M0>0，εs0/εs1 路径）"
   },
   {
@@ -229,7 +221,6 @@
       "locator": "data/cases/workings/flexure_workings.md",
       "cross_check": "对 x 线性直接解与力矩式回代一致"
     },
-    "tolerance_policy": "数值 ±0.5%（工程量纲相对容差）；verdict 真值严格相等；plan/05 §三",
     "scenario": "反向例（新增钢筋量不足，需调整）"
   }
 ]

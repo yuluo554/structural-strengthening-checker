@@ -13,6 +13,8 @@
       "channel": "已尝试渠道：①济南城乡建设发展研究中心(jncc.jinan.gov.cn)挂载规程PDF——扫描件，第31页后文字层失效，6.3 节文本不可提取；②建标库站内书号未定位到；③道客巴巴/搜建筑需登录或为图片查看器。待后续以纸版或可提取文本渠道核对。",
       "locator": "JGJ 145-2013 目次（PDF 第 7~9 页）确认第 6.3 节标题 'Post-installed Rebar System'；条文原文待获取",
       "checked_date": null,
+      "review_interval": "annual",
+      "next_review": "2027-10-05",
       "cross_check": null
     },
     "status": "待核对",

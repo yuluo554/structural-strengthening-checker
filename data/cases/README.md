@@ -2,7 +2,11 @@
 
 - schema 见 plan/04 §1.7：`case_id / module / input / expected / source` 必填；**无来源的数值不得作为基准真值**（引擎 load_cases 强制）。
 - 来源：自编算例+手工计算书（`workings/`，依据已核对公式）为主；规范条文说明无算例（已逐页核实）；教材算例可获取后可按台账规则追加。
-- 容差策略：数值 ±0.5%（写入 tolerance_policy），verdict 严格相等。
+- 容差策略：数值 ±0.5%（机读真值只认 `expected.tolerance`，当前 14 例均为 `0.005`），verdict 严格相等。
+  原先每例另带一个 `tolerance_policy` 自由文本字段，它**不被任何代码读取**，且已漂移出 3 种不同措辞
+  （措辞差异容易被误读成策略差异）——本轮删除，口径收敛到 `expected.tolerance` 单一来源。
+- `scenario` 字段**不参与判定，仅供人读**（说明算例属于哪种受力/路径场景）；判定只由 `expected.verdict`、
+  `expected` 中各数值指标与 `expected.tolerance` 决定（`bench/calc_bench.compare_case`）。
 
 ## M2 状态（2026-10-05，公式引擎里程碑）
 
