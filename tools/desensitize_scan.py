@@ -26,7 +26,7 @@ ABS_PATH 类目（EMAIL/PERSONAL/SIBLING 照扫）。
 用法（仓库根）：
   py -X utf8 tools/desensitize_scan.py                # 全扫：入仓树 + dist/
   py -X utf8 tools/desensitize_scan.py --repo-only    # 仅入仓树（无 dist 时）
-  py -X utf8 tools/desensitize_scan.py --selftest     # 自证（阳性 4 + 阴性 4）
+  py -X utf8 tools/desensitize_scan.py --selftest     # 自证（阳性 5 + 阴性 5）
   py -X utf8 tools/desensitize_scan.py --mode metadata  # 提交历史邮箱（防 D1 复发）
 退出码：0=硬门全清（复核项另行列出）；1=硬门有命中（处置后复扫）。
 
@@ -114,11 +114,17 @@ def strip_publish_metadata(line: str, account: str) -> str:
 
     ① URL 协议头（`https://` 等，否则盘符正则可能误触）；
     ② `git@github.com` 这类 git 协议地址（形如 `user@host` 的串会被 EMAIL_RE 判成邮箱）；
-    ③ `github.com/<账号名>` 与裸 `<账号名>/<repo>`（账号名是公开元数据，不是个人信息）。
+    ③ GitHub noreply 地址（`*@users.noreply.github.com`）——`--mode metadata` 已把它定为
+       提交元数据的唯一合法形态，文档里引用它（如留档改写前后对照）不构成个人信息泄漏；
+    ④ `github.com/<账号名>` 与裸 `<账号名>/<repo>`（账号名是公开元数据，不是个人信息）。
     真实邮箱 / 真实姓名 / 用户目录路径仍照扫。
     """
     line = URL_RE.sub("", line)
     line = re.sub(r"\bgit@[A-Za-z0-9.-]+", "", line)
+    # 右边界必须钉住域名结尾：否则「noreply 域名 + 额外子域」形态会被误当 noreply 放行
+    # （回归用例见 --selftest 阳性组：伪装子域必须报出）
+    line = re.sub(r"[A-Za-z0-9._%+-]+@" + re.escape(NOREPLY_SUFFIX)
+                  + r"(?![A-Za-z0-9.-])", "", line, flags=re.IGNORECASE)
     line = re.sub(r"github\.com/[A-Za-z0-9-]+", "", line, flags=re.IGNORECASE)
     if account:
         line = re.sub(
@@ -314,11 +320,19 @@ def run_selftest() -> int:
         ("ABS_PATH_USER", f"路径 {fake_dir}\\out.txt"),
         ("SIBLING", f"参见 {fake_sib} 的口径"),
     ]
+    # 附注：noreply 豁免必须钉右边界，否则 `…@users.noreply.github.com.evil.com` 会被放行。
+    # 该用例放在 positive 组（伪装域名必须报），锁住这个回归。
+    positive.append((
+        "EMAIL",
+        f"伪装 {fake_user}" + at + "users.noreply.github.com" + ".evil.example",
+    ))
     negative = [
         ("git 协议地址", f"git remote add origin git{at}github.com:{fake_account}/repo.git"),
         ("github.com/账号", f"https://github.com/{fake_account}/repo 为公开仓库"),
         ("裸 账号/repo", f"仓名 {fake_account}/repo 见 README"),
         ("模式占位", "把你的邮箱填在 <你的邮箱> 处，账号填在 <账号名> 处"),
+        ("GitHub noreply 地址",
+         f"提交元数据唯一合法形态 12345678+{fake_account}" + at + "users.noreply.github.com"),
     ]
 
     ok = 0
@@ -342,11 +356,11 @@ def run_selftest() -> int:
 
     for f in failures:
         print(f"  [x] {f}")
-    if ok != total or total < 8:
-        print(f"[SUMMARY] selftest {ok}/{total}（要求全部命中且 >= 8 项）")
+    if ok != total or total < 10:
+        print(f"[SUMMARY] selftest {ok}/{total}（要求全部命中且 >= 10 项）")
         print("[VERDICT] SELFTEST_FAIL")
         return 1
-    print(f"DESENSITIZE_SELFTEST_OK {ok} 项反证全部命中（阳性 4 / 阴性 4）")
+    print(f"DESENSITIZE_SELFTEST_OK {ok} 项反证全部命中（阳性 5 / 阴性 5）")
     return 0
 
 

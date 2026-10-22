@@ -57,7 +57,7 @@ REVIEW plan/RELEASE-M6.md:50 [ABS_PATH_ANY] x1
 
 | 门 | 命令 | 结果 |
 |---|---|---|
-| 自证 | `tools/desensitize_scan.py --selftest` | `DESENSITIZE_SELFTEST_OK 8 项反证全部命中（阳性 4 / 阴性 4）` / rc 0 |
+| 自证 | `tools/desensitize_scan.py --selftest` | `DESENSITIZE_SELFTEST_OK 10 项反证全部命中（阳性 5 / 阴性 5）` / rc 0 |
 | 提交元数据 | `tools/desensitize_scan.py --mode metadata` | `mode=metadata 提交数=14` / `gate=0` / rc 0 |
 
 ### 负控（两道门都验证过「真会红」）
@@ -72,6 +72,21 @@ REVIEW plan/RELEASE-M6.md:50 [ABS_PATH_ANY] x1
 改前 `personal_markers()` 会把本机 `git config user.name` 当标记，任何提到账号名的行都判 PERSONAL
 ——换台机器结果就不同。改后账号名按「发布固有公开元数据」整体剥除，实测模拟异机
 （`USERNAME`/`USERPROFILE`/`HOME` 全换）仍 `gate=0 / SCAN_CLEAN`。
+
+### 发布当轮发现并修掉的一个真漏洞（noreply 豁免的右边界）
+
+写完本文件首版后重跑扫描，`plan/RELEASE-M7.md` 的「改写前/后对照」表被判 `[EMAIL]` —— 
+因为它引用了 noreply 地址。这暴露两个问题：
+
+1. **文档里引用 noreply 地址被当泄漏**：`--mode metadata` 已把 noreply 定为提交元数据唯一合法形态，
+   文本扫描却不认，两处口径不一致 → 已补剥离规则（第 ③ 条）。
+2. ★ **首版的剥离正则没有右边界**：`[A-Za-z0-9._%+-]+@users.noreply.github.com` 会匹配
+   `…@users.noreply.github.com.evil.com` 的前缀并整条放行 —— 一个真实存在的伪造后缀漏洞。
+   已加 `(?![A-Za-z0-9.-])` 钉住域名结尾。
+
+边界用例 8 项逐一验证（真 QQ / 其他 noreply 域 / gmail 必须报；真 noreply 不报；
+伪装子域必须报；noreply 后接空格/右括号/中文均不报），并把这个伪装子域用例**固化为
+`--selftest` 的阳性项**，防将来退化。
 
 ### 自指假阳性（本轮踩到并修掉）
 
@@ -99,8 +114,9 @@ REVIEW plan/RELEASE-M6.md:50 [ABS_PATH_ANY] x1
 |---|---|
 | 版本 | **0.1.1**（`pyproject.toml` == `__init__.__version__` == README 首屏，守门测试锁死） |
 | 产物 | `dist/SSC/` onedir 双 exe：`SSC.exe`（GUI）+ `ssc-cli.exe`（控制台） |
-| 发布形态 | `output/SSC-v0.1.1-windows-x64.zip`，**79,538,731 B**，`sha256:71a4a91444c0c2a6d6b0e40f3a646e3bb875454aa53b17c0d0c16836a8239415`（不入仓） |
-| zip 可复现 | 固定时间戳 `2026-10-22 00:00:00` 重打两次，digest **逐字节相同** |
+| 发布形态 | `output/SSC-v0.1.1-windows-x64.zip`，**79,537,764 B**，`sha256:deea94e3e033a54673914653d3cda568756c3d6ce8d8d9559243b7278ce257c5`（不入仓） |
+| zip **打包**可复现 | 对**同一份 `dist/SSC`** 用固定时间戳重打两次，digest 逐字节相同 |
+| ★ exe **构建**不可复现 | 重新跑 PyInstaller 后，277 个条目里 **274 个逐字节相同**，仅 `SSC.exe` / `ssc-cli.exe` / `_internal/base_library.zip` 三者字节变化（大小不变）。这是 PyInstaller 构建产物注入时间戳/引导哈希的固有行为；`SOURCE_DATE_EPOCH=1792713600` 实测**不能**消除。结论：**下载件可自校验**（给定 sha256），但不能由源码重建出同一字节 —— 与 setuptools 打 wheel 同类 |
 | 红线断言 | 358 个路径，无 `_private/standards_raw/synthetic/workings` 成分；内嵌 knowledge 三库 + cases 与仓库逐份 JSON 对账一致 |
 | 内嵌数据 | 含 `next_review` / `review_interval`（与源码同基线；旧 M6 exe 无此字段） |
 | exe 冒烟 | `--version` → `ssc 0.1.1`；`selfcheck` → SELFCHECK_OK；`bench` → BENCH_OK；`modules` 4 模块全 READY；`check <docx>` → 规则判定与建议正常；`SSC.exe` offscreen 启动 12s 存活无报错 |
@@ -117,7 +133,7 @@ Qt 翻译/样式文件按 3.12 的 PySide6 6.6.3.1 收集）。功能面无退�
 用它构建可保证产物能覆盖全部受支持解释器语义（3.13 运行 cp312 字节码仍在支持范围内）。
 M5 记录的「3.8 通道 7 次构建崩溃」与「3.14 通道 webbrowser 解析 bug」两条历史坑不变。
 
-## 六、CI（run `39700060745`，head `1d0bd52`，2026-10-22T00:30Z）
+## 六、CI（整改提交 run `39700060745` head `1d0bd52`；发布提交 run `39702267844` head `cc9c2427`）
 
 | job | 结论 | steps |
 |---|---|---|
@@ -144,7 +160,50 @@ M5 记录的「3.8 通道 7 次构建崩溃」与「3.14 通道 webbrowser 解�
 - [x] 测试不退化：156 → **168**（新增 12 项，既有断言零删除）
 - [x] 干净环境全量复验 + CI 全绿
 
-## 八、遗留与偏差
+
+## 八、发布执行实录（2026-10-22）
+
+| 动作 | 结果 |
+|---|---|
+| 提交 | `cc9c2427e802b10bb685eb071a6629592058a917`（M7 发布 v0.1.1）→ pushed origin/main |
+| tag `v0.1.1` 初版 | **annotated `4b1f098d…` → peeled `cc9c2427…`**（曾与 HEAD 零滞后，后因下述缺陷修复而移指） |
+| Release | https://github.com/yuluo554/structural-strengthening-checker/releases/tag/v0.1.1 （Latest，非 draft / 非 prerelease） |
+| 附件（初版，已替换） | `SSC-v0.1.1-windows-x64.zip` 79,538,731 B，`sha256:71a4a91444c0c2a6d6b0e40f3a646e3bb875454aa53b17c0d0c16836a8239415` |
+| **三方 sha256 对撞** | 本地打包值 = GitHub `assets[].digest` = **真下载后自算值** → 三者逐字符相同 ✅ |
+| 真下载复验 | 通道 `gh api -H "Accept: application/octet-stream" .../releases/assets/664247032`（本机直连与代理均不可达，见 §八 第 3 条）；落盘 79,538,731 B → 解压 277 文件 → `ssc-cli.exe --version` = `ssc 0.1.1`、`selfcheck` = SELFCHECK_OK、`bench` = BENCH_OK ✅ |
+| CI（发布提交） | run `39702267844`（head `cc9c2427`）**4 job × 12 step 全 success**，`bad=[]` |
+| `v0.1.0-M6` 是否被波及 | **未变**：tag 仍 `07c505df…`；Release 附件仍 87,655,021 B / `cc05ca19…` ✅ |
+
+附：本机 `curl` 直连 github.com 超时（rc 28），`--proxy 127.0.0.1:7897` 亦不可达（rc 7），
+与 M6 记录的「本机代理不可达」一致；`gh api` 走 API 通道可正常取附件。
+
+### ★ 发布后 20 分钟内的自我更正（D-M7-1，已处理）
+
+本文件首版发布后，我按留档内容重跑扫描时发现 **脱敏扫描器 noreply 豁免有真实缺陷**：
+剥离正则 `[A-Za-z0-9._%+-]+@users\.noreply\.github\.com` **没有右边界**，
+于是「合法 noreply 域名 + 额外子域」这类**伪造后缀**会被整条放行 —— 邮箱硬门可被绕过
+（具体构造见 `tools/desensitize_scan.py --selftest` 的阳性组，不在本文写字面量，避免留档自身被判命中）。
+
+处置（用户拍板「移动 tag + 重传附件」）：
+
+| 项 | 初版 | 修正后 |
+|---|---|---|
+| 扫描器 | 无右边界 | 加 `(?![A-Za-z0-9.-])` 钉住域名结尾 |
+| selftest | 阳性 4 + 阴性 4 = 8 项 | **阳性 5 + 阴性 5 = 10 项**（新增：伪装子域必须报；noreply 不报） |
+| exe | — | 重打包（`tools/` 不在 exe 内，但重新构建以保持 dist 与源码同基线） |
+| zip | 79,538,731 B / `71a4a914…` | **79,537,764 B / `deea94e3…`** |
+| tag | 指向 `cc9c2427` | **移指修正提交**，annotated 重打并 force push |
+| Release | 已发布 | 附件替换 + 说明更新 |
+
+边界用例 8 项逐一实测（真 QQ / 其他 noreply 域 / gmail → 必须报；真 noreply → 不报；
+伪装子域 → 必须报；noreply 后接空格 / 右括号 / 中文 → 不报），全对；其中伪装子域用例已
+**固化为 selftest 阳性项**防退化。
+
+教训（写进方法库）：**「豁免」类规则必须钉两端边界**。只钉左端（`[A-Za-z0-9._%+-]+@`）
+而放任右端，等于让任何以合法域名为前缀的伪造串都通过。这条与 M6 的「短标记要词边界」
+是同一类错误，只不过发生在域的右侧。
+
+## 九、遗留与偏差
 
 1. **GUI 真窗口目检未做**（用户明确跳过）。已有证据：`test_gui.py` 17 项 offscreen 全绿、
    `SSC.exe` offscreen 启动 12s 存活无报错。**未做的**是人工看四页签的实际渲染与交互。
