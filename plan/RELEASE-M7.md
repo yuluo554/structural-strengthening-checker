@@ -205,10 +205,16 @@ M5 记录的「3.8 通道 7 次构建崩溃」与「3.14 通道 webbrowser 解�
 
 ### 最终态（D-M7-1 修正后，本节为发布验收依据）
 
+> **关于「tag 落后 HEAD」**：本文件在 tag 之后仍在被追加修正（本次即 D-M7-1 的留档）。
+> 因此 `v0.1.1..HEAD` 会持续存在**纯文档**提交，`git rev-list --count v0.1.1..HEAD` 不为 0 是**预期行为**，
+> 不是滞后缺陷。判据应看两件事：① `git diff v0.1.1..HEAD -- src/` 为空（代码零差异）；
+> ② `git rev-parse v0.1.1^{commit}` 等于上面「发布提交」那一行的 sha。
+> 这是「留档无法自证自身所在提交的 sha」的固有循环——数值以**本章 + GitHub Release 说明**为准，不在正文里追 HEAD。
+
 | 项 | 值 |
 |---|---|
-| 提交 | `62d5a19519913d88a6bbb1aa322f69f0c28a7d6f`（M7 修正 D-M7-1） |
-| tag 对象 | `4b720f38d13b0a3156aa1ab67dc20a3a60573e39` → peeled **`62d5a195…`** = HEAD，**零滞后** |
+| 发布提交 | `62d5a19519913d88a6bbb1aa322f69f0c28a7d6f`（M7 修正 D-M7-1）——**tag 指向此提交** |
+| tag 对象 | `4b720f38d13b0a3156aa1ab67dc20a3a60573e39` → peeled `62d5a195…` |
 | Release target | `62d5a19519913d88a6bbb1aa322f69f0c28a7d6f`（与 tag 一致） |
 | 附件 | `SSC-v0.1.1-windows-x64.zip` **79,537,764 B** / `sha256:deea94e3e033a54673914653d3cda568756c3d6ce8d8d9559243b7278ce257c5`（旧附件 asset `664247032` 已删除，新 asset `664276482`） |
 | 三方对撞 | 本地打包值 = GitHub `assets[].digest` = **真下载自算值** → 逐字符相同 ✅ |
