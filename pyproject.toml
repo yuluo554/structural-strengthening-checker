@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "structural-strengthening-checker"
-version = "0.1.0"
+version = "0.1.1"
 description = "结构加固验算与加固方案核查工具：GB 50367-2013 构件加固验算计算器 + 加固方案文本规则核查 + GB 55021-2021 强制条款检查单（全离线，条款联动可溯源）"
 readme = "README.md"
 requires-python = ">=3.12"
